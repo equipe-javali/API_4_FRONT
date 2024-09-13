@@ -1,0 +1,95 @@
+.cadastro-estacao {
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.cadastro-estacao .container {
+    background-color: #f8f8f8;
+    padding: 20px;
+    width: 1280px;
+    position: relative;
+}
+
+.cadastro-estacao .text-wrapper-titulo {
+    color: #020202;
+    font-family: "Onest-Regular", Helvetica;
+    font-size: 64px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cadastro-estacao .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cadastro-estacao .form {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.cadastro-estacao .form-group {
+    margin-bottom: 20px;
+}
+
+.cadastro-estacao .text-wrapper {
+    color: #40587e;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 25px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.cadastro-estacao .input {
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 10px;
+    height: 31px;
+    width: 100%;
+    padding: 5px 10px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    color: #5f5e63;
+}
+
+.cadastro-estacao .foto-container {
+    width: 416px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cadastro-estacao .foto {
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    height: 500px;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: 5%;    
+    
+}
+
+
+.cadastro-estacao .button {
+    background-color: #0178d4;
+    border-radius: 5px;
+    height: 47px;
+    width: 198px;
+    color: #edf4ff;
+    font-family: "Kantumruy-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 47px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
