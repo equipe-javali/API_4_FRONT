@@ -1,38 +1,30 @@
-import { cadastrarEstacao } from '../../services/estacaoServices';
-import { CadastrarEstacao } from '../../types/Estacao'; 
+import React, { useState, useEffect } from "react";
+import "../css/Estacoes.css";
+import { cadastrarParametro } from '../../services/estacaoParametro';
+import { CadastrarParametro} from '../../types/Parametro'; 
 
 export const CadastroParametro = () => {
-  const [formData, setFormData] = useState<CadastrarEstacao>({ 
+  const [formData, setFormData] = useState<CadastrarParametro>({ 
     nome: '',
-    endereco: '', 
-    latitude: 0, 
-    longitude: 0, 
-    mac_address: '',
-  });
-
-  const [alertaData, setAlertaData] = useState({
-    nome: '',
-    condicao: '',
-    valor: '',
+    fator: '',  
+    offset: '', 
+    unidademedida: '', 
   });
 
   const [mensagem, setMensagem] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
-    if (name.startsWith('alerta_')) { 
-      const alertaFieldName = name.substring(7); 
-      setAlertaData({ ...alertaData, [alertaFieldName]: value });
-    } else {
-      setFormData({ ...formData, [name]: name === 'latitude' || name === 'longitude' ? parseFloat(value) : value });
-    }
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await cadastrarEstacao(formData);
+      const response = await cadastrarParametro(formData);
   
       if (response.errors && response.errors.length > 0) { 
         console.error('Erro na resposta da API:', response.errors);
@@ -42,20 +34,14 @@ export const CadastroParametro = () => {
         setMensagem("Estação cadastrada com sucesso!");
         setFormData({ 
           nome: '',
-          endereco: '',
-          latitude: 0,
-          longitude: 0,
-          mac_address: '',
-        });
-        setAlertaData({
-          nome: '',
-          condicao: '',
-          valor: '',
+          fator: '',
+          offset: '',
+          unidademedida: '',
         });
       }
     } catch (error) {
       console.error('Erro:', error);
-      setMensagem("Erro ao cadastrar estação. Verifique os dados e tente novamente.");
+      setMensagem("Erro ao cadastrar parâmetro. Verifique os dados e tente novamente.");
     }
   };
 
@@ -78,7 +64,7 @@ export const CadastroParametro = () => {
   return (
     <div className="cadastro-estacao">
       <div className="container">
-        <h1 className="text-wrapper-titulo">Cadastrar Estação</h1>      
+        <h1 className="text-wrapper-titulo">Cadastrar tipo de Parâmetro</h1>      
 
         <form onSubmit={handleSubmit}>  
           <div className="content">          
@@ -95,108 +81,46 @@ export const CadastroParametro = () => {
                 />
               </div>
               <div className="form-group">
-                <label className="text-wrapper">MAC adress UID</label>
+                <label className="text-wrapper">Fator</label>
                 <input 
                   type="text" 
                   className="input" 
-                  placeholder="Digite o MAC adress UID..." 
-                  name="mac_address" 
-                  value={formData.mac_address} 
+                  placeholder="Digite o fator..." 
+                  name="fator" 
+                  value={formData.fator} 
                   onChange={handleChange} 
                 />
               </div>
               <div className="form-group">
-                <label className="text-wrapper">Parâmetros</label>
+                <label className="text-wrapper">Offset</label>
+                <input 
+                  type="text" 
+                  className="input" 
+                  placeholder="Digite a localização..." 
+                  name="offset" 
+                  value={formData.offset} 
+                  onChange={handleChange} 
+                />
+              </div>
+              <div className="form-group">
+                <label className="text-wrapper">Unidade de medida</label>
                 <select 
                   className="input" 
-                  name="parametros"  
-                  value={formData.parametros} 
+                  name="unidademedida"  
+                  value={formData.unidademedida} 
                   onChange={handleChange} 
                 >
-                  <option>Opção 1</option>
-                  <option>Opção 2</option>
+                  <option value="">Selecione uma unidade</option>
+                  <option value="opcao1">Opção 1</option>
+                  <option value="opcao2">Opção 2</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label className="text-wrapper">Localização</label>
-                <input 
-                  type="text" 
-                  className="input" 
-                  placeholder="Digite a localização e/ou ponto de referência..." 
-                  name="endereco" 
-                  value={formData.endereco} 
-                  onChange={handleChange} 
-                />
-              </div>
-              <div className="form-group">
-                <label className="text-wrapper">Latitude</label>
-                <input 
-                  type="text" 
-                  className="input" 
-                  placeholder="Latitude" 
-                  name="latitude" 
-                  value={formData.latitude} 
-                  onChange={handleChange} 
-                />
-              </div>
-              <div className="form-group">
-                <label className="text-wrapper">Longitude</label>
-                <input 
-                  type="text" 
-                  className="input" 
-                  placeholder="Longitude" 
-                  name="longitude" 
-                  value={formData.longitude} 
-                  onChange={handleChange} 
-                />
-              </div>
+              <button type="submit" className="button">Cadastrar</button>
             </div>
-              <div className="foto-container">
-                <div className="foto" />
-                <label className="text-wrapper">Foto</label>
-              </div>
-            </div>            
-
-            <h2 className="text-wrapper">Cadastrar alerta</h2>
-            <div className="form-group">
-              <label className="text-wrapper">Nome</label>
-              <input 
-                type="text" 
-                className="input" 
-                placeholder="Nome" 
-                name="alerta_nome" // Adicione o prefixo 'alerta_'
-                value={alertaData.nome} 
-                onChange={handleChange} 
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Condição</label>
-              <input 
-                type="text" 
-                className="input" 
-                placeholder="Condição" 
-                name="alerta_condicao" 
-                value={alertaData.condicao} 
-                onChange={handleChange} 
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Valor</label>
-              <input 
-                type="text" 
-                className="input" 
-                placeholder="Valor" 
-                name="alerta_valor" 
-                value={alertaData.valor} 
-                onChange={handleChange} 
-              />
-            </div>
-            <div className="form-group">
-              <button className="button" type="submit">Salvar</button> 
-              {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>} 
-            </div>
-          </form> 
-        </div>
-      </div>    
+          </div>            
+          {mensagem && <div className="success-message">{mensagem}</div>}
+        </form> 
+      </div>
+    </div>    
   );
 };
