@@ -7,7 +7,8 @@ const BaseLateralHeader = () => {
   return (
     <div id="app-content-lr">
       <SideMenu links={[
-        ["Cadastro de Estação", "estacao"]
+        ["Cadastro de Estação", "estacao"],
+        ["Cadastro de Parâmetro", "cadastro/parametro"]
       ]} />
       <div id="app-content-tb">
         <Outlet />
