@@ -1,10 +1,10 @@
 .box {
     height: 1780px;
-    width: 74px;
+    width: 174px;
 }
 
 .side-menu {
-    background-color: #364d6f;
+    background-color: #364d6f;    
     height: 1780px;
     width: 174px;
     display: flex;
