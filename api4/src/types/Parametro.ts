@@ -1,4 +1,4 @@
-export interface CadastrarParametro {
+export interface Parametro {
   nome: string;
   fator: string;
   offset: string,
