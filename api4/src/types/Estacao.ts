@@ -5,5 +5,5 @@ export interface Estacao {
   longitude: number;
   mac_address: string;
   id?: number;
-  // parametros?: string;
+  parametros?: string;
 };

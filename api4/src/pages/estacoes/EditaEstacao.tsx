@@ -105,7 +105,7 @@ export function EditaEstacao() {
                   value={formData.mac_address}
                   onChange={handleChange} />
               </div>
-              {/* <div className="form-group">
+              <div className="form-group">
                 <label className="text-wrapper">Parâmetros</label>
                 <select
                   className="input"
@@ -116,7 +116,7 @@ export function EditaEstacao() {
                   <option>Opção 1</option>
                   <option>Opção 2</option>
                 </select>
-              </div> */}
+              </div>
               <div className="form-group">
                 <label className="text-wrapper">Localização</label>
                 <input
@@ -148,13 +148,7 @@ export function EditaEstacao() {
                   onChange={handleChange} />
               </div>
             </div>
-            <div className="foto-container">
-              <div className="foto" />
-              <label className="text-wrapper"><button className="button" type="submit">Salvar</button>
-              {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}</label>
-              
-            </div>
-            
+                        
             <div className="form-group">
             
           </div>

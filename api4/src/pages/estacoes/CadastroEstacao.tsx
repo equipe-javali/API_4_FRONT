@@ -105,7 +105,7 @@ export function CadastroEstacao() {
                   value={formData.mac_address}
                   onChange={handleChange} />
               </div>
-              {/* <div className="form-group">
+              <div className="form-group">
                 <label className="text-wrapper">Parâmetros</label>
                 <select
                   className="input"
@@ -116,7 +116,7 @@ export function CadastroEstacao() {
                   <option>Opção 1</option>
                   <option>Opção 2</option>
                 </select>
-              </div> */}
+              </div>
               <div className="form-group">
                 <label className="text-wrapper">Localização</label>
                 <input
@@ -148,10 +148,7 @@ export function CadastroEstacao() {
                   onChange={handleChange} />
               </div>
             </div>
-            <div className="foto-container">
-              <div className="foto" />
-              <label className="text-wrapper">Foto</label>
-            </div>
+            
           </div>
 
           {/* <h2 className="text-wrapper">Cadastrar alerta</h2>

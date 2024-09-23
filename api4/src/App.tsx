@@ -3,8 +3,8 @@ import BaseLateralHeader from './components/BaseLateralHeader';
 import { CadastroEstacao } from './pages/estacoes/CadastroEstacao';
 import Home from './pages/Home';
 import { CadastroParametro } from './pages/Parametros/CadastroParametros';
-import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 import { EditaEstacao } from './pages/estacoes/EditaEstacao';
+import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 
 function App() {
   return (
