@@ -1,4 +1,4 @@
-export interface CadastrarEstacao {
+export interface Estacao {
   nome: string;
   endereco: string;
   latitude: number;
