@@ -1,0 +1,107 @@
+.cadastro-parametro {
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;    
+}
+
+.cadastro-parametro .container {    
+    padding: 10px;
+    width: 80%;
+    
+}
+
+.cadastro-parametro .text-wrapper-titulo {
+    color: #020202;
+    font-family: "Onest-Regular", Helvetica;
+    font-size: 64px;  
+    text-align: center;    
+}
+
+.cadastro-parametro .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cadastro-parametro .form {
+    flex: 1;
+    margin-right: 25px;
+}
+
+.cadastro-parametro .form-group {
+    margin-bottom: 20px;
+}
+
+.cadastro-parametro .text-wrapper {
+    color: #40587e;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 25px;    
+    margin-bottom: 10px;
+    display: block;
+}
+
+.cadastro-parametro .input {
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 10px;
+    height: 31px;
+    width: 100%;
+    padding: 5px 10px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    color: #5f5e63;
+}
+
+.cadastro-parametro .foto-container {
+    width: 416px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cadastro-parametro .foto {
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    height: 75%;    
+    width: 100%;
+    display: block;
+    margin-left: 15%;    
+    margin-top: 10%;
+    
+}
+
+
+.cadastro-parametro .button {
+    background-color: #0178d4;
+    border-radius: 5px;
+    height: 47px;
+    width: 198px;
+    color: #edf4ff;
+    font-family: "Kantumruy-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 47px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.success-message {
+    color: green;
+    margin-bottom: 10px;
+  }
+  
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+
+  }
+
+.success-message, .error-message {
+    text-align: center; 
+    margin: 10px auto;   
+  }
