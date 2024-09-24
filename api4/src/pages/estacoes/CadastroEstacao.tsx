@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { cadastrarEstacao } from '../../services/estacaoServices';
+import { cadastrarSensor } from '../../services/sensorServices';
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
+import { cadastrarEstacao } from "../../services/estacaoServices";
+import Sensor from '../../types/Sensor'
 
 export function CadastroEstacao() {
   const [formData, setFormData] = useState<Estacao>({
@@ -12,10 +14,10 @@ export function CadastroEstacao() {
     mac_address: '',
   });
 
-  const [alertaData, setAlertaData] = useState({
+  const [sensorData, setSensorData] = useState<Sensor>({
     nome: '',
-    condicao: '',
-    valor: '',
+    id_parametro: 0,
+    estacaoId: '',
   });
 
   const [mensagem, setMensagem] = useState<string | null>(null);
@@ -23,25 +25,27 @@ export function CadastroEstacao() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (name.startsWith('alerta_')) {
-      const alertaFieldName = name.substring(7);
-      setAlertaData({ ...alertaData, [alertaFieldName]: value });
+    if (name.startsWith('sensor_')) {
+      const sensorFieldName = name.substring(7);
+      setSensorData({ ...sensorData, [sensorFieldName]: value });
     } else {
       setFormData({ ...formData, [name]: name === 'latitude' || name === 'longitude' ? parseFloat(value) : value });
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitEstacao = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await cadastrarEstacao(formData);
+      const responseEstacao = await cadastrarEstacao(formData);
 
-      if (response.errors && response.errors.length > 0) {
-        console.error('Erro na resposta da API:', response.errors);
-        setMensagem("Erro ao cadastrar estação: " + response.errors.join(", "));
+      if (responseEstacao.errors && responseEstacao.errors.length > 0) {
+        console.error('Erro na resposta da API:', responseEstacao.errors);
+        setMensagem("Erro ao cadastrar estação: " + responseEstacao.errors.join(", "));
       } else {
-        console.log('Sucesso:', response);
+        console.log('Sucesso:', responseEstacao);
         setMensagem("Estação cadastrada com sucesso!");
+
+        const estacaoId = responseEstacao.id;
         setFormData({
           nome: '',
           endereco: '',
@@ -49,15 +53,26 @@ export function CadastroEstacao() {
           longitude: 0,
           mac_address: '',
         });
-        setAlertaData({
-          nome: '',
-          condicao: '',
-          valor: '',
-        });
+
+        // Cadastrar o sensor após cadastrar a estação
+        const responseSensor = await cadastrarSensor({ ...sensorData, estacaoId });
+
+        if (responseSensor.errors && responseSensor.errors.length > 0) {
+          console.error('Erro na resposta da API:', responseSensor.errors);
+          setMensagem("Erro ao cadastrar sensor: " + responseSensor.errors.join(", "));
+        } else {
+          console.log('Sucesso:', responseSensor);
+          setMensagem("Sensor cadastrado com sucesso!");
+          setSensorData({
+            nome: '',
+            id_parametro: 0,
+            estacaoId: '',
+          });
+        }
       }
     } catch (error) {
       console.error('Erro:', error);
-      setMensagem("Erro ao cadastrar estação. Verifique os dados e tente novamente.");
+      setMensagem("Erro ao cadastrar estação e sensor. Verifique os dados e tente novamente.");
     }
   };
 
@@ -80,9 +95,9 @@ export function CadastroEstacao() {
   return (
     <div className="cadastro-estacao">
       <div className="container">
-        <h1 className="text-wrapper-titulo">Cadastrar Estação</h1>
+        <h2 className="text-wrapper-titulo">Cadastrar Estação</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitEstacao}>
           <div className="content">
             <div className="form">
               <div className="form-group">
@@ -104,19 +119,7 @@ export function CadastroEstacao() {
                   name="mac_address"
                   value={formData.mac_address}
                   onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label className="text-wrapper">Parâmetros</label>
-                <select
-                  className="input"
-                  name="parametros"
-                  value={formData.parametros}
-                  onChange={handleChange}
-                >
-                  <option>Opção 1</option>
-                  <option>Opção 2</option>
-                </select>
-              </div>
+              </div>              
               <div className="form-group">
                 <label className="text-wrapper">Localização</label>
                 <input
@@ -147,48 +150,38 @@ export function CadastroEstacao() {
                   value={formData.longitude}
                   onChange={handleChange} />
               </div>
-            </div>
-            
-          </div>
 
-          {/* <h2 className="text-wrapper">Cadastrar alerta</h2>
-            <div className="form-group">
-              <label className="text-wrapper">Nome</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Nome"
-                name="alerta_nome"
-                value={alertaData.nome}
-                onChange={handleChange}
-              />
+              <div className="form">
+              <h2 className="text-wrapper-titulo">Cadastrar Sensor</h2>
+              <div className="form-group">
+                <label className="text-wrapper">Nome do Sensor</label>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Nome do Sensor"
+                  name="sensor_nome"
+                  value={sensorData.nome}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label className="text-wrapper">Parâmetros do Sensor</label>
+                <select
+                  className="input"
+                  name="sensor_parametros"
+                  value={sensorData.id_parametro}
+                  onChange={handleChange}
+                >
+                  <option value="1">Opção 1</option>
+                  <option value="2">Opção 2</option>
+                </select>
+              </div> 
+              </div> 
+              <div className="form-group">
+                <button className="button" type="submit">Salvar</button>
+                {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
+              </div>
             </div>
-            <div className="form-group">
-              <label className="text-wrapper">Condição</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Condição"
-                name="alerta_condicao"
-                value={alertaData.condicao}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Valor</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Valor"
-                name="alerta_valor"
-                value={alertaData.valor}
-                onChange={handleChange}
-              />
-            </div>
-            */}
-          <div className="form-group">
-            <button className="button" type="submit">Salvar</button>
-            {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
           </div>
         </form>
       </div>

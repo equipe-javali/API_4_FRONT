@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { editarEstacao } from '../../services/estacaoServices';
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
+import { cadastrarEstacao } from "../../services/estacaoServices";
 
 export function EditaEstacao() {
   const [formData, setFormData] = useState<Estacao>({
@@ -31,17 +31,17 @@ export function EditaEstacao() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitEstacao = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await editarEstacao(formData);
+      const response = await cadastrarEstacao(formData);
 
       if (response.errors && response.errors.length > 0) {
         console.error('Erro na resposta da API:', response.errors);
-        setMensagem("Erro ao atualizar estação: " + response.errors.join(", "));
+        setMensagem("Erro ao cadastrar estação: " + response.errors.join(", "));
       } else {
         console.log('Sucesso:', response);
-        setMensagem("Estação atualizada com sucesso!");
+        setMensagem("Estação cadastrada com sucesso!");
         setFormData({
           nome: '',
           endereco: '',
@@ -57,7 +57,7 @@ export function EditaEstacao() {
       }
     } catch (error) {
       console.error('Erro:', error);
-      setMensagem("Erro ao atualizar estação. Verifique os dados e tente novamente.");
+      setMensagem("Erro ao cadastrar estação. Verifique os dados e tente novamente.");
     }
   };
 
@@ -80,9 +80,9 @@ export function EditaEstacao() {
   return (
     <div className="cadastro-estacao">
       <div className="container">
-        <h1 className="text-wrapper-titulo">Estação ID {formData.id}</h1>
+        <h2 className="text-wrapper-titulo">Estação ID</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitEstacao}>
           <div className="content">
             <div className="form">
               <div className="form-group">
@@ -147,54 +147,105 @@ export function EditaEstacao() {
                   value={formData.longitude}
                   onChange={handleChange} />
               </div>
+              <div className="form-group">
+                <button className="button" type="submit">Salvar</button>
+                {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
+              </div>
             </div>
-                        
-            <div className="form-group">
-            
           </div>
-          </div>
-
-          {/* <h2 className="text-wrapper">Cadastrar alerta</h2>
-            <div className="form-group">
-              <label className="text-wrapper">Nome</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Nome"
-                name="alerta_nome"
-                value={alertaData.nome}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Condição</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Condição"
-                name="alerta_condicao"
-                value={alertaData.condicao}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Valor</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Valor"
-                name="alerta_valor"
-                value={alertaData.valor}
-                onChange={handleChange}
-              />
-            </div>
-            */}
-          {/* <div className="form-group">
-            <button className="button" type="submit">Salvar</button>
-            {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
-          </div> */}
         </form>
       </div>
+
+      <div className="container">
+        <h2 className="text-wrapper-titulo">Cadastrar sensor</h2>
+        <form onSubmit={handleSubmitEstacao}>
+          <div className="content">
+            <div className="form">
+              <div className="form-group">
+                <label className="text-wrapper">Nome</label>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Nome"
+                  name="alerta_nome"
+                  value={alertaData.nome}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label className="text-wrapper">Condição</label>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Condição"
+                  name="alerta_condicao"
+                  value={alertaData.condicao}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label className="text-wrapper">Valor</label>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Valor"
+                  name="alerta_valor"
+                  value={alertaData.valor}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <button className="button" type="submit">Salvar</button>
+                {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
   );
 }
+
+{/* <div className="container">
+        <h2 className="text-wrapper-titulo">Cadastrar alerta</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="text-wrapper">Nome</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="Nome"
+              name="alerta_nome"
+              value={alertaData.nome}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label className="text-wrapper">Condição</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="Condição"
+              name="alerta_condicao"
+              value={alertaData.condicao}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label className="text-wrapper">Valor</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="Valor"
+              name="alerta_valor"
+              value={alertaData.valor}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <button className="button" type="submit">Salvar</button>
+            {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
+          </div>
+        </form>
+      </div> */}

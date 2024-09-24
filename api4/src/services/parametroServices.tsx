@@ -12,3 +12,12 @@ export const cadastrarParametro = async (parametroData: Parametro) => {
   }
 };
 
+export const listarParametros = async (quantidade: number = 10, pagina: number = 0) => { 
+  try {
+    const response = await axios.get(`${API_URL}/${quantidade}/${pagina}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+

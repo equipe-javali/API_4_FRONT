@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-import { listarEstacoes } from "../../services/estacaoServices";
+import { Link } from "react-router-dom";
 import { Estacao } from "../../types/Estacao";
 import "./css/ListaEstacoes.css";
+import { listarEstacoes } from "../../services/estacaoServices";
 
 export function ListaEstacoes() {
   const [estacoes, setEstacoes] = useState<Estacao[]>([]);
