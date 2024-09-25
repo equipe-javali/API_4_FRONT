@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import { CadastroParametro } from './pages/Parametros/CadastroParametros';
 import { EditaEstacao } from './pages/estacoes/EditaEstacao';
 import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
+import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 
 function App() {
   return (
@@ -13,11 +14,17 @@ function App() {
         <Route element={<BaseLateralHeader />}>
           <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
           <Route path="/edita/estacao" element={<EditaEstacao/>} />
-          <Route path="/lista/estacoes" element={<ListaEstacoes />} />
-          
+          <Route path="/lista/estacoes" element={<ListaEstacoes />} />          
 
           {/* rotas parametros */}
           <Route path="/cadastro/parametro" element={<CadastroParametro />} />
+          <Route path="/edita/parametro" element={<CadastroParametro />} />
+          <Route path="/lista/parametros" element={<CadastroParametro />} />
+
+          {/* rotas sensores */}
+          <Route path="/cadastro/sensor" element={<CadastroSensor />} />
+          <Route path="/edita/sensor" element={<CadastroParametro />} />
+          <Route path="/lista/sensores" element={<CadastroParametro />} />
           <Route path="/" element={<Home />} />
         </Route>
       </Routes>

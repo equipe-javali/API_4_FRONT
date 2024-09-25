@@ -1,9 +1,7 @@
 export interface Parametro {
+  id?: number; // Tornar id opcional
   nome: string;
-  fator: string;
-  offset: string,
-  unidademedida:string,
-
-  id?: number;
-  parametros?: string;
-};
+  fator: number;
+  offset: number;
+  unidademedida: string;
+}
