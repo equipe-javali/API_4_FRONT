@@ -12,8 +12,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<BaseLateralHeader />}>
-          <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
-          <Route path="/edita/estacao" element={<EditaEstacao/>} />
+          <Route path="/cadastro/estacao" element={<CadastroEstacao />} />          
+          <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
           <Route path="/lista/estacoes" element={<ListaEstacoes />} />          
 
           {/* rotas parametros */}
