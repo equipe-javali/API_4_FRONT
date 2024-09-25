@@ -40,12 +40,15 @@ export const editarEstacao = async (estacaoData: Estacao) => {
 };
 
 
-export const deletarEstacao = async (id: number) => { 
+export const deletarEstacao = async (id: number) => {
   try {
-    const response = await axios.delete(`${API_URL}/deletar/${id}`);
-    return response.data; 
+    const response = await axios.delete(`${API_URL}/deletar`, {
+      data: { id } 
+    });
+    return response.data;
   } catch (error) {
-    throw error; 
+    console.error('Erro ao deletar estação:', error);
+    throw error;
   }
 };
 

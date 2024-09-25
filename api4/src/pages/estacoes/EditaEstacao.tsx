@@ -5,13 +5,15 @@ import { editarEstacao, buscarEstacaoPorId } from "../../services/estacaoService
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
 import { listarSensores } from '../../services/sensorServices'; 
+import { ClipLoader } from "react-spinners";
 
 export function EditaEstacao() {
-  const { id } = useParams<{ id: string }>(); // Obter o ID da estação a partir dos parâmetros da URL
+  const { id } = useParams<{ id: string }>(); 
   const [formData, setFormData] = useState<Estacao | null>(null);
   const [sensores, setSensores] = useState<any[]>([]); 
   const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -23,13 +25,13 @@ export function EditaEstacao() {
           console.error('Resposta da API não é um array:', responseSensores);
         }
 
-        if (id) { // Verificar se o id não é undefined
+        if (id) {
           const responseEstacao = await buscarEstacaoPorId(id);
           if (responseEstacao && responseEstacao.data) {
             const estacao = responseEstacao.data.rows[0];
             setFormData({
               ...estacao,
-              id_sensores: estacao.id_sensores || [] // Garantir que id_sensores seja um array
+              id_sensores: estacao.id_sensores || [] 
             });
             const sensoresSelecionados = estacao.id_sensores.map((sensorId: number) => 
               responseSensores.data.rows.find((sensor: any) => sensor.id === sensorId)
@@ -41,6 +43,8 @@ export function EditaEstacao() {
         }
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
+      } finally {
+        setIsLoading(false); 
       }
     };
 
@@ -105,6 +109,14 @@ export function EditaEstacao() {
     value: sensor.id,
     label: sensor.nome
   }));
+
+  if (isLoading) {
+    return (
+      <div className="spinner-container">
+        <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
+      </div>
+    );
+  }
 
   if (!formData) {
     return <div>Carregando...</div>;
