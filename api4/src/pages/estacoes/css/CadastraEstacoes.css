@@ -4,24 +4,27 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
+    padding-top: 20px;
+    padding-right: 0px ;
+    padding-left: 0px ; 
+    padding-bottom: 30px;
 }
 
-.cadastro-estacao .container {     
-    padding: 50px;
+.cadastro-estacao .container {
+    padding: 15px;    
     background-color: white;
-    width: 70dvw;
+    width: 60vw; 
     border-radius: 20px;
-    margin-top: 70px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    min-height: 30vh; 
 }
 
 .cadastro-estacao .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
-    font-size: 35px;  
-    text-align: center; 
-    margin-top: 50px;   
+    font-size: 30px; /* Reduz o tamanho da fonte */
+    text-align: center;
+    margin-top: 20px; /* Reduz a margem superior */
 }
 
 .cadastro-estacao .content {
@@ -32,18 +35,19 @@
 
 .cadastro-estacao .form {
     flex: 1;
-    padding: 3dvw;
+    padding-left: 10px;
+    padding-right: 30px;
 }
 
 .cadastro-estacao .form-group {
-    margin-bottom: 20px;
-    padding: 10px;
+    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
+    padding: 8px;
 }
 
 .cadastro-estacao .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
-    font-size: 22px;    
+    font-size: 20px; /* Reduz o tamanho da fonte */
     margin-bottom: 10px;
     display: block;
 }
@@ -53,11 +57,11 @@
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;    
+    width: 100%;
     font-family: "Inter-Regular", Helvetica;
     font-size: 17px;
     color: #5f5e63;
-    padding: 5px 10px; 
+    padding: 5px 10px;
 }
 
 .cadastro-estacao .select {
@@ -65,11 +69,11 @@
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;    
+    width: 100%;
     font-family: "Inter-Regular", Helvetica;
     font-size: 17px;
     color: #5f5e63;
-    padding: 20px 10px; 
+    padding: 20px 10px;
 }
 
 .cadastro-estacao .button {
@@ -89,7 +93,6 @@
     margin: 0 auto;
 }
 
-
 .success-message {
     color: green;
     margin-bottom: 10px;
@@ -101,13 +104,13 @@
 }
 
 .success-message, .error-message {
-    text-align: center; 
-    margin: 10px auto;   
+    text-align: center;
+    margin: 10px auto;
 }
 
 .spinner-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Altura total da viewport */
-  }
+    height: 100vh;
+}

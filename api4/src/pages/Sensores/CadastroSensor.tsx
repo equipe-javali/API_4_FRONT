@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Select from 'react-select';
 import { cadastrarSensor } from '../../services/sensorServices';
 import "./css/CadastraSensor.css";
 import Sensor from '../../types/Sensor';
@@ -18,8 +19,8 @@ export function CadastroSensor() {
     const carregarParametros = async () => {
       try {
         const response = await listarParametros();
-        if (Array.isArray(response)) {
-          setParametros(response);
+        if (response.data && Array.isArray(response.data.rows)) {
+          setParametros(response.data.rows);
         } else {
           console.error('Resposta da API não é um array:', response);
         }
@@ -34,6 +35,10 @@ export function CadastroSensor() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = (selectedOption: any) => {
+    setFormData({ ...formData, id_parametro: selectedOption ? selectedOption.value : 0 });
   };
 
   const handleSubmitSensor = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,6 +79,11 @@ export function CadastroSensor() {
     };
   }, [mensagem]);
 
+  const parametroOptions = parametros.map(parametro => ({
+    value: parametro.id,
+    label: parametro.nome
+  }));
+
   return (
     <div className="cadastro-sensor">
       <div className="container">
@@ -95,16 +105,14 @@ export function CadastroSensor() {
               </div>
               <div className="form-group">
                 <label className="text-wrapper">Parâmetros</label>
-                <select
-                  className="input"
+                <Select
                   name="id_parametro"
-                  value={formData.id_parametro}
-                  onChange={handleChange}
-                >
-                  {Array.isArray(parametros) && parametros.map((parametro) => (
-                    <option key={parametro.id} value={parametro.id}>{parametro.nome}</option>
-                  ))}
-                </select>
+                  options={parametroOptions}
+                  className="basic-single-select"
+                  classNamePrefix="select"
+                  onChange={handleSelectChange}
+                  value={parametroOptions.find(option => option.value === formData.id_parametro)}
+                />
               </div>  
               <div className="form-group">
                 <button className="button" type="submit">Salvar</button>

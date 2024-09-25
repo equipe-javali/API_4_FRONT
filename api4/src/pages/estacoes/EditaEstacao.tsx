@@ -62,8 +62,7 @@ export function EditaEstacao() {
     if (formData) {
       const selectedIds = selectedOptions.map((option: any) => option.value);
       setFormData({ ...formData, id_sensores: selectedIds });
-
-      // Atualizar os sensores selecionados
+      
       const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
       setSensoresSelecionados(sensoresSelecionados);
     }
