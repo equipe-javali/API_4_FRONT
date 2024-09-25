@@ -1,43 +1,75 @@
-.estacoes-container {
+.lista-estacao {
+    background-color: #f7f7f7;
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    padding: 20px;
-  }
-  
-  .estacoes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Space between cards */
-  }
-  
-  .estacao-card {
-    background-color: #f1f1f1; /* Light gray background */
+    align-items: center;
+    padding: 50px;
+}
+
+.lista-estacao .container {
+    padding: 50px;
+    background-color: white;
+    width: 70dvw;
     border-radius: 20px;
-    padding: 20px;
-    text-align: center; /* Center text within card */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  
-  .estacao-card h3 {
+    margin-top: 70px;
+    margin-bottom: 30px;
+}
+
+.lista-estacao .text-wrapper-titulo {
+    color: #020202;
+    font-family: "Onest-Regular", Helvetica;
+    font-size: 35px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 40px; 
+}
+
+.success-message, .error-message {
+    text-align: center;
+    margin: 10px auto;
+}
+
+.success-message {
+    color: green;
     margin-bottom: 10px;
-  }
-  
-  .estacao-card p {
-    margin-bottom: 15px;
-    color: #666; /* Slightly darker text for address */
-  }
-  
-  .edit-button {
-    background-color: #40587e; /* Dark blue button */
-    color: white;
-    padding: 10px 15px;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.icon-button {
+    background: none;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    text-decoration: none; /* Remove underline from link */
-  }
-  
-  .edit-button:hover {
-    background-color: #334766; /* Darker blue on hover */
-  }
+    color: #40587e;
+    font-size: 1.5em;
+    margin: 0 5px;
+}
+
+.icon-button:hover {
+    color: #334766;
+}
+
+.rdt_TableHeadRow > div {
+    font-size: 18px; 
+    font-weight: bold;     
+    padding: 19px;
+    
+    
+}
+
+
+.rdt_TableCell {
+    font-size: 18px;
+    padding: 11px;
+}

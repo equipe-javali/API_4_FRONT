@@ -1,22 +1,21 @@
-.cadastro-estacao {
+.cadastro-sensor {
     background-color: #f7f7f7;
     display: flex;
-    justify-content: center;
+    justify-content: center;    
     flex-direction: column;
     align-items: center;
-    padding: 50px;
 }
 
-.cadastro-estacao .container {     
-    padding: 50px;
+.cadastro-sensor .container {     
+    padding: 10px;
     background-color: white;
     width: 70dvw;
     border-radius: 20px;
-    margin-top: 70px;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
 
-.cadastro-estacao .text-wrapper-titulo {
+.cadastro-sensor .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
     font-size: 35px;  
@@ -24,23 +23,23 @@
     margin-top: 50px;   
 }
 
-.cadastro-estacao .content {
+.cadastro-sensor .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.cadastro-estacao .form {
+.cadastro-sensor .form {
     flex: 1;
     padding: 3dvw;
 }
 
-.cadastro-estacao .form-group {
+.cadastro-sensor .form-group {
     margin-bottom: 20px;
     padding: 10px;
 }
 
-.cadastro-estacao .text-wrapper {
+.cadastro-sensor .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
     font-size: 22px;    
@@ -48,7 +47,7 @@
     display: block;
 }
 
-.cadastro-estacao .input {
+.cadastro-sensor .input {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
@@ -60,7 +59,7 @@
     padding: 5px 10px; 
 }
 
-.cadastro-estacao .select {
+.cadastro-sensor .select {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
@@ -72,7 +71,7 @@
     padding: 20px 10px; 
 }
 
-.cadastro-estacao .button {
+.cadastro-sensor .button {
     background-color: #0178d4;
     border-radius: 5px;
     height: 47px;
@@ -89,7 +88,6 @@
     margin: 0 auto;
 }
 
-
 .success-message {
     color: green;
     margin-bottom: 10px;
@@ -104,10 +102,3 @@
     text-align: center; 
     margin: 10px auto;   
 }
-
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Altura total da viewport */
-  }

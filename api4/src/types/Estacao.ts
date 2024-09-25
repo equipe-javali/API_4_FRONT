@@ -1,9 +1,9 @@
 export interface Estacao {
+  id?: number;
   nome: string;
   endereco: string;
   latitude: number;
   longitude: number;
-  mac_address: string;
-  id?: number;
-  parametros?: string;
+  mac_address: string;    
+  id_sensores: Array<number>;
 };
