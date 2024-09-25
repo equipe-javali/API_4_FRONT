@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import { Estacao } from "../../types/Estacao";
-import "./css/CadastraEstacoes.css"; // Reutilizando o CSS da página de edição
+import "./css/ListaEstacoes.css"; 
 import { listarEstacoes, deletarEstacao } from "../../services/estacaoServices";
-import { ClipLoader } from "react-spinners"; // Importando o spinner
+import { ClipLoader } from "react-spinners"; 
+import { FaEdit, FaTrash } from 'react-icons/fa'; 
 
 export function ListaEstacoes() {
   const [estacoes, setEstacoes] = useState<Estacao[]>([]);
@@ -74,28 +75,44 @@ export function ListaEstacoes() {
       sortable: true,
     },
     {
+      name: 'Latitude',
+      selector: (row: Estacao) => row.latitude,
+      sortable: true,
+    },
+    {
+      name: 'Longitude',
+      selector: (row: Estacao) => row.longitude,
+      sortable: true,
+    },
+    {
+      name: 'MAC Address',
+      selector: (row: Estacao) => row.mac_address,
+      sortable: true,
+    },
+    {
       name: 'Ações',
       cell: (row: Estacao) => (
         <div>
-          <Link to={`/edita/estacao/${row.id}`} className="edit-button">Editar</Link>
+          <Link to={`/edita/estacao/${row.id}`} className="icon-button">
+            <FaEdit />
+          </Link>
           <button 
             onClick={() => row.id !== undefined && handleDelete(row.id)} 
-            className="delete-button"
+            className="icon-button"
           >
-            Excluir
+            <FaTrash />
           </button>
         </div>
       ),
       ignoreRowClick: true,
-      allowOverflow: true, // Remova esta linha
-      button: true, // Remova esta linha
     }
   ];
 
   return (
-    <div className="cadastro-estacao"> {/* Usando a classe "cadastro-estacao" para o container */}
-      <div className="container"> {/* Usando a classe "container" para o container interno */}
-        <h2 className="text-wrapper-titulo">Lista de Estações</h2> {/* Usando a classe "text-wrapper-titulo" para o título */}
+    <div className="lista-estacao"> 
+      <div className="container">
+        <h2 className="text-wrapper-titulo">Lista de Estações</h2> 
+        
         <DataTable
           columns={columns}
           data={estacoes}
