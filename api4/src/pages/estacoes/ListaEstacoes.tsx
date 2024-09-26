@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-import { listarEstacoes } from "../../services/estacaoServices";
+import { Link } from "react-router-dom";
 import { Estacao } from "../../types/Estacao";
-import "./css/ListaEstacoes.css";
+import "./css/ListaEstacoes.css"; 
+import { listarEstacoes, deletarEstacao } from "../../services/estacaoServices";
+import { ClipLoader } from "react-spinners"; 
+import { FaEdit, FaTrash } from 'react-icons/fa'; 
 
 export function ListaEstacoes() {
   const [estacoes, setEstacoes] = useState<Estacao[]>([]);
-  console.log(estacoes)
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,8 +39,24 @@ export function ListaEstacoes() {
     fetchEstacoes();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    if (window.confirm("Tem certeza que deseja excluir esta estação?")) {
+      try {
+        await deletarEstacao(id);
+        setEstacoes(estacoes.filter(estacao => estacao.id !== id));
+      } catch (error) {
+        console.error("Erro ao excluir estação:", error);
+        setError("Erro ao excluir estação. Tente novamente.");
+      }
+    }
+  };
+
   if (isLoading) {
-    return <div>Carregando...</div>; // Considere um spinner aqui
+    return (
+      <div className="spinner-container">
+        <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
+      </div>
+    );
   }
 
   if (error) {
@@ -58,26 +75,52 @@ export function ListaEstacoes() {
       sortable: true,
     },
     {
+      name: 'Latitude',
+      selector: (row: Estacao) => row.latitude,
+      sortable: true,
+    },
+    {
+      name: 'Longitude',
+      selector: (row: Estacao) => row.longitude,
+      sortable: true,
+    },
+    {
+      name: 'MAC Address',
+      selector: (row: Estacao) => row.mac_address,
+      sortable: true,
+    },
+    {
       name: 'Ações',
       cell: (row: Estacao) => (
-        <Link to={`/estacao/${row.id}/editar`} className="edit-button">Editar</Link>
+        <div>
+          <Link to={`/edita/estacao/${row.id}`} className="icon-button">
+            <FaEdit />
+          </Link>
+          <button 
+            onClick={() => row.id !== undefined && handleDelete(row.id)} 
+            className="icon-button"
+          >
+            <FaTrash />
+          </button>
+        </div>
       ),
       ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
     }
   ];
 
   return (
-    <div className="estacoes-container">
-      <h2>Lista de Estações</h2>
-      <DataTable
-        columns={columns}
-        data={estacoes}
-        pagination
-        striped
-        highlightOnHover
-      />
+    <div className="lista-estacao"> 
+      <div className="container">
+        <h2 className="text-wrapper-titulo">Lista de Estações</h2> 
+        
+        <DataTable
+          columns={columns}
+          data={estacoes}
+          pagination
+          striped
+          highlightOnHover
+        />
+      </div>
     </div>
   );
 }

@@ -1,37 +1,51 @@
-.lista-estacao .container {     
+/* .lista-sensor {
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-right: 0px ;
+    padding-left: 0px ; 
+    padding-bottom: 30px;
+    
+} */
+
+.lista-sensor .container {     
     padding: 15px;    
     background-color: white;
     width: 60vw; 
-    border-radius: 20px;    
+    border-radius: 20px;
+    margin-top: 20px;
     min-height: 30vh; 
    
 }
 
-.lista-estacao .text-wrapper-titulo {
+.lista-sensor .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
     font-size: 30px;  
     text-align: center; 
-    margin-top: 40px;   
+    margin-top: 50px;   
 }
 
-.lista-estacao .content {
+.lista-sensor .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.lista-estacao .form {
+.lista-sensor .form {
     flex: 1;
     padding: 3dvw;
 }
 
-.lista-estacao .form-group {
+.lista-sensor .form-group {
     margin-bottom: 20px;
     padding: 10px;
 }
 
-.lista-estacao .text-wrapper {
+.lista-sensor .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
     font-size: 22px;    
@@ -39,7 +53,7 @@
     display: block;
 }
 
-.cadastro-estacao .input {
+.cadastro-sensor .input {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
@@ -51,7 +65,7 @@
     padding: 5px 10px; 
 }
 
-.cadastro-estacao .select {
+.cadastro-sensor .select {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
@@ -63,7 +77,7 @@
     padding: 20px 10px; 
 }
 
-.cadastro-estacao .button {
+.cadastro-sensor .button {
     background-color: #0178d4;
     border-radius: 5px;
     height: 47px;

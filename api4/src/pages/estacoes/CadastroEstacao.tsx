@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { cadastrarEstacao } from '../../services/estacaoServices';
+import Select from 'react-select';
+import { cadastrarEstacao } from "../../services/estacaoServices";
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
+import { listarSensores } from '../../services/sensorServices'; 
 
 export function CadastroEstacao() {
   const [formData, setFormData] = useState<Estacao>({
@@ -10,37 +12,54 @@ export function CadastroEstacao() {
     latitude: 0,
     longitude: 0,
     mac_address: '',
+    id_sensores: [], 
   });
 
-  const [alertaData, setAlertaData] = useState({
-    nome: '',
-    condicao: '',
-    valor: '',
-  });
-
+  const [sensores, setSensores] = useState<any[]>([]); 
+  const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
+
+  useEffect(() => {
+    const carregarSensores = async () => {
+      try {
+        const response = await listarSensores();
+        if (response.data && Array.isArray(response.data.rows)) {
+          setSensores(response.data.rows);
+        } else {
+          console.error('Resposta da API não é um array:', response);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar sensores:', error);
+      }
+    };
+
+    carregarSensores();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-
-    if (name.startsWith('alerta_')) {
-      const alertaFieldName = name.substring(7);
-      setAlertaData({ ...alertaData, [alertaFieldName]: value });
-    } else {
-      setFormData({ ...formData, [name]: name === 'latitude' || name === 'longitude' ? parseFloat(value) : value });
-    }
+    setFormData({ ...formData, [name]: name === 'latitude' || name === 'longitude' ? parseFloat(value) : value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSelectChange = (selectedOptions: any) => {
+    const selectedIds = selectedOptions.map((option: any) => option.value);
+    setFormData({ ...formData, id_sensores: selectedIds });
+
+    // Atualizar os sensores selecionados
+    const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
+    setSensoresSelecionados(sensoresSelecionados);
+  };
+
+  const handleSubmitEstacao = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await cadastrarEstacao(formData);
+      const responseEstacao = await cadastrarEstacao(formData);
 
-      if (response.errors && response.errors.length > 0) {
-        console.error('Erro na resposta da API:', response.errors);
-        setMensagem("Erro ao cadastrar estação: " + response.errors.join(", "));
+      if (responseEstacao.errors && responseEstacao.errors.length > 0) {
+        console.error('Erro na resposta da API:', responseEstacao.errors);
+        setMensagem("Erro ao cadastrar estação: " + responseEstacao.errors.join(", "));
       } else {
-        console.log('Sucesso:', response);
+        console.log('Sucesso:', responseEstacao);
         setMensagem("Estação cadastrada com sucesso!");
         setFormData({
           nome: '',
@@ -48,12 +67,9 @@ export function CadastroEstacao() {
           latitude: 0,
           longitude: 0,
           mac_address: '',
+          id_sensores: [],
         });
-        setAlertaData({
-          nome: '',
-          condicao: '',
-          valor: '',
-        });
+        setSensoresSelecionados([]); 
       }
     } catch (error) {
       console.error('Erro:', error);
@@ -77,12 +93,17 @@ export function CadastroEstacao() {
     };
   }, [mensagem]);
 
+  const sensorOptions = sensores.map(sensor => ({
+    value: sensor.id,
+    label: sensor.nome
+  }));
+
   return (
     <div className="cadastro-estacao">
       <div className="container">
-        <h1 className="text-wrapper-titulo">Cadastrar Estação</h1>
+        <h2 className="text-wrapper-titulo">Cadastrar Estação</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitEstacao}>
           <div className="content">
             <div className="form">
               <div className="form-group">
@@ -104,18 +125,6 @@ export function CadastroEstacao() {
                   name="mac_address"
                   value={formData.mac_address}
                   onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label className="text-wrapper">Parâmetros</label>
-                <select
-                  className="input"
-                  name="parametros"
-                  value={formData.parametros}
-                  onChange={handleChange}
-                >
-                  <option>Opção 1</option>
-                  <option>Opção 2</option>
-                </select>
               </div>
               <div className="form-group">
                 <label className="text-wrapper">Localização</label>
@@ -147,48 +156,23 @@ export function CadastroEstacao() {
                   value={formData.longitude}
                   onChange={handleChange} />
               </div>
+              <div className="form-group">
+                <label className="text-wrapper">Sensores</label>
+                <Select
+                  isMulti
+                  name="id_sensores"
+                  options={sensorOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={handleSelectChange}
+                  value={sensorOptions.filter(option => formData.id_sensores.includes(option.value))}
+                />
+              </div>             
+              <div className="form-group">
+                <button className="button" type="submit">Salvar</button>
+                {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
+              </div>
             </div>
-            
-          </div>
-
-          {/* <h2 className="text-wrapper">Cadastrar alerta</h2>
-            <div className="form-group">
-              <label className="text-wrapper">Nome</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Nome"
-                name="alerta_nome"
-                value={alertaData.nome}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Condição</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Condição"
-                name="alerta_condicao"
-                value={alertaData.condicao}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="text-wrapper">Valor</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Valor"
-                name="alerta_valor"
-                value={alertaData.valor}
-                onChange={handleChange}
-              />
-            </div>
-            */}
-          <div className="form-group">
-            <button className="button" type="submit">Salvar</button>
-            {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
           </div>
         </form>
       </div>

@@ -21,21 +21,34 @@ export const listarEstacoes = async (quantidade: number = 10, pagina: number = 0
   }
 };
 
-export const editarEstacao = async (estacaoData: Estacao) => { 
+export const buscarEstacaoPorId = async (id: string) => { 
   try {
-    const response = await axios.put(`${API_URL}/atualizar`, estacaoData);
+    const response = await axios.get(`${API_URL}/${id}`);
     return response.data; 
   } catch (error) {
     throw error; 
   }
 };
 
-export const deletarEstacao = async (id: number) => { 
+export const editarEstacao = async (estacaoData: Estacao) => { 
   try {
-    const response = await axios.delete(`${API_URL}/deletar/${id}`);
+    const response = await axios.patch(`${API_URL}/atualizar`, estacaoData); // Alterado para PATCH
     return response.data; 
   } catch (error) {
     throw error; 
+  }
+};
+
+
+export const deletarEstacao = async (id: number) => {
+  try {
+    const response = await axios.delete(`${API_URL}/deletar`, {
+      data: { id } 
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao deletar estação:', error);
+    throw error;
   }
 };
 

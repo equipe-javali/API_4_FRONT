@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import "./css/Parametros.css";
+import React, { useState } from "react";
 import { cadastrarParametro } from '../../services/parametroServices';
-import { Parametro} from '../../types/Parametro'; 
+import { Parametro } from '../../types/Parametro';
+import "./css/Parametros.css";
 
 export function CadastroParametro() {
   const [formData, setFormData] = useState<Parametro>({
     nome: '',
-    fator: '',
-    offset: '',
+    fator: 0, // Inicializar como número
+    offset: 0, // Inicializar como número
     unidademedida: '',
   });
 
@@ -15,10 +15,11 @@ export function CadastroParametro() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    setFormData({
+      ...formData,
+      [name]: name === 'fator' || name === 'offset' ? parseFloat(value) : value, // Converter para número
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,14 +29,15 @@ export function CadastroParametro() {
 
       if (response.errors && response.errors.length > 0) {
         console.error('Erro na resposta da API:', response.errors);
-        setMensagem("Erro ao cadastrar estação: " + response.errors.join(", "));
+        setMensagem("Erro ao cadastrar parâmetro: " + response.errors.join(", "));
       } else {
         console.log('Sucesso:', response);
-        setMensagem("Estação cadastrada com sucesso!");
+        setMensagem("Parâmetro cadastrado com sucesso!");
+
         setFormData({
           nome: '',
-          fator: '',
-          offset: '',
+          fator: 0, // Resetar como número
+          offset: 0, // Resetar como número
           unidademedida: '',
         });
       }
@@ -45,26 +47,10 @@ export function CadastroParametro() {
     }
   };
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-
-    if (mensagem) {
-      timeoutId = setTimeout(() => {
-        setMensagem(null);
-      }, 5000);
-    }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [mensagem]);
-
   return (
     <div className="cadastro-parametro">
       <div className="container">
-        <h1 className="text-wrapper-titulo">Cadastrar tipo de Parâmetro</h1>
+        <h2 className="text-wrapper-titulo">Cadastrar Parâmetro</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="content">
@@ -82,7 +68,7 @@ export function CadastroParametro() {
               <div className="form-group">
                 <label className="text-wrapper">Fator</label>
                 <input
-                  type="text"
+                  type="number"
                   className="input"
                   placeholder="Digite o fator..."
                   name="fator"
@@ -92,30 +78,29 @@ export function CadastroParametro() {
               <div className="form-group">
                 <label className="text-wrapper">Offset</label>
                 <input
-                  type="text"
+                  type="number"
                   className="input"
-                  placeholder="Digite a localização..."
+                  placeholder="Digite o offset..."
                   name="offset"
                   value={formData.offset}
                   onChange={handleChange} />
               </div>
               <div className="form-group">
-                <label className="text-wrapper">Unidade de medida</label>
-                <select
+                <label className="text-wrapper">Unidade de Medida</label>
+                <input
+                  type="text"
                   className="input"
+                  placeholder="Digite a unidade de medida..."
                   name="unidademedida"
                   value={formData.unidademedida}
-                  onChange={handleChange}
-                >
-                  <option value="">Selecione uma unidade</option>
-                  <option value="opcao1">Opção 1</option>
-                  <option value="opcao2">Opção 2</option>
-                </select>
+                  onChange={handleChange} />
               </div>
-              <button type="submit" className="button">Cadastrar</button>
+              <div className="form-group">
+                <button className="button" type="submit">Salvar</button>
+                {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
+              </div>
             </div>
           </div>
-          {mensagem && <div className="success-message">{mensagem}</div>}
         </form>
       </div>
     </div>

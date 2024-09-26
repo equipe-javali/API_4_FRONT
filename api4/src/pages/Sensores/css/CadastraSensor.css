@@ -1,69 +1,82 @@
-.lista-estacao .container {     
+/* .cadastro-sensor {
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-right: 0px ;
+    padding-left: 0px ; 
+    padding-bottom: 30px;
+} */
+
+.cadastro-sensor .container {
     padding: 15px;    
     background-color: white;
     width: 60vw; 
-    border-radius: 20px;    
+    border-radius: 20px;
+    margin-top: 20px;
     min-height: 30vh; 
-   
 }
 
-.lista-estacao .text-wrapper-titulo {
+.cadastro-sensor .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
-    font-size: 30px;  
-    text-align: center; 
-    margin-top: 40px;   
+    font-size: 30px; /* Reduz o tamanho da fonte */
+    text-align: center;
+    margin-top: 20px; /* Reduz a margem superior */
 }
 
-.lista-estacao .content {
+.cadastro-sensor .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.lista-estacao .form {
+.cadastro-sensor .form {
     flex: 1;
-    padding: 3dvw;
+    padding-left: 10px;
+    padding-right: 30px;
 }
 
-.lista-estacao .form-group {
-    margin-bottom: 20px;
-    padding: 10px;
+.cadastro-sensor .form-group {
+    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
+    padding: 8px;
 }
 
-.lista-estacao .text-wrapper {
+.cadastro-sensor .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
-    font-size: 22px;    
+    font-size: 20px; /* Reduz o tamanho da fonte */
     margin-bottom: 10px;
     display: block;
 }
 
-.cadastro-estacao .input {
+.cadastro-sensor .input {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;    
+    width: 100%;
     font-family: "Inter-Regular", Helvetica;
     font-size: 17px;
     color: #5f5e63;
-    padding: 5px 10px; 
+    padding: 5px 10px;
 }
 
-.cadastro-estacao .select {
+.cadastro-sensor .select {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;    
+    width: 100%;
     font-family: "Inter-Regular", Helvetica;
     font-size: 17px;
     color: #5f5e63;
-    padding: 20px 10px; 
+    padding: 20px 10px;
 }
 
-.cadastro-estacao .button {
+.cadastro-sensor .button {
     background-color: #0178d4;
     border-radius: 5px;
     height: 47px;
@@ -80,7 +93,6 @@
     margin: 0 auto;
 }
 
-
 .success-message {
     color: green;
     margin-bottom: 10px;
@@ -92,40 +104,13 @@
 }
 
 .success-message, .error-message {
-    text-align: center; 
-    margin: 10px auto;   
+    text-align: center;
+    margin: 10px auto;
 }
 
 .spinner-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
-  }
-
-.icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #40587e;
-    font-size: 1.5em;
-    margin: 0 5px;
-}
-
-.icon-button:hover {
-    color: #334766;
-}
-
-.rdt_TableHeadRow > div {
-    font-size: 18px; 
-    font-weight: bold;     
-    padding: 19px;
-    
-    
-}
-
-
-.rdt_TableCell {
-    font-size: 18px;
-    padding: 11px;
+    height: 100vh;
 }

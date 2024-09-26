@@ -1,77 +1,80 @@
-.cadastro-estacao {
-    background-color: #f8f8f8;
+/* .cadastro-estacao {
+    background-color: #f7f7f7;
     display: flex;
-    justify-content: center;    
-}
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-right: 0px ;
+    padding-left: 0px ; 
+    padding-bottom: 30px;
+} */
 
-.cadastro-estacao .container {    
-    padding: 10px;
-    width: 80%;
-    
+.cadastro-estacao .container {
+    padding: 15px;    
+    background-color: white;
+    width: 60vw; 
+    border-radius: 20px;
+    margin-top: 20px;
+    min-height: 30vh; 
 }
 
 .cadastro-estacao .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
-    font-size: 64px;  
-    text-align: center;    
+    font-size: 30px; /* Reduz o tamanho da fonte */
+    text-align: center;
+    margin-top: 20px; /* Reduz a margem superior */
 }
 
 .cadastro-estacao .content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .cadastro-estacao .form {
     flex: 1;
-    margin-right: 25px;
+    padding-left: 10px;
+    padding-right: 30px;
 }
 
 .cadastro-estacao .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
+    padding: 8px;
 }
 
 .cadastro-estacao .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
-    font-size: 25px;    
+    font-size: 20px; /* Reduz o tamanho da fonte */
     margin-bottom: 10px;
     display: block;
 }
 
 .cadastro-estacao .input {
-    background-color: #f1f1f1;
+    background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    padding: 5px 10px;
     font-family: "Inter-Regular", Helvetica;
-    font-size: 20px;
+    font-size: 17px;
     color: #5f5e63;
+    padding: 5px 10px;
 }
 
-.cadastro-estacao .foto-container {
-    width: 416px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.cadastro-estacao .foto {
-    background-color: #d9d9d9;
-    border-radius: 20px;
-    height: 75%;    
+.cadastro-estacao .select {
+    background-color: #f8f8f8;
+    border: none;
+    border-radius: 10px;
+    height: 31px;
     width: 100%;
-    display: block;
-    margin-left: 15%;    
-    margin-top: 10%;
-    
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 17px;
+    color: #5f5e63;
+    padding: 20px 10px;
 }
-
 
 .cadastro-estacao .button {
     background-color: #0178d4;
@@ -93,15 +96,21 @@
 .success-message {
     color: green;
     margin-bottom: 10px;
-  }
-  
+}
+
 .error-message {
     color: red;
     margin-bottom: 10px;
+}
 
-  }
+.success-message, .error-message {
+    text-align: center;
+    margin: 10px auto;
+}
 
-  .success-message, .error-message {
-    text-align: center; 
-    margin: 10px auto;   
-  }
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
