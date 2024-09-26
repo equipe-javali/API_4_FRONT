@@ -1,5 +1,5 @@
 export interface Parametro {
-  id?: number; // Tornar id opcional
+  id?: number; 
   nome: string;
   fator: number;
   offset: number;

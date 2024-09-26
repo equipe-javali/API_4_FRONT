@@ -6,7 +6,7 @@ import Sensor from '../../types/Sensor';
 import { listarParametros } from '../../services/parametroServices'; 
 import { Parametro } from '../../types/Parametro'; 
 
-export function CadastroSensor() {
+export function EditaSensor() {
   const [formData, setFormData] = useState<Sensor>({
     nome: '',
     id_parametro: 0,
