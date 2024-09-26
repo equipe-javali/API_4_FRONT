@@ -7,7 +7,7 @@ import { EditaEstacao } from './pages/estacoes/EditaEstacao';
 import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 import { ListaSensores } from './pages/Sensores/ListaSensores';
-// import { EditaSensor } from './pages/Sensores/EditaSensor';
+import { EditaSensor } from './pages/Sensores/EditaSensor';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
 
           {/* rotas sensores */}
           <Route path="/cadastro/sensor" element={<CadastroSensor />} />
-          {/* <Route path="/edita/sensor" element={<EditaSensor />} /> */}
+          <Route path="/edita/sensor/:id" element={<EditaSensor />} />
           <Route path="/lista/sensores" element={<ListaSensores />} />
           <Route path="/" element={<Home />} />
         </Route>
