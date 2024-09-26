@@ -23,7 +23,7 @@ export const listarSensores = async (quantidade: number = 10, pagina: number = 0
 
 export const editarSensor = async (sensorData: Sensor) => { 
   try {
-    const response = await axios.put(`${API_URL}/atualizar`, sensorData);
+    const response = await axios.patch(`${API_URL}/atualizar`, sensorData);
     return response.data; 
   } catch (error) {
     throw error; 
@@ -35,6 +35,15 @@ export const deletarSensor = async (id: number) => {
     const response = await axios.delete(`${API_URL}/deletar`, {
       data: { id }
     });
+    return response.data; 
+  } catch (error) {
+    throw error; 
+  }
+};
+
+export const buscarSensorPorId = async (id: string) => { 
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
     return response.data; 
   } catch (error) {
     throw error; 
