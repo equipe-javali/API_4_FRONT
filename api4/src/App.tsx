@@ -8,6 +8,7 @@ import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 import { ListaSensores } from './pages/Sensores/ListaSensores';
 import { EditaSensor } from './pages/Sensores/EditaSensor';
+import Login from './pages/estacoes/Login';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           <Route path="/cadastro/sensor" element={<CadastroSensor />} />
           <Route path="/edita/sensor/:id" element={<EditaSensor />} />
           <Route path="/lista/sensores" element={<ListaSensores />} />
+
+          {/* rotas sensores */}
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
         </Route>
       </Routes>
