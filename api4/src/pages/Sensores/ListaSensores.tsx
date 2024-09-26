@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import Sensor from "../../types/Sensor";
 import "./css/ListaSensores.css"; 
-import { listarSensores, deletarSensor} from "../../services/sensorServices";
+import { listarSensores, deletarSensor } from "../../services/sensorServices";
 import { ClipLoader } from "react-spinners"; 
 import { FaEdit, FaTrash } from 'react-icons/fa'; 
 import { listarParametros } from "../../services/parametroServices";
@@ -55,7 +55,7 @@ export function ListaSensores() {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError("Erro desconhecado.");
+          setError("Erro desconhecido.");
         }
       }
     };
