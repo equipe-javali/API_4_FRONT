@@ -1,22 +1,8 @@
-.lista-estacao {
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    padding-right: 0px ;
-    padding-left: 0px ; 
-    padding-bottom: 30px;
-    
-}
-
 .lista-estacao .container {     
     padding: 15px;    
     background-color: white;
     width: 60vw; 
-    border-radius: 20px;
-    margin-top: 20px;
+    border-radius: 20px;    
     min-height: 30vh; 
    
 }
@@ -26,7 +12,7 @@
     font-family: "Onest-Regular", Helvetica;
     font-size: 30px;  
     text-align: center; 
-    margin-top: 50px;   
+    margin-top: 40px;   
 }
 
 .lista-estacao .content {

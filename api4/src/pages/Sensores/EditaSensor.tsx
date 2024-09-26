@@ -132,9 +132,10 @@ export function EditaSensor() {
               <div className="form-group">
                 <label className="text-wrapper">Parâmetros</label>
                 <Select
+                  isMulti
                   name="id_parametro"
                   options={parametroOptions}
-                  className="basic-single-select"
+                  className="basic-multi-select"
                   classNamePrefix="select"
                   onChange={handleSelectChange}
                   value={parametroOptions.find(option => option.value === formData.id_parametro)}
