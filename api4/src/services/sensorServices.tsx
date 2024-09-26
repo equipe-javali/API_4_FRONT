@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Sensor from '../types/Sensor';
 
-
 const API_URL = 'http://localhost:3001/sensor'; 
 
 export const cadastrarSensor = async (sensorData: Sensor) => { 
@@ -33,10 +32,11 @@ export const editarSensor = async (sensorData: Sensor) => {
 
 export const deletarSensor = async (id: number) => { 
   try {
-    const response = await axios.delete(`${API_URL}/deletar/${id}`);
+    const response = await axios.delete(`${API_URL}/deletar`, {
+      data: { id }
+    });
     return response.data; 
   } catch (error) {
     throw error; 
   }
 };
-

@@ -4,31 +4,96 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
+    padding-top: 20px;
+    padding-right: 0px ;
+    padding-left: 0px ; 
+    padding-bottom: 30px;
+    
 }
 
-.lista-estacao .container {
-    padding: 50px;
+.lista-estacao .container {     
+    padding: 15px;    
     background-color: white;
-    width: 70dvw;
+    width: 60vw; 
     border-radius: 20px;
-    margin-top: 70px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    min-height: 30vh; 
+   
 }
 
 .lista-estacao .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
-    font-size: 35px;
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 40px; 
+    font-size: 30px;  
+    text-align: center; 
+    margin-top: 50px;   
 }
 
-.success-message, .error-message {
-    text-align: center;
-    margin: 10px auto;
+.lista-estacao .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.lista-estacao .form {
+    flex: 1;
+    padding: 3dvw;
+}
+
+.lista-estacao .form-group {
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.lista-estacao .text-wrapper {
+    color: #40587e;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 22px;    
+    margin-bottom: 10px;
+    display: block;
+}
+
+.cadastro-estacao .input {
+    background-color: #f8f8f8;
+    border: none;
+    border-radius: 10px;
+    height: 31px;
+    width: 100%;    
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 17px;
+    color: #5f5e63;
+    padding: 5px 10px; 
+}
+
+.cadastro-estacao .select {
+    background-color: #f8f8f8;
+    border: none;
+    border-radius: 10px;
+    height: 31px;
+    width: 100%;    
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 17px;
+    color: #5f5e63;
+    padding: 20px 10px; 
+}
+
+.cadastro-estacao .button {
+    background-color: #0178d4;
+    border-radius: 5px;
+    height: 47px;
+    width: 198px;
+    color: #edf4ff;
+    font-family: "Kantumruy-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 47px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
 
 .success-message {
     color: green;
@@ -40,12 +105,17 @@
     margin-bottom: 10px;
 }
 
+.success-message, .error-message {
+    text-align: center; 
+    margin: 10px auto;   
+}
+
 .spinner-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; 
-}
+  }
 
 .icon-button {
     background: none;

@@ -6,7 +6,7 @@ import Sensor from '../../types/Sensor';
 import { listarParametros } from '../../services/parametroServices'; 
 import { Parametro } from '../../types/Parametro'; 
 
-export function CadastroSensor() {
+export function EditaSensor() {
   const [formData, setFormData] = useState<Sensor>({
     nome: '',
     id_parametro: 0,
@@ -118,10 +118,9 @@ export function CadastroSensor() {
               <div className="form-group">
                 <label className="text-wrapper">Parâmetros</label>
                 <Select
-                  isMulti
                   name="id_parametro"
                   options={parametroOptions}
-                  className="basic-multi-select"
+                  className="basic-single-select"
                   classNamePrefix="select"
                   onChange={handleSelectChange}
                   value={parametroOptions.find(option => option.value === formData.id_parametro)}

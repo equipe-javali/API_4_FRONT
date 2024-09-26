@@ -1,20 +1,29 @@
-.box {
-    height: 1780px;
-    width: 174px;
-}
-
 .side-menu {
     background-color: #364d6f;    
-    height: 1780px;
-    width: 174px;
+    width: 200px; 
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    
 }
 
-.side-menu a {
+.menu-link {
     color: white;
     text-decoration: none;
     margin: 10px 0;
+    display: flex;
+    align-items: center;
+    width: 100%;    
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.menu-link:hover {
+    background-color: #2c3e50;
+}
+
+.link-text {
+    margin-left: 10px;
+    font-size: 16px;
 }
