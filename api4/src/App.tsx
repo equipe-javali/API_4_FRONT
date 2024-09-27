@@ -9,6 +9,7 @@ import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 import { ListaSensores } from './pages/Sensores/ListaSensores';
 import { EditaSensor } from './pages/Sensores/EditaSensor';
 import Login from './pages/estacoes/Login';
+import CadastrarAdministrador from './pages/estacoes/CadastroAdm'
 import Perfil from './pages/estacoes/Perfil';
 
 function App() {
@@ -32,7 +33,10 @@ function App() {
 
           {/* rotas Login */}
           <Route path="/login" element={<Login />} />
+
+          {/* rotas Usuário */}
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/cadastro" element={<CadastrarAdministrador />} />
           <Route path="/" element={<Home />} />
         </Route>
       </Routes>
