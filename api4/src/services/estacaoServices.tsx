@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Estacao } from '../types/Estacao'; 
 
-const API_URL = 'http://localhost:3001/estacao'; 
+const API_URL = 'http://localhost:3000/estacao'; 
 
 export const cadastrarEstacao = async (estacaoData: Estacao) => { 
   try {
