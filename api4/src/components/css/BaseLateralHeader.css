@@ -1,7 +1,7 @@
 #app-content-lr {
     display: flex;
     flex-direction: row;
-    width: 100%;   
+    width: 100%;
   }
   
   #app-content-tb {
@@ -10,9 +10,9 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
-    width: 100%;
-    
+    padding: 5% 0 5% 15%;
+    width: 85%;
+    height: 100%;
   }
   
   

@@ -8,7 +8,7 @@
 .side-menu {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 20%;
     height: 100%;
     padding: 10px 0;
     position: fixed;
@@ -21,8 +21,12 @@
     margin: 0 15px 10px 15px;
 }
 
+.menu-logo-horizontal {
+    width: 80%;
+    margin: 0 15px 10px 15px;
+}
+
 .menu-details {
-    border-radius: 4px;
     font-size: small;
 }
 
@@ -30,22 +34,21 @@
     background-color: var(--colorMenuHover);
 }
 
-.menu-details > summary {
+.menu-details>summary {
     display: flex;
     justify-content: space-between;
     padding: var(--padding);
-    margin: 0 ;
-    border-radius: 4px;
+    margin: 0;
     font-size: medium;
     cursor: pointer;
     list-style: none;
 }
 
-.menu-details > summary::after {
+.menu-details>summary::after {
     content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIwLjYzZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIwIDUxMiI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMjc4LjYgMjMzLjRjMTIuNSAxMi41IDEyLjUgMzIuOCAwIDQ1LjNsLTE2MCAxNjBjLTEyLjUgMTIuNS0zMi44IDEyLjUtNDUuMyAwcy0xMi41LTMyLjggMC00NS4zTDIxMC43IDI1Nkw3My40IDExOC42Yy0xMi41LTEyLjUtMTIuNS0zMi44IDAtNDUuM3MzMi44LTEyLjUgNDUuMyAwbDE2MCAxNjB6Ii8+PC9zdmc+');
 }
 
-.menu-details[open] > summary::after {
+.menu-details[open]>summary::after {
     content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIwLjg4ZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMjAxLjQgMzc0LjZjMTIuNSAxMi41IDMyLjggMTIuNSA0NS4zIDBsMTYwLTE2MGMxMi41LTEyLjUgMTIuNS0zMi44IDAtNDUuM3MtMzIuOC0xMi41LTQ1LjMgMEwyMjQgMzA2LjdMODYuNiAxNjkuNGMtMTIuNS0xMi41LTMyLjgtMTIuNS00NS4zIDBzLTEyLjUgMzIuOCAwIDQ1LjNsMTYwIDE2MHoiLz48L3N2Zz4=');
 }
 
@@ -55,6 +58,7 @@
     width: 100%;
     padding-left: 20px;
     text-decoration: none;
+    color: whitesmoke;
     transition: background-color 0.3s;
 }
 
@@ -62,18 +66,106 @@
     color: var(--colorTextHover);
 }
 
-.menu-bottom{
+.menu-bottom {
     margin-top: auto;
 }
 
-.user-profile, .menu-collapse {
+.user-profile,
+.menu-collapse {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding:  0 var(--padding);
+    padding: 0 var(--padding);
 }
 
+.user-profile {
+    flex-direction: column;
+    gap: 5px;
+    font-size: small;
+    margin: 10px;
+    padding: 10px 0;
+    border-radius: 20px;
+    background-color: var(--colorTextHover);
+    position: relative;
+}
+
+.user-name {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#menu-expand{
+    /* display: none; */
+    position: absolute;
+    background-color: #30305a;
+    white-space: nowrap;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    left: calc(100% + 1.5rem);
+    transform-origin: center left;
+}
+
+#menu-expand:before {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    background: #30305a;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-radius: 3px;
+}
+
+.expand-open {
+    display: block;
+}
+
+/* 
+.user-name:hover .menu-expand,
+.user-name:focus .menu-expand,
+.user-name:active .menu-expand {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.user-name .menu-expand {
+    position: absolute;
+    background-color: #30305a;
+    white-space: nowrap;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    left: calc(100% + 1.5rem);
+    transform-origin: center left;
+    transform: scale(0);
+    opacity: 0;
+    transition: 0.15s ease;
+}
+
+.user-name .menu-expand::before {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    background: #30305a;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-radius: 3px;
+} */
+
 .menu-collapse {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: 0;
+    width: 100%;
+    color: whitesmoke;
     border-top: #2c3e50 solid 2px;
     padding-bottom: 10px;
     cursor: pointer;
