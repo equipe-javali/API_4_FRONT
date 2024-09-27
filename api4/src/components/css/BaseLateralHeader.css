@@ -1,9 +1,7 @@
 #app-content-lr {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: 100vh;
-   
+    width: 100%;   
   }
   
   #app-content-tb {
