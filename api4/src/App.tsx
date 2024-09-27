@@ -9,6 +9,7 @@ import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 import { ListaSensores } from './pages/Sensores/ListaSensores';
 import { EditaSensor } from './pages/Sensores/EditaSensor';
 import Login from './pages/estacoes/Login';
+import Perfil from './pages/estacoes/Perfil';
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function App() {
           <Route path="/edita/sensor/:id" element={<EditaSensor />} />
           <Route path="/lista/sensores" element={<ListaSensores />} />
 
-          {/* rotas sensores */}
+          {/* rotas Login */}
           <Route path="/login" element={<Login />} />
+          <Route path="/perfil" element={<Perfil />} />
           <Route path="/" element={<Home />} />
         </Route>
       </Routes>
