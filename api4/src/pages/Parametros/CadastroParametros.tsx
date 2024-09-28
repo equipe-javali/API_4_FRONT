@@ -100,7 +100,7 @@ export function CadastroParametro() {
                   className="basic-single"
                   classNamePrefix="select"
                   onChange={handleSelectChange}
-                  value={unidadeOptions.find(option => option.value === formData.unidade_medida) || null} // Ajustado para 'unidade_medida'
+                  value={unidadeOptions.find(option => option.value === formData.unidade_medida) || null} 
                 />
               </div>
               <div className="form-group">

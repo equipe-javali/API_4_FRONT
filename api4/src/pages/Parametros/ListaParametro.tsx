@@ -17,11 +17,22 @@ export function ListaParametros() {
     const fetchParametros = async () => {
       try {
         const response = await listarParametros();
+        
         if (!response || !response.data) {
           throw new Error("Resposta da API não é válida.");
         }
+
         if (response.data.rows) {
-          setParametros(response.data.rows);
+          const parametrosAjustados = response.data.rows.map((parametro: any) => ({
+            id: parametro.id,
+            unidade_medida: parametro.id_unidade ?? 0,  // Mapeando id_unidade para unidade_medida
+            nome: parametro.nome,
+            fator: parseFloat(parametro.fator),  // Garantindo que o fator seja numérico
+            offset: parseFloat(parametro.valor_offset),  // Mapeando valor_offset para offset
+            nome_json: parametro.nome_json
+          }));
+          
+          setParametros(parametrosAjustados);
         } else {
           throw new Error("Formato de resposta da API inesperado.");
         }
@@ -67,17 +78,22 @@ export function ListaParametros() {
   const columns = [
     {
       name: 'Nome',
-      selector: (row: Parametro) => row.nome,
+      selector: (row: Parametro) => row.nome || 'N/A',
       sortable: true,
     },
     {
       name: 'Fator',
-      selector: (row: Parametro) => row.fator,
+      selector: (row: Parametro) => row.fator || 'N/A',
       sortable: true,
     },
     {
-      name: 'Offset',
-      selector: (row: Parametro) => row.offset,
+      name: 'Offset',  // Usar o campo 'valor_offset' que vem da API, mapeado para 'offset'
+      selector: (row: Parametro) => row.offset || 'N/A',
+      sortable: true,
+    },
+    {
+      name: 'Unidade de Medida',  // Usar o campo 'id_unidade' que vem da API, mapeado para 'unidade_medida'
+      selector: (row: Parametro) => row.unidade_medida || 'N/A',
       sortable: true,
     },
     {

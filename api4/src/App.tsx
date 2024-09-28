@@ -4,6 +4,7 @@ import { CadastroEstacao } from './pages/estacoes/CadastroEstacao';
 import Home from './pages/Home';
 import { CadastroParametro } from './pages/Parametros/CadastroParametros';
 import { ListaParametros } from './pages/Parametros/ListaParametro';
+import { EditarParametro } from './pages/Parametros/EditarParametro';
 import { EditaEstacao } from './pages/estacoes/EditaEstacao';
 import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 import { CadastroSensor } from './pages/Sensores/CadastroSensor';
@@ -24,7 +25,7 @@ function App() {
 
           {/* rotas parametros */}
           <Route path="/cadastro/parametro" element={<CadastroParametro />} />
-          <Route path="/edita/parametro" element={<CadastroParametro />} />
+          <Route path="/edita/parametro/:id" element={<EditarParametro />} />
           <Route path="/lista/parametros" element={<ListaParametros />} />
 
           {/* rotas sensores */}

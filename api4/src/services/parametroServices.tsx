@@ -3,7 +3,6 @@ import { Parametro } from '../types/Parametro';
 
 const API_URL = 'http://localhost:3000/parametro'; 
 
-// Função para cadastrar um novo parâmetro
 export const cadastrarParametro = async (parametroData: Parametro) => { 
   try {
     const response = await axios.post(`${API_URL}/cadastrar`, parametroData);
@@ -14,7 +13,6 @@ export const cadastrarParametro = async (parametroData: Parametro) => {
   }
 };
 
-// Função para listar parâmetros com paginação
 export const listarParametros = async (quantidade: number = 10, pagina: number = 0) => { 
   try {
     const response = await axios.get(`${API_URL}/${quantidade}/${pagina}`);
@@ -25,7 +23,6 @@ export const listarParametros = async (quantidade: number = 10, pagina: number =
   }
 };
 
-// Função para deletar um parâmetro pelo seu ID
 export const deletarParametro = async (id: number) => {
   try {
     const response = await axios.delete(`${API_URL}/deletar/`, {
@@ -35,6 +32,25 @@ export const deletarParametro = async (id: number) => {
   } catch (error) {
     console.error(`Erro ao excluir o parâmetro de id ${id}:`, error);
     throw error;
+  }
+};
+
+export const editarParametro = async (parametroData: Parametro) => { 
+  try {
+    const response = await axios.patch(`${API_URL}/atualizar`, parametroData);
+    return response.data; 
+  } catch (error) {
+    throw error; 
+  }
+};
+
+
+export const buscarParametroPorID = async (id: string) => { 
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data; 
+  } catch (error) {
+    throw error; 
   }
 };
 
