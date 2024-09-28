@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Parametro } from '../types/Parametro';
 
-const API_URL = 'http://localhost:3000/parametro'; // URL base da API
+const API_URL = 'http://localhost:3000/parametro'; 
 
 // Função para cadastrar um novo parâmetro
 export const cadastrarParametro = async (parametroData: Parametro) => { 
@@ -28,10 +28,15 @@ export const listarParametros = async (quantidade: number = 10, pagina: number =
 // Função para deletar um parâmetro pelo seu ID
 export const deletarParametro = async (id: number) => {
   try {
-    const response = await axios.delete(`${API_URL}/excluir/${id}`);
-    return response.data;
+    const response = await axios.delete(`${API_URL}/deletar/`, {
+    data: { id }
+    });
+  return response.data;
   } catch (error) {
     console.error(`Erro ao excluir o parâmetro de id ${id}:`, error);
     throw error;
   }
 };
+
+
+

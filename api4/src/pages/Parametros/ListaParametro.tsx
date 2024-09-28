@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import { Parametro } from "../../types/Parametro";
-import "./css/ListaParametros.css"; 
+import "./css/Parametros.css";
+
 import { listarParametros, deletarParametro } from "../../services/parametroServices";
 import { ClipLoader } from "react-spinners"; 
 import { FaEdit, FaTrash } from 'react-icons/fa'; 

@@ -32,7 +32,7 @@ export const buscarEstacaoPorId = async (id: string) => {
 
 export const editarEstacao = async (estacaoData: Estacao) => { 
   try {
-    const response = await axios.patch(`${API_URL}/atualizar`, estacaoData); // Alterado para PATCH
+    const response = await axios.patch(`${API_URL}/atualizar`, estacaoData); 
     return response.data; 
   } catch (error) {
     throw error; 
