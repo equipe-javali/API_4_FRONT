@@ -27,10 +27,10 @@ export const CadastroAdm: React.FC = () => {
 
       if (response.data && response.data.errors && response.data.errors.length > 0) {
         console.error('Erro na resposta da API:', response.data.errors);
-        setMensagem("Erro ao cadastrar estação: " + response.data.errors.join(", "));
+        setMensagem("Erro ao cadastrar usuário: " + response.data.errors.join(", "));
       } else {
         console.log('Sucesso:', response.data);
-        setMensagem("Administrador cadastrada com sucesso!");
+        setMensagem("Usuário cadastrado com sucesso!");
         setFormData({
           nome: '',
           email: '',
@@ -39,7 +39,7 @@ export const CadastroAdm: React.FC = () => {
       }
     } catch (error) {
       console.error('Erro:', error);
-      setMensagem("Erro ao cadastrar Administrador. Verifique os dados e tente novamente.");
+      setMensagem("Erro ao cadastrar Usuário. Verifique os dados e tente novamente.");
     }
   };
 
@@ -66,7 +66,7 @@ export const CadastroAdm: React.FC = () => {
   return (
     <div className="cadastro-adm">
       <div className="cadastro-adm-container">
-        <h1 className="text-wrapper-titulo">Cadastrar Administrador</h1>
+        <h1 className="text-wrapper-titulo">Cadastrar Usuário</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
