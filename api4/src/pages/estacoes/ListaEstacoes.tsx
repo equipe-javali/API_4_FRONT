@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import { Estacao } from "../../types/Estacao";
@@ -13,19 +13,31 @@ export function ListaEstacoes() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEstacoes = async () => {
+    const fetchEstacoesESensores = async () => {
       try {
-        const response = await listarEstacoes();
-        if (!response || !response.data) {
+        const responseEstacoes = await listarEstacoes();
+
+        if (!responseEstacoes || !responseEstacoes.data) {
           throw new Error("Resposta da API não é válida.");
         }
-        if (response.data.rows) {
-          setEstacoes(response.data.rows);
+
+        if (responseEstacoes.data.rows) {
+          const estacoesAjustadas = responseEstacoes.data.rows.map((estacao: any) => ({
+            id: estacao.id,
+            nome: estacao.nome,
+            endereco: estacao.endereco,
+            latitude: parseFloat(estacao.latitude),
+            longitude: parseFloat(estacao.longitude),
+            mac_address: estacao.mac_address,
+            sensores: estacao.sensores || []
+          }));
+          
+          setEstacoes(estacoesAjustadas);
         } else {
           throw new Error("Formato de resposta da API inesperado.");
         }
       } catch (err) {
-        console.error("Erro ao buscar estações:", err);
+        console.error("Erro ao buscar estações e sensores:", err);
         if (err instanceof Error) {
           setError(err.message);
         } else {
@@ -36,7 +48,7 @@ export function ListaEstacoes() {
       }
     };
 
-    fetchEstacoes();
+    fetchEstacoesESensores();
   }, []);
 
   const handleDelete = async (id: number) => {
@@ -88,6 +100,11 @@ export function ListaEstacoes() {
       name: 'MAC Address',
       selector: (row: Estacao) => row.mac_address,
       sortable: true,
+    },
+    {
+      name: 'Sensores',
+      selector: (row: Estacao) => row.sensores ? row.sensores.map(sensor => sensor.nome).join(', ') : 'Nenhum sensor',
+      sortable: false,
     },
     {
       name: 'Ações',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Select from 'react-select';
-import { cadastrarEstacao } from "../../services/estacaoServices";
+import { cadastrarEstacao, adicionarSensor } from "../../services/estacaoServices";
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
 import { listarSensores } from '../../services/sensorServices'; 
@@ -61,6 +61,13 @@ export function CadastroEstacao() {
       } else {
         console.log('Sucesso:', responseEstacao);
         setMensagem("Estação cadastrada com sucesso!");
+
+        // Associar sensores à estação
+        const estacaoId = responseEstacao.data.id;
+        for (const sensorId of formData.id_sensores) {
+          await adicionarSensor(estacaoId, sensorId);
+        }
+
         setFormData({
           nome: '',
           endereco: '',
