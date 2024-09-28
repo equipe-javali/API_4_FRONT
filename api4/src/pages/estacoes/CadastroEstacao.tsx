@@ -42,7 +42,7 @@ export function CadastroEstacao() {
   };
 
   const handleSelectChange = (selectedOptions: any) => {
-    const selectedIds = selectedOptions.map((option: any) => option.value);
+    const selectedIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
     setFormData({ ...formData, id_sensores: selectedIds });
 
     // Atualizar os sensores selecionados
@@ -160,9 +160,9 @@ export function CadastroEstacao() {
                 <label className="text-wrapper">Sensores</label>
                 <Select
                   isMulti
-                  name="id_sensores"
+                  name="id_sensor"
                   options={sensorOptions}
-                  className="basic-multi-select"
+                  className="basic-select"
                   classNamePrefix="select"
                   onChange={handleSelectChange}
                   value={sensorOptions.filter(option => formData.id_sensores.includes(option.value))}
