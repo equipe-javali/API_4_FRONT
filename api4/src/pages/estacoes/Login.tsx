@@ -74,7 +74,7 @@ const Login: React.FC = () => {
           <button type="submit" className="login-button">Login</button>
         </form>
         <p className="footer-text">
-          Ainda não possui cadastro? <a href="/usuario">Cadastre-se aqui!</a>
+          Ainda não possui cadastro? <a href="/cadastro">Cadastre-se aqui!</a>
         </p>
       </div>
     </div>
