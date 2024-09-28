@@ -17,8 +17,10 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
 
     if (expandMenu == true) {
       expand?.classList.add('expand-open')
+      expand?.classList.remove('expand-hidden')
     } else {
       expand?.classList.remove('expand-open')
+      expand?.classList.add('expand-hidden')
     }
   }
 
@@ -59,8 +61,9 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
             <div className='user-profile'>
               <FaRegUserCircle color='white' size={30}/>
               <div className='user-name'>
-                <div id='menu-expand'>
-                  <button>Perfil</button>
+                <div id='menu-expand' className='expand-hidden'>
+                  <button>Meu perfil</button>
+                  <button>Sair <FaSignOutAlt /> </button>
                 </div>
                 <p>Nome do usuário</p>
                 <FaEllipsisV onClick={handleExpandMenu}/>
