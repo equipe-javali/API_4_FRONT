@@ -2,7 +2,7 @@ import axios from 'axios';
 import { cadastrarAdministrador, Perfil } from '../types/Administrador'; 
 import { Login } from '../types/Administrador';
 
-const API_URL = 'http://localhost:3000/usuario'; 
+const API_URL = 'http://localhost:3001/usuario'; 
 
 export const cadastrarAdm = async (usuarioData: cadastrarAdministrador) => { 
   try {

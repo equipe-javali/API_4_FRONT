@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/unidademedida';
+const API_URL = 'http://localhost:3001/unidademedida';
 
 export const listarUnidades = async () => {
   try {

@@ -14,7 +14,10 @@ export function CadastroSensor() {
       nome: '',
       fator: 0,
       offset: 0,
-      unidademedida: ''
+      nome_json:'',
+      unidade_medida: {
+        id: 0
+      }
     }
   });  
 
@@ -65,7 +68,10 @@ export function CadastroSensor() {
             nome: '',
             fator: 0,
             offset: 0,
-            unidademedida: ''
+            nome_json:'',
+            unidade_medida: {
+              id: 0
+            }
           }          
         });
       }
@@ -118,10 +124,9 @@ export function CadastroSensor() {
               <div className="form-group">
                 <label className="text-wrapper">Parâmetros</label>
                 <Select
-                  isMulti
                   name="id_parametro"
                   options={parametroOptions}
-                  className="basic-multi-select"
+                  className="basic-select"
                   classNamePrefix="select"
                   onChange={handleSelectChange}
                   value={parametroOptions.find(option => option.value === formData.id_parametro)}
