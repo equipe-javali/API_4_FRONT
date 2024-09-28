@@ -1,6 +1,8 @@
 export interface Parametro {
   id?: number;
-  unidade_medida: number; 
+  unidade_medida: {
+    id: number; 
+  };
   nome: string;
   fator: number;
   offset: number;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from 'react-select';
 import { useParams, useNavigate } from "react-router-dom";
 import { editarParametro, buscarParametroPorID } from "../../services/parametroServices"; 
-import { listarUnidades } from "../../services/unidademedidaServices"; 
+import { listarUnidades } from "../../services/unidadeServices"; 
 import { Parametro } from '../../types/Parametro';
 import "./css/Parametros.css";
 import { ClipLoader } from "react-spinners";
@@ -19,7 +19,6 @@ export function EditarParametro() {
     useEffect(() => {
       const carregarDados = async () => {
           try {
-              // Carregar unidades de medida
               const responseUnidades = await listarUnidades();
               console.log('Unidades retornadas:', responseUnidades);  
               if (responseUnidades.data && Array.isArray(responseUnidades.data.rows)) {
@@ -31,12 +30,15 @@ export function EditarParametro() {
                   console.error('Formato inesperado para unidades de medida:', responseUnidades);
               }
   
-              // Carregar os dados do parâmetro por ID
               if (id) {
                   const responseParametro = await buscarParametroPorID(id);
                   console.log('Parâmetro retornado:', responseParametro);  
                   if (responseParametro.data && responseParametro.data.rows && responseParametro.data.rows.length > 0) {
-                      setFormData(responseParametro.data.rows[0]); // Acessa o primeiro item do array
+                      const parametro = responseParametro.data.rows[0];
+                      setFormData({
+                          ...parametro,
+                          unidade_medida: { id: parametro.id_unidade } 
+                      });
                   } else {
                       console.error('Erro ao buscar parâmetro:', responseParametro);
                   }
@@ -48,12 +50,9 @@ export function EditarParametro() {
           }
       };
   
-        carregarDados();
+      carregarDados();
     }, [id]);
-  
 
-    
-    // Manter os valores do formData ao mudar os inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (formData) {
             const { name, value } = e.target;
@@ -64,12 +63,11 @@ export function EditarParametro() {
         }
     };
 
-    // Atualizar a unidade de medida selecionada
     const handleSelectChange = (selectedOption: any) => {
         if (formData) {
             setFormData({ 
                 ...formData, 
-                unidade_medida: selectedOption ? selectedOption.value : 0 
+                unidade_medida: selectedOption ? { id: selectedOption.value } : { id: 0 } 
             });
         }
     };
@@ -80,12 +78,20 @@ export function EditarParametro() {
             try {
                 const updatedData: Parametro = {
                     ...formData,
-                    id: Number(id),
+                    id: Number(id), 
                 };
 
-                await editarParametro(updatedData); 
-                setMensagem("Parâmetro atualizado com sucesso!");
-                navigate('/lista/parametros');
+                console.log('Dados a serem enviados:', updatedData); 
+
+                const response = await editarParametro(updatedData); 
+                console.log('Resposta da API:', response); 
+
+                if (response.errors && response.errors.length > 0) {
+                    setMensagem("Erro ao atualizar parâmetro: " + response.errors.join(", "));
+                } else {
+                    setMensagem("Parâmetro atualizado com sucesso!");
+                    navigate('/lista/parametros');
+                }
             } catch (error) {
                 console.error("Erro ao atualizar parâmetro:", error);
                 setMensagem("Erro ao atualizar parâmetro. Verifique os dados e tente novamente.");
@@ -93,7 +99,6 @@ export function EditarParametro() {
         }
     };
 
-    // Limpar a mensagem após 5 segundos
     useEffect(() => {
         let timeoutId: NodeJS.Timeout | null = null;
 
@@ -131,14 +136,10 @@ export function EditarParametro() {
                         <div className="form">
                             <div className="form-group">
                                 <label className="text-wrapper">Unidade de Medida</label>
-                                <Select
-                                    name="unidade_medida"
-                                    options={unidadeOptions}
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    onChange={handleSelectChange}
-                                    value={unidadeOptions.find(option => option.value === formData.unidade_medida) || null} 
-                                />
+                                
+                                <div className="unidade-display">
+                                    {unidadeOptions.find(option => option.value === formData.unidade_medida.id)?.label || 'Nenhuma unidade selecionada'}
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label className="text-wrapper">Nome</label>

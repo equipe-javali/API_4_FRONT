@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
-import { Parametro } from "../../types/Parametro";
 import "./css/Parametros.css";
-
 import { listarParametros, deletarParametro } from "../../services/parametroServices";
 import { ClipLoader } from "react-spinners"; 
 import { FaEdit, FaTrash } from 'react-icons/fa'; 
 
 export function ListaParametros() {
-  const [parametros, setParametros] = useState<Parametro[]>([]);
+  const [parametros, setParametros] = useState<Record<string, any>[]>([]); // Usando Record<string, any>
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -78,27 +76,27 @@ export function ListaParametros() {
   const columns = [
     {
       name: 'Nome',
-      selector: (row: Parametro) => row.nome || 'N/A',
+      selector: (row: Record<string, any>) => row.nome || 'N/A', // Adicionado tipo
       sortable: true,
     },
     {
       name: 'Fator',
-      selector: (row: Parametro) => row.fator || 'N/A',
+      selector: (row: Record<string, any>) => row.fator || 'N/A', // Adicionado tipo
       sortable: true,
     },
     {
       name: 'Offset',  // Usar o campo 'valor_offset' que vem da API, mapeado para 'offset'
-      selector: (row: Parametro) => row.offset || 'N/A',
+      selector: (row: Record<string, any>) => row.offset || 'N/A', // Adicionado tipo
       sortable: true,
     },
     {
       name: 'Unidade de Medida',  // Usar o campo 'id_unidade' que vem da API, mapeado para 'unidade_medida'
-      selector: (row: Parametro) => row.unidade_medida || 'N/A',
+      selector: (row: Record<string, any>) => row.unidade_medida || 'N/A', // Adicionado tipo
       sortable: true,
     },
     {
       name: 'Ações',
-      cell: (row: Parametro) => (
+      cell: (row: Record<string, any>) => (
         <div>
           <Link to={`/edita/parametro/${row.id}`} className="icon-button">
             <FaEdit />

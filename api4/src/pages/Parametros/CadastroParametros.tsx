@@ -6,7 +6,7 @@ import "./css/Parametros.css";
 
 export function CadastroParametro() {
   const [formData, setFormData] = useState({
-    unidade_medida: 0, 
+    unidade_medida: { id: 0 }, 
     nome: '',
     fator: 0,
     offset: 0,
@@ -42,21 +42,24 @@ export function CadastroParametro() {
   };
 
   const handleSelectChange = (selectedOption: any) => {
-    setFormData({ ...formData, unidade_medida: selectedOption ? selectedOption.value : 0 }); 
+    setFormData({ ...formData, unidade_medida: { id: selectedOption ? selectedOption.value : 0 } }); 
   };
 
   const handleSubmitParametro = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form Data before submit:", formData); 
-  
+
     try {
-      const responseParametro = await cadastrarParametro(formData);
+      const responseParametro = await cadastrarParametro(formData); // Enviando o formData diretamente
+      
+      console.log("Response from cadastrarParametro:", responseParametro);
+      
       if (responseParametro.errors && responseParametro.errors.length > 0) {
         setMensagem("Erro ao cadastrar parâmetro: " + responseParametro.errors.join(", "));
       } else {
         setMensagem("Parâmetro cadastrado com sucesso!");
         setFormData({
-          unidade_medida: 0,
+          unidade_medida: { id: 0 }, // Resetando para um objeto
           nome: '',
           fator: 0,
           offset: 0,
@@ -64,10 +67,10 @@ export function CadastroParametro() {
         });
       }
     } catch (error) {
+      console.error('Erro ao cadastrar parâmetro:', error);
       setMensagem("Erro ao cadastrar parâmetro. Verifique os dados e tente novamente.");
     }
   };
-  
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
@@ -100,7 +103,7 @@ export function CadastroParametro() {
                   className="basic-single"
                   classNamePrefix="select"
                   onChange={handleSelectChange}
-                  value={unidadeOptions.find(option => option.value === formData.unidade_medida) || null} 
+                  value={unidadeOptions.find(option => option.value === formData.unidade_medida.id) || null} 
                 />
               </div>
               <div className="form-group">
