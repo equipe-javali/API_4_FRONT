@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Estacao } from '../types/Estacao'; 
 
-const API_URL = 'http://localhost:3001/estacao'; 
+const API_URL = 'http://localhost:3000/estacao'; 
 
 export const cadastrarEstacao = async (estacaoData: Estacao) => { 
   try {
@@ -32,7 +32,7 @@ export const buscarEstacaoPorId = async (id: string) => {
 
 export const editarEstacao = async (estacaoData: Estacao) => { 
   try {
-    const response = await axios.patch(`${API_URL}/atualizar`, estacaoData); // Alterado para PATCH
+    const response = await axios.patch(`${API_URL}/atualizar`, estacaoData); 
     return response.data; 
   } catch (error) {
     throw error; 

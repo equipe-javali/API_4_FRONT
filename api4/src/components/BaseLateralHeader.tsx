@@ -9,7 +9,7 @@ const BaseLateralHeader = () => {
     <div id="app-content-lr">
       <SideMenu links={[
         ["Login", "login", <FaSignInAlt />],
-        ["Cadastro de Uusário", "cadastro", <FaPlus />],
+        ["Cadastro de Usuário", "cadastro", <FaPlus />],
         ["Cadastro de Estação", "cadastro/estacao", <FaPlus />],
         ["Lista de Estações", "lista/estacoes", <FaList />],
         ["Cadastro de Parâmetro", "cadastro/parametro", <FaPlus />],
