@@ -23,7 +23,7 @@ export const CadastroAdm: React.FC = () => {
     e.preventDefault();
     try {
 
-      const response = await axios.post('http://localhost:3000/usuario/cadastrar', formData);
+      const response = await axios.post('http://localhost:3001/usuario/cadastrar', formData);
 
       if (response.data && response.data.errors && response.data.errors.length > 0) {
         console.error('Erro na resposta da API:', response.data.errors);

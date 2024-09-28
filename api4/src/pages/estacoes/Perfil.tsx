@@ -6,10 +6,11 @@ import './css/Perfil.css';
 
 const Perfil: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
-  const [editable, setEditable] = useState(false);  // Estado para controlar edição
+  const [editable, setEditable] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState(''); // Estado para mensagem de sucesso
+  const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Estado para confirmação de deleção
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -21,12 +22,11 @@ const Perfil: React.FC = () => {
   };
 
   const handleEdit = () => {
-    setEditable(true);  // Torna os campos editáveis
+    setEditable(true);
   };
 
   const handleSave = async () => {
     try {
-      // Monta o JSON de acordo com o backend
       const updatedData = {
         id: userData.id,
         nome: userData.nome,
@@ -34,13 +34,12 @@ const Perfil: React.FC = () => {
         senha: userData.senha
       };
 
-      // Requisição PATCH para salvar os dados editados
-      const response = await axios.patch(`http://localhost:3000/usuario/atualizar`, updatedData);
+      const response = await axios.patch(`http://localhost:3001/usuario/atualizar`, updatedData);
 
       if (response.status === 200) {
-        setEditable(false); // Volta para o modo não editável
+        setEditable(false); 
         setSuccessMessage('Alterações salvas com sucesso!');
-        setTimeout(() => setSuccessMessage(''), 3000); // Limpa a mensagem após 3 segundos
+        setTimeout(() => setSuccessMessage(''), 3000);
       } else {
         setErrorMessage('Erro ao salvar as alterações.');
       }
@@ -50,7 +49,28 @@ const Perfil: React.FC = () => {
   };
 
   const handleCancel = () => {
-    setEditable(false);  // Cancela a edição e retorna ao modo read-only
+    setEditable(false);
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await axios.delete(`http://localhost:3001/usuario/deletar`, {
+        data: { id: userData.id }
+      });
+      console.log('Conta deletada com sucesso!');
+      navigate('/login');
+    } catch (error) {
+      setErrorMessage('Erro ao deletar a conta.');
+      console.error('Erro ao deletar a conta:', error);
+    }
+  };
+
+  const confirmDeleteAccount = () => {
+    setShowDeleteConfirmation(true); // Exibe o pop-up de confirmação
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false); // Cancela a confirmação
   };
 
   useEffect(() => {
@@ -64,7 +84,7 @@ const Perfil: React.FC = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/usuario/${usuarioId}`);
+        const response = await axios.get(`http://localhost:3001/usuario/${usuarioId}`);
         if (response.status === 200) {
           setUserData({ ...response.data.data, senha: usuarioSenha });
         } else {
@@ -84,7 +104,7 @@ const Perfil: React.FC = () => {
 
   return (
     <div className="perfil-container">
-      <h2> {userData.nome}</h2> {/* Nome do usuário no título */}
+      <h2>{userData.nome}</h2>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
       <div className="perfil-info">
         <p>
@@ -92,7 +112,7 @@ const Perfil: React.FC = () => {
           <input
             type="text"
             value={userData.nome}
-            readOnly={!editable}  // Editável apenas quando `editable` for true
+            readOnly={!editable}
             onChange={(e) => handleInputChange('nome', e.target.value)}
           />
         </p>
@@ -101,7 +121,7 @@ const Perfil: React.FC = () => {
           <input
             type="email"
             value={userData.email}
-            readOnly={!editable}  
+            readOnly={!editable}
             onChange={(e) => handleInputChange('email', e.target.value)}
           />
         </p>
@@ -110,7 +130,7 @@ const Perfil: React.FC = () => {
           <input
             type={showPassword ? 'text' : 'password'}
             value={userData.senha}
-            readOnly={!editable}  
+            readOnly={!editable}
             onChange={(e) => handleInputChange('senha', e.target.value)}
           />
           <button onClick={togglePasswordVisibility} className="toggle-password">
@@ -119,14 +139,31 @@ const Perfil: React.FC = () => {
         </p>
       </div>
       {editable ? (
-        <div className="button-group">
+        <div className="button-group-1">
           <button onClick={handleSave} className="save-button">Salvar</button>
           {successMessage && <div className="success-message">{successMessage}</div>}
           <button onClick={handleCancel} className="cancel-button">Cancelar</button>
         </div>
       ) : (
-        <button onClick={handleEdit} className="edit-button">Editar</button>
+        <div className="button-group">
+          <button onClick={handleEdit} className="edit-button">Editar</button>
+          <button onClick={confirmDeleteAccount} className="delete-button">Deletar Conta</button>
+        </div>        
       )}
+
+      {/* Modal de confirmação para deletar a conta */}
+      {showDeleteConfirmation && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Tem certeza que deseja apagar a conta?</p>
+            <div className="modal-buttons">
+              <button onClick={handleDeleteAccount} className="confirm-button">Sim</button>
+              <button onClick={cancelDelete} className="cancel-button">Não</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {successMessage && <div className="success-message">{successMessage}</div>}
     </div>
   );

@@ -18,7 +18,7 @@ const Login: React.FC = () => {
 
     try {
       // Faz a requisição POST ao backend
-      const response = await axios.post('http://localhost:3000/usuario/login', formData, {
+      const response = await axios.post('http://localhost:3001/usuario/login', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
