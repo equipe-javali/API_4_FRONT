@@ -24,18 +24,54 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
     }
   }
 
+  const handleCollapseMenu = () => {
+    const menu = document.getElementById('side-menu');
+    setCollMenu(!collMenu);
+
+    if (collMenu == true) {
+      menu?.classList.add('sideMenu-open')
+      menu?.classList.remove('sideMenu-close')
+    } else {
+      menu?.classList.remove('sideMenu-open')
+      menu?.classList.add('sideMenu-close')
+    }
+  }
+
   return (
-    <div className="side-menu">
+    <div id="side-menu" className='sideMenu-open'>
       {collMenu ?
         <>
-          <img className='menu-logo' src='https://tecsus.com.br/wp-content/uploads/2020/11/cropped-ICONE-TECSUS-32x32.png' />
+          <img className='collapse-pic' src='https://tecsus.com.br/wp-content/uploads/2020/11/cropped-ICONE-TECSUS-32x32.png' />
+
+          {links.map(([name, pathCad, pathList, icon]) => (
+            <div className='collapse-options'>
+                <div className='collapse-icon'>
+                  {icon}
+                </div>
+
+                <div id='collapse-expand'>
+                  <p>{name}</p>
+                  <Link key={pathCad} to={pathCad} className="menu-link">
+                    <p className='link-text'>Cadastrar</p>
+                  </Link>
+                  <Link key={pathList} to={pathList} className='menu-link'>
+                    <p>Listar</p>
+                  </Link>
+                </div>
+            </div>
+          ))}
 
           <div className='menu-bottom'>
-            <div className='user-profile'>
-              <FaRegUserCircle color='white' />
+            <div className='user-collapse'>
+              <FaRegUserCircle color='white' size={35}/>
+              <div className='user-options'>
+                  <p>Nome do usuário</p>
+                  <button>Meu perfil</button>
+                  <button>Sair <FaSignOutAlt /> </button>
+              </div>
             </div>
 
-            <button className='menu-collapse' onClick={() => setCollMenu(!collMenu)}>
+            <button className='btn-collapse' onClick={handleCollapseMenu}>
               <FaAngleDoubleRight className='collapse-arrow' />
             </button>
           </div>
@@ -70,10 +106,10 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
               </div>
             </div>
 
-            <button className='menu-collapse' onClick={() => setCollMenu(!collMenu)}>
+            {/* <button className='btn-collapse' onClick={handleCollapseMenu}>
               <p>Collapse menu</p>
               <FaAngleDoubleLeft className='collapse-arrow' />
-            </button>
+            </button> */}
           </div>
         </>
       }
