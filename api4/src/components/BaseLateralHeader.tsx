@@ -1,21 +1,16 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import SideMenu from '../components/SideMenu';
-import { FaHome, FaList, FaPlus, FaCogs, FaThermometerHalf, FaClipboardList, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaList, FaPlus, FaCogs, FaThermometerHalf, FaClipboardList, FaRegUserCircle } from 'react-icons/fa';
 import './css/BaseLateralHeader.css';
 
 const BaseLateralHeader = () => {
   return (
     <div id="app-content-lr">
       <SideMenu links={[
-        ["Login", "login", <FaSignInAlt />],
-        ["Cadastro de Usuário", "cadastro", <FaPlus />],
-        ["Cadastro de Estação", "cadastro/estacao", <FaPlus />],
-        ["Lista de Estações", "lista/estacoes", <FaList />],
-        ["Cadastro de Parâmetro", "cadastro/parametro", <FaPlus />],
-        ["Lista de Parâmetros", "lista/parametros", <FaClipboardList />],
-        ["Cadastro de Sensor", "cadastro/sensor", <FaPlus />],
-        ["Lista de Sensores", "lista/sensores", <FaThermometerHalf />],
+        ["Estação", "cadastro/estacao", "lista/estacoes", <FaCogs />],
+        ["Parâmetro", "cadastro/parametro", "lista/parametros", <FaPlus />],
+        ["Sensor", "cadastro/sensor", "lista/sensores", <FaThermometerHalf />]
       ]} />
       <div id="app-content-tb">
         <Outlet />

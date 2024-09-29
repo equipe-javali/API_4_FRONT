@@ -20,11 +20,12 @@ function App() {
       <Routes>
         {/* rotas Login */}
         <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<CadastrarAdministrador />} />
 
         <Route element={<BaseLateralHeader />}>
-          <Route path="/cadastro/estacao" element={<CadastroEstacao />} />          
+          <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
           <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
-          <Route path="/lista/estacoes" element={<ListaEstacoes />} />          
+          <Route path="/lista/estacoes" element={<ListaEstacoes />} />
 
           {/* rotas parametros */}
           <Route path="/cadastro/parametro" element={<CadastroParametro />} />
@@ -38,9 +39,8 @@ function App() {
 
           {/* rotas Usuário */}
           <Route path="/perfil" element={<Perfil />} />
-          <Route path="/cadastro" element={<CadastrarAdministrador />} />
-          <Route path="/" element={<Home />} />
         </Route>
+          <Route path="/" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
