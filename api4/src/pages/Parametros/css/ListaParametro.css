@@ -1,41 +1,40 @@
-.cadastro-parametro .container {
+.lista-parametro .container {     
     padding: 15px;    
     background-color: white;
     width: 60vw; 
-    border-radius: 20px;
-    margin-top: 20px;
+    border-radius: 20px;    
     min-height: 30vh; 
+   
 }
 
-.cadastro-parametro .text-wrapper-titulo {
+.lista-parametro .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
-    font-size: 30px; /* Reduz o tamanho da fonte */
-    text-align: center;
-    margin-top: 20px; /* Reduz a margem superior */
+    font-size: 30px;  
+    text-align: center; 
+    margin-top: 40px;   
 }
 
-.cadastro-parametro .content {
+.lista-parametro .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.cadastro-parametro .form {
+.lista-parametro .form {
     flex: 1;
-    padding-left: 10px;
-    padding-right: 30px;
+    padding: 3dvw;
 }
 
-.cadastro-parametro .form-group {
-    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
-    padding: 8px;
+.lista-parametro .form-group {
+    margin-bottom: 20px;
+    padding: 10px;
 }
 
-.cadastro-parametro .text-wrapper {
+.lista-parametro .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
-    font-size: 20px; /* Reduz o tamanho da fonte */
+    font-size: 22px;    
     margin-bottom: 10px;
     display: block;
 }
@@ -45,11 +44,11 @@
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;
+    width: 100%;    
     font-family: "Inter-Regular", Helvetica;
     font-size: 17px;
     color: #5f5e63;
-    padding: 5px 10px;
+    padding: 5px 10px; 
 }
 
 .cadastro-parametro .select {
@@ -57,11 +56,11 @@
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;
+    width: 100%;    
     font-family: "Inter-Regular", Helvetica;
     font-size: 17px;
     color: #5f5e63;
-    padding: 20px 10px;
+    padding: 20px 10px; 
 }
 
 .cadastro-parametro .button {
@@ -81,6 +80,7 @@
     margin: 0 auto;
 }
 
+
 .success-message {
     color: green;
     margin-bottom: 10px;
@@ -92,13 +92,40 @@
 }
 
 .success-message, .error-message {
-    text-align: center;
-    margin: 10px auto;
+    text-align: center; 
+    margin: 10px auto;   
 }
 
 .spinner-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; 
+  }
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #40587e;
+    font-size: 1.5em;
+    margin: 0 5px;
+}
+
+.icon-button:hover {
+    color: #334766;
+}
+
+.rdt_TableHeadRow > div {
+    font-size: 18px; 
+    font-weight: bold;     
+    padding: 19px;
+    
+    
+}
+
+
+.rdt_TableCell {
+    font-size: 18px;
+    padding: 11px;
 }

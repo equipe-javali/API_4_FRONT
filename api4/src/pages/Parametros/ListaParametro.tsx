@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
-import "./css/Parametros.css";
+import "./css/ListaParametro.css"
 import { listarParametros, deletarParametro } from "../../services/parametroServices";
 import { ClipLoader } from "react-spinners"; 
 import { FaEdit, FaTrash } from 'react-icons/fa'; 
 
 export function ListaParametros() {
-  const [parametros, setParametros] = useState<Record<string, any>[]>([]); // Usando Record<string, any>
+  const [parametros, setParametros] = useState<Record<string, any>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,10 +23,10 @@ export function ListaParametros() {
         if (response.data.rows) {
           const parametrosAjustados = response.data.rows.map((parametro: any) => ({
             id: parametro.id,
-            unidade_medida: parametro.id_unidade ?? 0,  // Mapeando id_unidade para unidade_medida
+            unidade_medida: parametro.id_unidade ?? 0,  
             nome: parametro.nome,
-            fator: parseFloat(parametro.fator),  // Garantindo que o fator seja numérico
-            offset: parseFloat(parametro.valor_offset),  // Mapeando valor_offset para offset
+            fator: parseFloat(parametro.fator), 
+            offset: parseFloat(parametro.valor_offset),  
             nome_json: parametro.nome_json
           }));
           
@@ -76,22 +76,22 @@ export function ListaParametros() {
   const columns = [
     {
       name: 'Nome',
-      selector: (row: Record<string, any>) => row.nome || 'N/A', // Adicionado tipo
+      selector: (row: Record<string, any>) => row.nome || 'N/A', 
       sortable: true,
     },
     {
       name: 'Fator',
-      selector: (row: Record<string, any>) => row.fator || 'N/A', // Adicionado tipo
+      selector: (row: Record<string, any>) => row.fator || 'N/A', 
       sortable: true,
     },
     {
-      name: 'Offset',  // Usar o campo 'valor_offset' que vem da API, mapeado para 'offset'
-      selector: (row: Record<string, any>) => row.offset || 'N/A', // Adicionado tipo
+      name: 'Offset',  
+      selector: (row: Record<string, any>) => row.offset || 'N/A', 
       sortable: true,
     },
     {
-      name: 'Unidade de Medida',  // Usar o campo 'id_unidade' que vem da API, mapeado para 'unidade_medida'
-      selector: (row: Record<string, any>) => row.unidade_medida || 'N/A', // Adicionado tipo
+      name: 'Unidade de Medida',  
+      selector: (row: Record<string, any>) => row.unidade_medida || 'N/A',
       sortable: true,
     },
     {

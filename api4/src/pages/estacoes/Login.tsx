@@ -16,8 +16,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      // Faz a requisição POST ao backend
+    try {      
       const response = await axios.post('http://localhost:3001/usuario/login', formData, {
         headers: {
           'Content-Type': 'application/json',
@@ -25,14 +24,14 @@ const Login: React.FC = () => {
       });
   
       if (response.status === 200) {
-        // Login bem-sucedido, armazena o ID do usuário
-        const { id } = response.data.data; // Onde o ID do usuário está (response.data.data.id)
-        const { senha } = formData; // A senha está no formData
-        localStorage.setItem('usuarioId', id); // Salva o ID no localStorage
-        localStorage.setItem('usuarioSenha', senha); // Salva a senha no localStorage
+        
+        const { id } = response.data.data; 
+        const { senha } = formData; 
+        localStorage.setItem('usuarioId', id); 
+        localStorage.setItem('usuarioSenha', senha); 
 
         console.log('Login bem-sucedido:', response.data);
-        // Redireciona para a página de perfil
+        
         navigate('/perfil');
       } else {
         setErrorMessage('Erro ao fazer login. Por favor, tente novamente.');

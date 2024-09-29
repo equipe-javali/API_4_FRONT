@@ -10,7 +10,7 @@ const Perfil: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Estado para confirmação de deleção
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); 
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -66,11 +66,11 @@ const Perfil: React.FC = () => {
   };
 
   const confirmDeleteAccount = () => {
-    setShowDeleteConfirmation(true); // Exibe o pop-up de confirmação
+    setShowDeleteConfirmation(true); 
   };
 
   const cancelDelete = () => {
-    setShowDeleteConfirmation(false); // Cancela a confirmação
+    setShowDeleteConfirmation(false); 
   };
 
   useEffect(() => {

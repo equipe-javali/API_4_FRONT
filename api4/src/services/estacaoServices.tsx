@@ -39,7 +39,6 @@ export const editarEstacao = async (estacaoData: Estacao) => {
   }
 };
 
-
 export const deletarEstacao = async (id: number) => {
   try {
     const response = await axios.delete(`${API_URL}/deletar`, {
@@ -52,3 +51,20 @@ export const deletarEstacao = async (id: number) => {
   }
 };
 
+export const adicionarSensor = async (id_estacao: number, id_sensor: number) => {
+  try {
+    const response = await axios.post(`${API_URL}/adicionarSensor`, { id_estacao, id_sensor });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const removerSensor = async (id_estacao: number, id_sensor: number) => {
+  try {
+    const response = await axios.post(`${API_URL}/removerSensor`, { id_estacao, id_sensor });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

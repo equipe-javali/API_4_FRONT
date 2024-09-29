@@ -23,7 +23,7 @@ export function ListaSensores() {
           throw new Error("Resposta da API não é válida.");
         }
         if (response.data.rows) {
-          console.log("Dados recebidos dos sensores:", response.data.rows); // Log de depuração
+          console.log("Dados recebidos dos sensores:", response.data.rows); 
           setSensores(response.data.rows);
         } else {
           throw new Error("Formato de resposta da API inesperado.");
@@ -45,7 +45,7 @@ export function ListaSensores() {
           throw new Error("Resposta da API não é válida.");
         }
         if (response.data.rows) {
-          console.log("Dados recebidos dos parametros:", response.data.rows); // Log de depuração
+          console.log("Dados recebidos dos parametros:", response.data.rows); 
           setParametros(response.data.rows);
         } else {
           throw new Error("Formato de resposta da API inesperado.");

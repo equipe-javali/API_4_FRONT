@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Select from 'react-select';
-import { useParams } from 'react-router-dom';
-import { editarEstacao, buscarEstacaoPorId } from "../../services/estacaoServices";
+import { useParams, useNavigate } from 'react-router-dom';
+import { editarEstacao, buscarEstacaoPorId, adicionarSensor, removerSensor } from "../../services/estacaoServices";
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
 import { listarSensores } from '../../services/sensorServices'; 
@@ -9,9 +9,10 @@ import { ClipLoader } from "react-spinners";
 
 export function EditaEstacao() {
   const { id } = useParams<{ id: string }>(); 
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<Estacao | null>(null);
   const [sensores, setSensores] = useState<any[]>([]); 
-  const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true); 
 
@@ -19,24 +20,22 @@ export function EditaEstacao() {
     const carregarDados = async () => {
       try {
         const responseSensores = await listarSensores();
+        console.log('Sensores retornados:', responseSensores);  
         if (responseSensores.data && Array.isArray(responseSensores.data.rows)) {
           setSensores(responseSensores.data.rows);
         } else {
-          console.error('Resposta da API não é um array:', responseSensores);
+          console.error('Formato inesperado para sensores:', responseSensores);
         }
 
         if (id) {
           const responseEstacao = await buscarEstacaoPorId(id);
-          if (responseEstacao && responseEstacao.data) {
+          console.log('Estação retornada:', responseEstacao);  
+          if (responseEstacao.data && responseEstacao.data.rows && responseEstacao.data.rows.length > 0) {
             const estacao = responseEstacao.data.rows[0];
             setFormData({
               ...estacao,
-              id_sensores: estacao.id_sensores || [] 
+              id_sensores: estacao.sensores ? estacao.sensores.map((sensor: any) => sensor.id) : [] 
             });
-            const sensoresSelecionados = estacao.id_sensores.map((sensorId: number) => 
-              responseSensores.data.rows.find((sensor: any) => sensor.id === sensorId)
-            ).filter((sensor: any) => sensor !== undefined);
-            setSensoresSelecionados(sensoresSelecionados);
           } else {
             console.error('Erro ao buscar estação:', responseEstacao);
           }
@@ -51,10 +50,13 @@ export function EditaEstacao() {
     carregarDados();
   }, [id]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (formData) {
       const { name, value } = e.target;
-      setFormData({ ...formData, [name]: name === 'latitude' || name === 'longitude' ? parseFloat(value) : value });
+      setFormData({ 
+        ...formData, 
+        [name]: name === 'latitude' || name === 'longitude' ? parseFloat(value) : value 
+      });
     }
   };
 
@@ -62,27 +64,62 @@ export function EditaEstacao() {
     if (formData) {
       const selectedIds = selectedOptions.map((option: any) => option.value);
       setFormData({ ...formData, id_sensores: selectedIds });
-      
-      const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
-      setSensoresSelecionados(sensoresSelecionados);
     }
   };
 
   const handleSubmitEstacao = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData) {
+    if (formData && id) {
       try {
-        const responseEstacao = await editarEstacao(formData);
-
+        const updatedData: Estacao = {
+          ...formData,
+          id: Number(id), 
+          
+        };
+  
+        const responseEstacao = await editarEstacao(updatedData);
+  
         if (responseEstacao.errors && responseEstacao.errors.length > 0) {
-          console.error('Erro na resposta da API:', responseEstacao.errors);
           setMensagem("Erro ao atualizar estação: " + responseEstacao.errors.join(", "));
         } else {
-          console.log('Sucesso:', responseEstacao);
           setMensagem("Estação atualizada com sucesso!");
+  
+          const estacaoId = parseInt(id, 10);
+          const sensoresAntigos = formData.sensores ? formData.sensores.map(sensor => sensor.id) : [];
+          const sensoresNovos = formData.id_sensores;          
+          const sensoresParaRemover = sensoresAntigos.filter(sensorId => !sensoresNovos.includes(sensorId));
+          for (const sensorId of sensoresParaRemover) {
+            console.log(`Removendo sensor ${sensorId} da estação ${estacaoId}`);
+            try {
+              await removerSensor(estacaoId, sensorId);
+            } catch (error) {
+              console.error(`Erro ao remover sensor ${sensorId}:`, error);
+              
+            }
+          }  
+          
+          const sensoresParaAdicionar = sensoresNovos.filter(sensorId => !sensoresAntigos.includes(sensorId));
+          for (const sensorId of sensoresParaAdicionar) {
+            console.log(`Adicionando sensor ${sensorId} à estação ${estacaoId}`);
+            try {
+              await adicionarSensor(estacaoId, sensorId);
+            } catch (error) {
+              console.error(`Erro ao adicionar sensor ${sensorId}:`, error);              
+            }
+          }
+            
+          setFormData(prevFormData => {
+            if (!prevFormData) return prevFormData;
+            return {
+              ...prevFormData,
+              sensores: sensores.filter(sensor => sensoresNovos.includes(sensor.id))
+            };
+          });
+  
+          navigate('/lista/estacoes');
         }
       } catch (error) {
-        console.error('Erro:', error);
+        console.error('Erro ao atualizar estação:', error);
         setMensagem("Erro ao atualizar estação. Verifique os dados e tente novamente.");
       }
     }

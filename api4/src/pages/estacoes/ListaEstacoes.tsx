@@ -1,31 +1,44 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import { Estacao } from "../../types/Estacao";
 import "./css/ListaEstacoes.css"; 
 import { listarEstacoes, deletarEstacao } from "../../services/estacaoServices";
 import { ClipLoader } from "react-spinners"; 
-import { FaEdit, FaTrash } from 'react-icons/fa'; 
+import { FaEdit, FaTrash, FaChevronDown, FaChevronUp } from 'react-icons/fa'; 
 
 export function ListaEstacoes() {
   const [estacoes, setEstacoes] = useState<Estacao[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedRows, setExpandedRows] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchEstacoes = async () => {
+    const fetchEstacoesESensores = async () => {
       try {
-        const response = await listarEstacoes();
-        if (!response || !response.data) {
+        const responseEstacoes = await listarEstacoes();
+
+        if (!responseEstacoes || !responseEstacoes.data) {
           throw new Error("Resposta da API não é válida.");
         }
-        if (response.data.rows) {
-          setEstacoes(response.data.rows);
+
+        if (responseEstacoes.data.rows) {
+          const estacoesAjustadas = responseEstacoes.data.rows.map((estacao: any) => ({
+            id: estacao.id,
+            nome: estacao.nome,
+            endereco: estacao.endereco,
+            latitude: parseFloat(estacao.latitude),
+            longitude: parseFloat(estacao.longitude),
+            mac_address: estacao.mac_address,
+            sensores: estacao.sensores || []
+          }));
+          
+          setEstacoes(estacoesAjustadas);
         } else {
           throw new Error("Formato de resposta da API inesperado.");
         }
       } catch (err) {
-        console.error("Erro ao buscar estações:", err);
+        console.error("Erro ao buscar estações e sensores:", err);
         if (err instanceof Error) {
           setError(err.message);
         } else {
@@ -36,7 +49,7 @@ export function ListaEstacoes() {
       }
     };
 
-    fetchEstacoes();
+    fetchEstacoesESensores();
   }, []);
 
   const handleDelete = async (id: number) => {
@@ -49,6 +62,12 @@ export function ListaEstacoes() {
         setError("Erro ao excluir estação. Tente novamente.");
       }
     }
+  };
+
+  const toggleRowExpansion = (id: number) => {
+    setExpandedRows(prevState =>
+      prevState.includes(id) ? prevState.filter(rowId => rowId !== id) : [...prevState, id]
+    );
   };
 
   if (isLoading) {
@@ -88,6 +107,28 @@ export function ListaEstacoes() {
       name: 'MAC Address',
       selector: (row: Estacao) => row.mac_address,
       sortable: true,
+    },
+    {
+      name: 'Sensores',
+      cell: (row: Estacao) => (
+        <div>
+          {row.sensores && row.sensores.length > 1 ? (
+            <button onClick={() => toggleRowExpansion(row.id!)} className="icon-button">
+              {expandedRows.includes(row.id!) ? <FaChevronUp /> : <FaChevronDown />}
+            </button>
+          ) : (
+            row.sensores ? row.sensores.map(sensor => sensor.nome).join(', ') : 'Nenhum sensor'
+          )}
+          {row.sensores && expandedRows.includes(row.id!) && (
+            <div className="sensor-list">
+              {row.sensores.map(sensor => (
+                <div key={sensor.id}>{sensor.nome}</div>
+              ))}
+            </div>
+          )}
+        </div>
+      ),
+      sortable: false,
     },
     {
       name: 'Ações',

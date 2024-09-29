@@ -50,7 +50,7 @@ export function CadastroParametro() {
     console.log("Form Data before submit:", formData); 
 
     try {
-      const responseParametro = await cadastrarParametro(formData); // Enviando o formData diretamente
+      const responseParametro = await cadastrarParametro(formData); 
       
       console.log("Response from cadastrarParametro:", responseParametro);
       
@@ -59,7 +59,7 @@ export function CadastroParametro() {
       } else {
         setMensagem("Parâmetro cadastrado com sucesso!");
         setFormData({
-          unidade_medida: { id: 0 }, // Resetando para um objeto
+          unidade_medida: { id: 0 }, 
           nome: '',
           fator: 0,
           offset: 0,
