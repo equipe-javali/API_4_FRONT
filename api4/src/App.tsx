@@ -18,6 +18,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* rotas Login */}
+        <Route path="/login" element={<Login />} />
+
         <Route element={<BaseLateralHeader />}>
           <Route path="/cadastro/estacao" element={<CadastroEstacao />} />          
           <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
@@ -32,9 +35,6 @@ function App() {
           <Route path="/cadastro/sensor" element={<CadastroSensor />} />
           <Route path="/edita/sensor/:id" element={<EditaSensor />} />
           <Route path="/lista/sensores" element={<ListaSensores />} />
-
-          {/* rotas Login */}
-          <Route path="/login" element={<Login />} />
 
           {/* rotas Usuário */}
           <Route path="/perfil" element={<Perfil />} />
