@@ -6,5 +6,5 @@ export interface Estacao {
   longitude: number;
   mac_address: string;    
   id_sensores: Array<number>;
-  sensores?: Array<{ id: number; nome: string }>; // Adicione esta linha
+  sensores?: Array<{ id: number; nome: string }>; 
 }

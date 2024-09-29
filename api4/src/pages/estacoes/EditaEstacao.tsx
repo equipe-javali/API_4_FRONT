@@ -74,7 +74,7 @@ export function EditaEstacao() {
         const updatedData: Estacao = {
           ...formData,
           id: Number(id), 
-          // Não envie id_sensores na requisição para /atualizar
+          
         };
   
         const responseEstacao = await editarEstacao(updatedData);
@@ -86,9 +86,7 @@ export function EditaEstacao() {
   
           const estacaoId = parseInt(id, 10);
           const sensoresAntigos = formData.sensores ? formData.sensores.map(sensor => sensor.id) : [];
-          const sensoresNovos = formData.id_sensores;
-  
-          // 1. Remover sensores antigos
+          const sensoresNovos = formData.id_sensores;          
           const sensoresParaRemover = sensoresAntigos.filter(sensorId => !sensoresNovos.includes(sensorId));
           for (const sensorId of sensoresParaRemover) {
             console.log(`Removendo sensor ${sensorId} da estação ${estacaoId}`);
@@ -96,23 +94,20 @@ export function EditaEstacao() {
               await removerSensor(estacaoId, sensorId);
             } catch (error) {
               console.error(`Erro ao remover sensor ${sensorId}:`, error);
-              // Lidar com o erro de remoção, se necessário
+              
             }
-          }
-  
-          // 2. Adicionar novos sensores
+          }  
+          
           const sensoresParaAdicionar = sensoresNovos.filter(sensorId => !sensoresAntigos.includes(sensorId));
           for (const sensorId of sensoresParaAdicionar) {
             console.log(`Adicionando sensor ${sensorId} à estação ${estacaoId}`);
             try {
               await adicionarSensor(estacaoId, sensorId);
             } catch (error) {
-              console.error(`Erro ao adicionar sensor ${sensorId}:`, error);
-              // Lidar com o erro de adição, se necessário
+              console.error(`Erro ao adicionar sensor ${sensorId}:`, error);              
             }
           }
-  
-          // 3. Atualizar formData (mantendo a lógica anterior)
+            
           setFormData(prevFormData => {
             if (!prevFormData) return prevFormData;
             return {

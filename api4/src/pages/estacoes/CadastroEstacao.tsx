@@ -43,9 +43,7 @@ export function CadastroEstacao() {
 
   const handleSelectChange = (selectedOptions: any) => {
     const selectedIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    setFormData({ ...formData, id_sensores: selectedIds });
-
-    // Atualizar os sensores selecionados
+    setFormData({ ...formData, id_sensores: selectedIds });    
     const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
     setSensoresSelecionados(sensoresSelecionados);
   };
@@ -61,8 +59,7 @@ export function CadastroEstacao() {
       } else {
         console.log('Sucesso:', responseEstacao);
         setMensagem("Estação cadastrada com sucesso!");
-
-        // Associar sensores à estação
+        
         const estacaoId = responseEstacao.data.id;
         for (const sensorId of formData.id_sensores) {
           await adicionarSensor(estacaoId, sensorId);
