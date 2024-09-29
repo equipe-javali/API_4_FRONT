@@ -74,40 +74,53 @@ export function EditaEstacao() {
         const updatedData: Estacao = {
           ...formData,
           id: Number(id), 
+          // Não envie id_sensores na requisição para /atualizar
         };
-
-        console.log('Dados a serem enviados:', updatedData); 
-
+  
         const responseEstacao = await editarEstacao(updatedData);
-        console.log('Resposta da API editarEstacao:', responseEstacao); 
-
+  
         if (responseEstacao.errors && responseEstacao.errors.length > 0) {
           setMensagem("Erro ao atualizar estação: " + responseEstacao.errors.join(", "));
         } else {
           setMensagem("Estação atualizada com sucesso!");
-
-          // Remover sensores antigos
-          const estacaoId = parseInt(id, 10); // Converter para número
+  
+          const estacaoId = parseInt(id, 10);
           const sensoresAntigos = formData.sensores ? formData.sensores.map(sensor => sensor.id) : [];
           const sensoresNovos = formData.id_sensores;
-
-          // Sensores a serem removidos
+  
+          // 1. Remover sensores antigos
           const sensoresParaRemover = sensoresAntigos.filter(sensorId => !sensoresNovos.includes(sensorId));
-          // Sensores a serem adicionados
-          const sensoresParaAdicionar = sensoresNovos.filter(sensorId => !sensoresAntigos.includes(sensorId));
-
-          // Remover sensores antigos
           for (const sensorId of sensoresParaRemover) {
-            console.log(`Removendo sensor ${sensorId} da estação ${estacaoId}`); 
-            await removerSensor(estacaoId, sensorId);
+            console.log(`Removendo sensor ${sensorId} da estação ${estacaoId}`);
+            try {
+              await removerSensor(estacaoId, sensorId);
+            } catch (error) {
+              console.error(`Erro ao remover sensor ${sensorId}:`, error);
+              // Lidar com o erro de remoção, se necessário
+            }
           }
-
-          // Adicionar novos sensores
+  
+          // 2. Adicionar novos sensores
+          const sensoresParaAdicionar = sensoresNovos.filter(sensorId => !sensoresAntigos.includes(sensorId));
           for (const sensorId of sensoresParaAdicionar) {
-            console.log(`Adicionando sensor ${sensorId} à estação ${estacaoId}`); 
-            await adicionarSensor(estacaoId, sensorId);
+            console.log(`Adicionando sensor ${sensorId} à estação ${estacaoId}`);
+            try {
+              await adicionarSensor(estacaoId, sensorId);
+            } catch (error) {
+              console.error(`Erro ao adicionar sensor ${sensorId}:`, error);
+              // Lidar com o erro de adição, se necessário
+            }
           }
-
+  
+          // 3. Atualizar formData (mantendo a lógica anterior)
+          setFormData(prevFormData => {
+            if (!prevFormData) return prevFormData;
+            return {
+              ...prevFormData,
+              sensores: sensores.filter(sensor => sensoresNovos.includes(sensor.id))
+            };
+          });
+  
           navigate('/lista/estacoes');
         }
       } catch (error) {

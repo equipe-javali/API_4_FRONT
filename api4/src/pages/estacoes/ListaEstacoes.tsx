@@ -5,12 +5,13 @@ import { Estacao } from "../../types/Estacao";
 import "./css/ListaEstacoes.css"; 
 import { listarEstacoes, deletarEstacao } from "../../services/estacaoServices";
 import { ClipLoader } from "react-spinners"; 
-import { FaEdit, FaTrash } from 'react-icons/fa'; 
+import { FaEdit, FaTrash, FaChevronDown, FaChevronUp } from 'react-icons/fa'; 
 
 export function ListaEstacoes() {
   const [estacoes, setEstacoes] = useState<Estacao[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedRows, setExpandedRows] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchEstacoesESensores = async () => {
@@ -63,6 +64,12 @@ export function ListaEstacoes() {
     }
   };
 
+  const toggleRowExpansion = (id: number) => {
+    setExpandedRows(prevState =>
+      prevState.includes(id) ? prevState.filter(rowId => rowId !== id) : [...prevState, id]
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="spinner-container">
@@ -103,7 +110,24 @@ export function ListaEstacoes() {
     },
     {
       name: 'Sensores',
-      selector: (row: Estacao) => row.sensores ? row.sensores.map(sensor => sensor.nome).join(', ') : 'Nenhum sensor',
+      cell: (row: Estacao) => (
+        <div>
+          {row.sensores && row.sensores.length > 1 ? (
+            <button onClick={() => toggleRowExpansion(row.id!)} className="icon-button">
+              {expandedRows.includes(row.id!) ? <FaChevronUp /> : <FaChevronDown />}
+            </button>
+          ) : (
+            row.sensores ? row.sensores.map(sensor => sensor.nome).join(', ') : 'Nenhum sensor'
+          )}
+          {row.sensores && expandedRows.includes(row.id!) && (
+            <div className="sensor-list">
+              {row.sensores.map(sensor => (
+                <div key={sensor.id}>{sensor.nome}</div>
+              ))}
+            </div>
+          )}
+        </div>
+      ),
       sortable: false,
     },
     {
