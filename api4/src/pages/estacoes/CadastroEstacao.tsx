@@ -116,7 +116,7 @@ export function CadastroEstacao() {
                   type="text"
                   className="input"
                   placeholder="Digite o nome..."
-                  name="nome"
+                  name="nome" 
                   value={formData.nome}
                   onChange={handleChange} />
               </div>
