@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import BaseLateralHeader from './components/BaseLateralHeader';
 import { CadastroEstacao } from './pages/estacoes/CadastroEstacao';
-import Home from './pages/Home';
 import { CadastroParametro } from './pages/Parametros/CadastroParametros';
 import { ListaParametros } from './pages/Parametros/ListaParametro';
 import { EditarParametro } from './pages/Parametros/EditarParametro';
@@ -10,6 +9,7 @@ import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 import { ListaSensores } from './pages/Sensores/ListaSensores';
 import { EditaSensor } from './pages/Sensores/EditaSensor';
+import Home from './pages/Home';
 import Login from './pages/estacoes/Login';
 import CadastrarAdministrador from './pages/estacoes/CadastroAdm'
 import Perfil from './pages/estacoes/Perfil';
@@ -23,6 +23,8 @@ function App() {
         <Route path="/cadastro" element={<CadastrarAdministrador />} />
 
         <Route element={<BaseLateralHeader />}>
+          <Route path="/home" element={<Home />} />
+
           <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
           <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
           <Route path="/lista/estacoes" element={<ListaEstacoes />} />

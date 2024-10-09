@@ -32,7 +32,7 @@ const Login: React.FC = () => {
 
         console.log('Login bem-sucedido:', response.data);
         
-        navigate('/perfil');
+        navigate('/home');
       } else {
         setErrorMessage('Erro ao fazer login. Por favor, tente novamente.');
       }
