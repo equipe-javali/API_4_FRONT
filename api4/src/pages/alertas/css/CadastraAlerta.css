@@ -1,4 +1,4 @@
-.cadastro-estacao .container {
+.cadastro-alerta .container {
     padding: 15px;    
     background-color: white;
     width: 60vw; 
@@ -7,7 +7,7 @@
     min-height: 30vh; 
 }
 
-.cadastro-estacao .text-wrapper-titulo {
+.cadastro-alerta .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
     font-size: 30px; /* Reduz o tamanho da fonte */
@@ -15,24 +15,24 @@
     margin-top: 20px; /* Reduz a margem superior */
 }
 
-.cadastro-estacao .content {
+.cadastro-alerta .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.cadastro-estacao .form {
+.cadastro-alerta .form {
     flex: 1;
     padding-left: 10px;
     padding-right: 30px;
 }
 
-.cadastro-estacao .form-group {
+.cadastro-alerta .form-group {
     margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
     padding: 8px;
 }
 
-.cadastro-estacao .text-wrapper {
+.cadastro-alerta .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px; /* Reduz o tamanho da fonte */
@@ -40,7 +40,7 @@
     display: block;
 }
 
-.cadastro-estacao .input {
+.cadastro-alerta .input {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
@@ -52,7 +52,7 @@
     padding: 5px 10px;
 }
 
-.cadastro-estacao .select {
+.cadastro-alerta .select {
     background-color: #f8f8f8;
     border: none;
     border-radius: 10px;
@@ -64,7 +64,7 @@
     padding: 20px 10px;
 }
 
-.cadastro-estacao .button {
+.cadastro-alerta .button {
     background-color: #0178d4;
     border-radius: 5px;
     height: 47px;

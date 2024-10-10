@@ -128,7 +128,7 @@ export function EditarParametro() {
     }
 
     return (
-        <div className="editar-parametro">
+        <div className="cadastro-parametro">
             <div className="container">
                 <h2 className="text-wrapper-titulo">Editar Parâmetro</h2>
                 <form onSubmit={handleSubmit}>
