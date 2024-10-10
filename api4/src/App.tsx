@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Login from './pages/estacoes/Login';
 import CadastrarAdministrador from './pages/estacoes/CadastroAdm'
 import Perfil from './pages/estacoes/Perfil';
+import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
           <Route path="/cadastro/sensor" element={<CadastroSensor />} />
           <Route path="/edita/sensor/:id" element={<EditaSensor />} />
           <Route path="/lista/sensores" element={<ListaSensores />} />
+
+          {/* rotas alertas */}
+          <Route path="/cadastro/alerta" element={<CadastroAlerta />} />         
+
 
           {/* rotas Usuário */}
           <Route path="/perfil" element={<Perfil />} />

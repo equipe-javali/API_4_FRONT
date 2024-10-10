@@ -10,7 +10,8 @@ const BaseLateralHeader = () => {
       <SideMenu links={[
         ["Estação", "cadastro/estacao", "lista/estacoes", <FaCogs />],
         ["Parâmetro", "cadastro/parametro", "lista/parametros", <FaPlus />],
-        ["Sensor", "cadastro/sensor", "lista/sensores", <FaThermometerHalf />]
+        ["Sensor", "cadastro/sensor", "lista/sensores", <FaThermometerHalf />],
+        ["Alerta", "cadastro/alerta", "lista/alertas", <FaClipboardList />]
       ]} />
       <div id="app-content-tb">
         <Outlet />

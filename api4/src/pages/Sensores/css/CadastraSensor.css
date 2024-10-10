@@ -1,15 +1,3 @@
-/* .cadastro-sensor {
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    padding-right: 0px ;
-    padding-left: 0px ; 
-    padding-bottom: 30px;
-} */
-
 .cadastro-sensor .container {
     padding: 15px;    
     background-color: white;
@@ -22,9 +10,9 @@
 .cadastro-sensor .text-wrapper-titulo {
     color: #020202;
     font-family: "Onest-Regular", Helvetica;
-    font-size: 30px; /* Reduz o tamanho da fonte */
+    font-size: 30px; 
     text-align: center;
-    margin-top: 20px; /* Reduz a margem superior */
+    margin-top: 20px; 
 }
 
 .cadastro-sensor .content {
@@ -40,14 +28,14 @@
 }
 
 .cadastro-sensor .form-group {
-    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
+    margin-bottom: 5px; 
     padding: 8px;
 }
 
 .cadastro-sensor .text-wrapper {
     color: #40587e;
     font-family: "Inter-Regular", Helvetica;
-    font-size: 20px; /* Reduz o tamanho da fonte */
+    font-size: 20px;
     margin-bottom: 10px;
     display: block;
 }
@@ -88,8 +76,7 @@
     text-align: center;
     line-height: 47px;
     border: none;
-    cursor: pointer;
-    display: block;
+    cursor: pointer;    
     margin: 0 auto;
 }
 

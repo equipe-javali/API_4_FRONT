@@ -5,4 +5,6 @@ export default interface Alerta {
   nome: string;
   condicao: string; 
   valor: number;  
+  id_parametro: number;
+  id_estacao: number;
 }

@@ -63,24 +63,6 @@
     padding: 20px 10px; 
 }
 
-.cadastro-estacao .button {
-    background-color: #0178d4;
-    border-radius: 5px;
-    height: 47px;
-    width: 198px;
-    color: #edf4ff;
-    font-family: "Kantumruy-Regular", Helvetica;
-    font-size: 24px;
-    font-weight: 400;
-    text-align: center;
-    line-height: 47px;
-    border: none;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-}
-
-
 .success-message {
     color: green;
     margin-bottom: 10px;
