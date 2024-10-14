@@ -43,7 +43,8 @@ function App() {
 
           {/* rotas alertas */}
           <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
-          <Route path="/edita/alerta/:id" element={<EditaAlerta />} />       
+          <Route path="/edita/alerta/:id" element={<EditaAlerta />} />   
+              
 
 
           {/* rotas Usuário */}
