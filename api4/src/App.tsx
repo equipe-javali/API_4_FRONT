@@ -14,6 +14,7 @@ import Login from './pages/estacoes/Login';
 import CadastrarAdministrador from './pages/estacoes/CadastroAdm'
 import Perfil from './pages/estacoes/Perfil';
 import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
+import { ListaAlertas } from './pages/alertas/ListaAlerta';
 
 function App() {
   return (
@@ -41,7 +42,9 @@ function App() {
           <Route path="/lista/sensores" element={<ListaSensores />} />
 
           {/* rotas alertas */}
-          <Route path="/cadastro/alerta" element={<CadastroAlerta />} />         
+          <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
+          {/* <Route path="/edita/alerta/:id" element={<CadastroAlerta />} /> */}
+          <Route path="/lista/alertas" element={<ListaAlertas />} />       
 
 
           {/* rotas Usuário */}
