@@ -3,32 +3,39 @@ import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import "./css/ListaAlertas.css"; 
 import { listarAlertas, deletarAlerta } from "../../services/alertaServices";
+import { listarEstacoes } from "../../services/estacaoServices";
+import { listarParametros } from "../../services/parametroServices";
 import { ClipLoader } from "react-spinners"; 
-import { FaEdit, FaTrash, FaChevronDown, FaChevronUp } from 'react-icons/fa'; 
+import { FaEdit, FaTrash } from 'react-icons/fa'; 
 import Alerta from "../../types/Alerta";
+import { Estacao } from "../../types/Estacao";
+import { Parametro } from "../../types/Parametro";
 
 export function ListaAlertas() {
   const [alertas, setAlertas] = useState<Alerta[]>([]);
+  const [estacoes, setEstacoes] = useState<Estacao[]>([]);
+  const [parametros, setParametros] = useState<Parametro[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [expandedRows, setExpandedRows] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchAlertas = async () => {
+    const fetchData = async () => {
       try {
-        const responseAlertas = await listarAlertas();
+        const [responseAlertas, responseEstacoes, responseParametros] = await Promise.all([
+          listarAlertas(),
+          listarEstacoes(),
+          listarParametros()
+        ]);
 
-        if (!responseAlertas || !responseAlertas.data) {
+        if (!responseAlertas || !responseAlertas.data || !responseEstacoes || !responseEstacoes.data || !responseParametros || !responseParametros.data) {
           throw new Error("Resposta da API não é válida.");
         }
 
-        if (responseAlertas.data.rows) {
-          setAlertas(responseAlertas.data.rows);
-        } else {
-          throw new Error("Formato de resposta da API inesperado.");
-        }
+        setAlertas(responseAlertas.data.rows);
+        setEstacoes(responseEstacoes.data.rows);
+        setParametros(responseParametros.data.rows);
       } catch (err) {
-        console.error("Erro ao buscar alertas:", err);
+        console.error("Erro ao buscar dados:", err);
         if (err instanceof Error) {
           setError(err.message);
         } else {
@@ -39,7 +46,7 @@ export function ListaAlertas() {
       }
     };
 
-    fetchAlertas();
+    fetchData();
   }, []);
 
   const handleDelete = async (id: number) => {
@@ -54,12 +61,6 @@ export function ListaAlertas() {
     }
   };
 
-  const toggleRowExpansion = (id: number) => {
-    setExpandedRows(prevState =>
-      prevState.includes(id) ? prevState.filter(rowId => rowId !== id) : [...prevState, id]
-    );
-  };
-
   if (isLoading) {
     return (
       <div className="spinner-container">
@@ -72,31 +73,46 @@ export function ListaAlertas() {
     return <div className="error-message">{error}</div>;
   }
 
+  const getEstacaoNome = (id: number) => {
+    const estacao = estacoes.find(estacao => estacao.id === id);
+    return estacao ? estacao.nome : 'N/A';
+  };
+
+  const getParametroNome = (id: number) => {
+    const parametro = parametros.find(parametro => parametro.id === id);
+    return parametro ? parametro.nome : 'N/A';
+  };
+
   const columns = [
     {
       name: 'Nome',
       selector: (row: Alerta) => row.nome,
       sortable: true,
+      wrap: true,
     },
     {
       name: 'Condição',
       selector: (row: Alerta) => row.condicao,
       sortable: true,
+      wrap: true,
     },
     {
       name: 'Valor',
       selector: (row: Alerta) => row.valor,
       sortable: true,
+      wrap: true,
     },
     {
       name: 'Estação',
-      selector: (row: Alerta) => row.id_estacao,
+      selector: (row: Alerta) => getEstacaoNome(row.id_estacao),
       sortable: true,
+      wrap: true,
     },
     {
       name: 'Parâmetro',
-      selector: (row: Alerta) => row.id_parametro,
+      selector: (row: Alerta) => getParametroNome(row.id_parametro),
       sortable: true,
+      wrap: true,
     },
     {
       name: 'Ações',
