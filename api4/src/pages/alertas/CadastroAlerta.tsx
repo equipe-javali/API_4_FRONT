@@ -69,7 +69,7 @@ export function CadastroAlerta() {
           condicao: '', 
           valor: 0,  
           id_parametro: 0,
-          id_estacao: 0, // Resetar o campo id_estacao
+          id_estacao: 0,
         });
       }
     } catch (error) {
@@ -105,9 +105,9 @@ export function CadastroAlerta() {
   }));
 
   return (
-    <div className="cadastro-parametro">
+    <div className="cadastro-alerta">
       <div className="container">
-        <h2 className="text-wrapper">Cadastrar alerta</h2>
+        <h2 className="text-wrapper-titulo">Cadastrar alerta</h2>
         <form onSubmit={handleSubmitAlerta}>
           <div className="form-group">
             <label className="text-wrapper">Nome</label>
