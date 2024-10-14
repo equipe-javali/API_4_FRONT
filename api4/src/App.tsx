@@ -15,6 +15,8 @@ import CadastrarAdministrador from './pages/estacoes/CadastroAdm'
 import Perfil from './pages/estacoes/Perfil';
 import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
 import { EditaAlerta } from './pages/alertas/EditaAlerta';
+import { ListaAlertas } from './pages/alertas/ListaAlerta';
+
 
 function App() {
   return (
@@ -43,9 +45,8 @@ function App() {
 
           {/* rotas alertas */}
           <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
-          <Route path="/edita/alerta/:id" element={<EditaAlerta />} />   
-              
-
+          <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
+          <Route path="/lista/alertas" element={<ListaAlertas />} />       
 
           {/* rotas Usuário */}
           <Route path="/perfil" element={<Perfil />} />
