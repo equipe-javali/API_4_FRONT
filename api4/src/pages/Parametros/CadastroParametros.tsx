@@ -8,8 +8,8 @@ export function CadastroParametro() {
   const [formData, setFormData] = useState({
     unidade_medida: { id: 0 }, 
     nome: '',
-    fator: 0,
-    offset: 0,
+    fator: 1,
+    offset: '0',
     nome_json: ''
   });
 
@@ -38,7 +38,7 @@ export function CadastroParametro() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: name === 'fator' || name === 'offset' ? parseFloat(value) : value });
+    setFormData({ ...formData, [name]: name === 'fator' ? parseFloat(value) : value });
   };
 
   const handleSelectChange = (selectedOption: any) => {
@@ -50,7 +50,12 @@ export function CadastroParametro() {
     console.log("Form Data before submit:", formData); 
 
     try {
-      const responseParametro = await cadastrarParametro(formData); 
+      const dataToSubmit = {
+        ...formData,
+        offset: parseFloat(formData.offset) 
+      };
+
+      const responseParametro = await cadastrarParametro(dataToSubmit); 
       
       console.log("Response from cadastrarParametro:", responseParametro);
       
@@ -61,8 +66,8 @@ export function CadastroParametro() {
         setFormData({
           unidade_medida: { id: 0 }, 
           nome: '',
-          fator: 0,
-          offset: 0,
+          fator: 1,
+          offset: '0', 
           nome_json: ''
         });
       }
@@ -134,7 +139,10 @@ export function CadastroParametro() {
                   placeholder="Digite o offset..."
                   name="offset"
                   value={formData.offset}
-                  onChange={handleChange} />
+                  onChange={handleChange} 
+                  step = "any"
+                  />
+
               </div>
               <div className="form-group">
                 <label className="text-wrapper">Nome JSON</label>

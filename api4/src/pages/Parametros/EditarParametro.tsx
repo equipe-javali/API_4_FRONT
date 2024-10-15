@@ -58,19 +58,10 @@ export function EditarParametro() {
             const { name, value } = e.target;
             setFormData({ 
                 ...formData, 
-                [name]: name === 'fator' || name === 'offset' ? parseFloat(value) : value 
+                [name]: name === 'fator' ? parseFloat(value) : value 
             });
         }
-    };
-
-    const handleSelectChange = (selectedOption: any) => {
-        if (formData) {
-            setFormData({ 
-                ...formData, 
-                unidade_medida: selectedOption ? { id: selectedOption.value } : { id: 0 } 
-            });
-        }
-    };
+    };    
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
