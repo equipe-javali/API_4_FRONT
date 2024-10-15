@@ -13,12 +13,19 @@ export function CadastroAlerta() {
     condicao: '', 
     valor: 0,  
     id_parametro: 0,
-    id_estacao: 0, // Adicionar o campo id_estacao
+    id_estacao: 0, 
   });  
 
   const [parametros, setParametros] = useState<Parametro[]>([]);
-  const [estacoes, setEstacoes] = useState<any[]>([]); // Adicionar estado para estações
+  const [estacoes, setEstacoes] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
+  const condicoesOptions = [
+    { value: '>', label: '>' },
+    { value: '<', label: '<' },
+    { value: '>=', label: '>=' },
+    { value: '<=', label: '<=' },
+    { value: '=', label: '=' }
+  ];
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -50,7 +57,7 @@ export function CadastroAlerta() {
   };
 
   const handleSelectChange = (selectedOption: any, action: any) => {
-    setFormData({ ...formData, [action.name]: selectedOption ? selectedOption.value : 0 });
+    setFormData({ ...formData, [action.name]: selectedOption ? selectedOption.value : '' });
   };
 
   const handleSubmitAlerta = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,13 +129,13 @@ export function CadastroAlerta() {
           </div>
           <div className="form-group">
             <label className="text-wrapper">Condição</label>
-            <input
-              type="text"
-              className="input"
-              placeholder="Condição"
+            <Select
               name="condicao"
-              value={formData.condicao}
-              onChange={handleChange}
+              options={condicoesOptions}
+              className="basic-single"
+              classNamePrefix="select"
+              onChange={(selectedOption) => handleSelectChange(selectedOption, { name: 'condicao' })}
+              value={condicoesOptions.find(option => option.value === formData.condicao) || null}
             />
           </div>
           <div className="form-group">

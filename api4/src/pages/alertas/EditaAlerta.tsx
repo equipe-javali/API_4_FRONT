@@ -16,6 +16,13 @@ export function EditaAlerta() {
   const [parametros, setParametros] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true); 
+  const condicoesOptions = [
+    { value: '>', label: '>' },
+    { value: '<', label: '<' },
+    { value: '>=', label: '>=' },
+    { value: '<=', label: '<=' },
+    { value: '=', label: '=' }
+  ];
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -141,13 +148,18 @@ export function EditaAlerta() {
               </div>
               <div className="form-group">
                 <label className="text-wrapper">Condição</label>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="Digite a condição..."
+                <Select
                   name="condicao"
-                  value={formData.condicao}
-                  onChange={handleChange} />
+                  options={condicoesOptions}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  onChange={(selectedOption) => {
+                    if (formData) {
+                      setFormData({ ...formData, condicao: selectedOption?.value || '' });
+                    }
+                  }}
+                  value={condicoesOptions.find(option => option.value === formData.condicao) || null}
+                />
               </div>
               <div className="form-group">
                 <label className="text-wrapper">Valor</label>
