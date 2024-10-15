@@ -95,6 +95,11 @@ export function ListaParametros() {
       sortable: true,
     },
     {
+      name: 'Nome JSON',
+      selector: (row: Record<string, any>) => row.nome_json || 'N/A',
+      sortable: true,
+    },
+    {
       name: 'Ações',
       cell: (row: Record<string, any>) => (
         <div>

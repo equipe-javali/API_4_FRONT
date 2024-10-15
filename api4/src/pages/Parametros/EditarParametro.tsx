@@ -172,6 +172,16 @@ export function EditarParametro() {
                                     onChange={handleChange} />
                             </div>
                             <div className="form-group">
+                                <label className="text-wrapper">Nome JSON</label>
+                                <input
+                                    type="text"
+                                    className="input"
+                                    placeholder="Digite o nome JSON..."
+                                    name="nome_json"
+                                    value={formData.nome_json ?? ''} 
+                                    onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
                                 <button className="button" type="submit">Atualizar</button>
                                 {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
                             </div>
