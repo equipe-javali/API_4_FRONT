@@ -16,6 +16,8 @@ import Perfil from './pages/estacoes/Perfil';
 import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
 import { EditaAlerta } from './pages/alertas/EditaAlerta';
 import { ListaAlertas } from './pages/alertas/ListaAlerta';
+import PrivateRoute from './components/PrivateRoute';
+import TesteComponent from './components/TesteComponent';
 
 
 function App() {
@@ -25,31 +27,36 @@ function App() {
         {/* rotas Login */}
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<CadastrarAdministrador />} />
+        <Route path="/teste" element={<TesteComponent />} />
 
         <Route element={<BaseLateralHeader />}>
-          <Route path="/home" element={<Home />} />
+          {/* ROTAS PROTEGIDAS */}
+          <Route element={<PrivateRoute />}>
+            {/* rotas Usuário */}
+            <Route path="/perfil" element={<Perfil />} />
+          </Route>
 
-          <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
-          <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
-          <Route path="/lista/estacoes" element={<ListaEstacoes />} />
+          {/* ROTAS PÚBLICAS */}
+            <Route path="/home" element={<Home />} />
 
-          {/* rotas parametros */}
-          <Route path="/cadastro/parametro" element={<CadastroParametro />} />
-          <Route path="/edita/parametro/:id" element={<EditarParametro />} />
-          <Route path="/lista/parametros" element={<ListaParametros />} />
+            <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
+            <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
+            <Route path="/lista/estacoes" element={<ListaEstacoes />} />
 
-          {/* rotas sensores */}
-          <Route path="/cadastro/sensor" element={<CadastroSensor />} />
-          <Route path="/edita/sensor/:id" element={<EditaSensor />} />
-          <Route path="/lista/sensores" element={<ListaSensores />} />
+            {/* rotas parametros */}
+            <Route path="/cadastro/parametro" element={<CadastroParametro />} />
+            <Route path="/edita/parametro/:id" element={<EditarParametro />} />
+            <Route path="/lista/parametros" element={<ListaParametros />} />
 
-          {/* rotas alertas */}
-          <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
-          <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
-          <Route path="/lista/alertas" element={<ListaAlertas />} />       
+            {/* rotas sensores */}
+            <Route path="/cadastro/sensor" element={<CadastroSensor />} />
+            <Route path="/edita/sensor/:id" element={<EditaSensor />} />
+            <Route path="/lista/sensores" element={<ListaSensores />} />
 
-          {/* rotas Usuário */}
-          <Route path="/perfil" element={<Perfil />} />
+            {/* rotas alertas */}
+            <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
+            <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
+            <Route path="/lista/alertas" element={<ListaAlertas />} />       
         </Route>
           <Route path="/" element={<Login />} />
       </Routes>

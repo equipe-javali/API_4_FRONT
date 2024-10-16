@@ -4,6 +4,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import './css/Perfil.css';
 
+import axiosJWT from '../../services/axiosJWT';
+
 const Perfil: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const [editable, setEditable] = useState(false);
@@ -34,7 +36,7 @@ const Perfil: React.FC = () => {
         senha: userData.senha
       };
 
-      const response = await axios.patch(`http://localhost:3001/usuario/atualizar`, updatedData);
+      const response = await axiosJWT.patch(`http://localhost:3001/usuario/atualizar`, updatedData);
 
       if (response.status === 200) {
         setEditable(false); 
@@ -54,7 +56,7 @@ const Perfil: React.FC = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      await axios.delete(`http://localhost:3001/usuario/deletar`, {
+      await axiosJWT.delete(`http://localhost:3001/usuario/deletar`, {
         data: { id: userData.id }
       });
       console.log('Conta deletada com sucesso!');
@@ -84,7 +86,7 @@ const Perfil: React.FC = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/usuario/${usuarioId}`);
+        const response = await axiosJWT.get(`http://localhost:3001/usuario/${usuarioId}`);
         if (response.status === 200) {
           setUserData({ ...response.data.data, senha: usuarioSenha });
         } else {

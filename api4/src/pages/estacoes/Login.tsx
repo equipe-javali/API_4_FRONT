@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./css/Login.css";
 
+import axiosJWT from "../../services/axiosJWT";
+
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', senha: '' });
   const [errorMessage, setErrorMessage] = useState('');
@@ -17,7 +19,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {      
-      const response = await axios.post('http://localhost:3001/usuario/login', formData, {
+      const response = await axiosJWT.post('http://localhost:3001/usuario/login', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -25,9 +27,10 @@ const Login: React.FC = () => {
   
       if (response.status === 200) {
         
-        const { id } = response.data.data; 
+        const { id, token } = response.data.data; 
         const { senha } = formData; 
         localStorage.setItem('usuarioId', id); 
+        localStorage.setItem('token', token);
         localStorage.setItem('usuarioSenha', senha); 
 
         console.log('Login bem-sucedido:', response.data);

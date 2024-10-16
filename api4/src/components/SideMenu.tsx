@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa'; // Importando FaHome
 import './css/SideMenu.css';
+import { useNavigate } from 'react-router-dom';
+
+import apiJWT from '../services/axiosJWT';
 
 interface SideMenuProps {
   links: [string, string, string, React.ReactNode][];
@@ -10,6 +13,7 @@ interface SideMenuProps {
 const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
   const [collMenu, setCollMenu] = useState(false);
   const [expandMenu, setExpandMenu] = useState(false);
+  const navigate = useNavigate();
 
   const handleExpandMenu = () => {
     const expand = document.getElementById('menu-expand');
@@ -34,6 +38,23 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
     } else {
       menu?.classList.remove('sideMenu-open');
       menu?.classList.add('sideMenu-close');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await apiJWT.post('/usuario/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    } finally {
+      localStorage.removeItem('usuarioId');
+      localStorage.removeItem('token');
+      localStorage.removeItem('usuarioSenha');
+      navigate('/login');
     }
   };
 
@@ -79,7 +100,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
               <div className='user-options'>
                 <p>Detalhes do usuário</p>
                 <button>Meu perfil</button>
-                <button>Sair <FaSignOutAlt /></button>
+                <button onClick={handleLogout}>Sair <FaSignOutAlt /></button>
               </div>
             </div>
             <button className='btn-collapse' onClick={handleCollapseMenu}>
@@ -120,7 +141,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
               <div className='user-name'>
                 <div id='menu-expand' className='expand-hidden'>
                   <Link to={'/perfil'} className='menu-link'>Meu perfil</Link>
-                  <Link to={'/'} className='menu-link'>Sair <FaSignOutAlt /></Link>
+                  <button onClick={handleLogout} className='menu-link'>Sair <FaSignOutAlt /></button>
                 </div>
                 <p>Detalhes do usuário</p>
                 <FaEllipsisV onClick={handleExpandMenu} />
