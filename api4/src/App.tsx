@@ -17,7 +17,6 @@ import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
 import { EditaAlerta } from './pages/alertas/EditaAlerta';
 import { ListaAlertas } from './pages/alertas/ListaAlerta';
 import PrivateRoute from './components/PrivateRoute';
-import TesteComponent from './components/TesteComponent';
 
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
         {/* rotas Login */}
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<CadastrarAdministrador />} />
-        <Route path="/teste" element={<TesteComponent />} />
 
         <Route element={<BaseLateralHeader />}>
           {/* ROTAS PROTEGIDAS */}
