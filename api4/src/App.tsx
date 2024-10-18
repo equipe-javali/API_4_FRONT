@@ -17,6 +17,7 @@ import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
 import { EditaAlerta } from './pages/alertas/EditaAlerta';
 import { ListaAlertas } from './pages/alertas/ListaAlerta';
 import PrivateRoute from './components/PrivateRoute';
+import HomePub from './pages/home/HomePub';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* rotas Login */}
+        <Route path="/home" element={<HomePub />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<CadastrarAdministrador />} />
 
@@ -35,8 +37,9 @@ function App() {
           </Route>
 
           {/* ROTAS PÚBLICAS */}
-            <Route path="/home" element={<Home />} />
+            <Route path="/homeAdm" element={<Home />} />
 
+            {/* rotas estacao */}
             <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
             <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
             <Route path="/lista/estacoes" element={<ListaEstacoes />} />
