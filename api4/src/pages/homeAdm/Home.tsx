@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
+import AlertView from '../../components/AlertView';
 
 export default function Home() {
     return (
@@ -24,6 +25,8 @@ export default function Home() {
                     <p>22°C</p>
                 </div>
             </section>
+
+            <AlertView />
 
             {/* <section className="features-section">
                 <h2>Funcionalidades Principais</h2>
