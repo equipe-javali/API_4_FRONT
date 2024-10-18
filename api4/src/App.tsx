@@ -27,6 +27,7 @@ function App() {
       <Routes>
         {/* rotas Login */}
         <Route element={ <BaseSuperior /> }>
+          <Route path="/" element={<HomePub />} />
           <Route path="/home" element={<HomePub />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<CadastrarAdministrador />} />
@@ -62,7 +63,7 @@ function App() {
             <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
             <Route path="/lista/alertas" element={<ListaAlertas />} />       
         </Route>
-          <Route path="/" element={<HomePub />} />
+          
       </Routes>
     </BrowserRouter>
   );
