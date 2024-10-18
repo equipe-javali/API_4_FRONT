@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
-import './css/Perfil.css';
+import './Perfil.css';
 
 import axiosJWT from '../../services/axiosJWT';
 

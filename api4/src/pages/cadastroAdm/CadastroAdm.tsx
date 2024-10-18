@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./css/CadastroAdm.css";
+import "./CadastroAdm.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface FormData {

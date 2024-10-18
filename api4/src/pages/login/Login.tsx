@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./css/Login.css";
+import "./Login.css";
 
 import axiosJWT from "../../services/axiosJWT";
 
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
 
         console.log('Login bem-sucedido:', response.data);
         
-        navigate('/home');
+        navigate('/homeAdm');
       } else {
         setErrorMessage('Erro ao fazer login. Por favor, tente novamente.');
       }

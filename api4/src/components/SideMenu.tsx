@@ -88,7 +88,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
             <div className='collapse-icon'><FaHome /></div>
             <div id='collapse-expand'>
               <p>Home</p>
-              <Link to="home" className="menu-link">
+              <Link to="homeAdm" className="menu-link">
                 <p className='link-text'>Ir para Home</p>
               </Link>
             </div>
@@ -114,7 +114,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
 
           <details className='menu-details'>
             <summary><FaHome /> Home</summary>
-            <Link to="home" className="menu-link">
+            <Link to="homeAdm" className="menu-link">
               <p className='link-text'>Ir para Home</p>
             </Link>
           </details>

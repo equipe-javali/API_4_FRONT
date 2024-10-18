@@ -1,13 +1,13 @@
 import React from 'react';
-import '../components/css/Home.css';
+import './Home.css';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
     return (
         <div className="home-container">
             <header className="home-header">
-                <h1>Gerenciamento de Clima</h1>
-                <p>Monitoramento de estações e sensores para uma gestão eficiente do clima.</p>
+                <h1>Bem vindo!</h1>
+                <p>Monitore estações e sensores para uma gestão eficiente do clima.</p>
             </header>
 
             <section className="statistics-section">
@@ -25,14 +25,14 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="features-section">
+            {/* <section className="features-section">
                 <h2>Funcionalidades Principais</h2>
                 <ul className="features-list">
                     <li>📊 Visualização em tempo real de dados de temperatura e umidade.</li>
                     <li>📈 Gráficos e relatórios históricos de clima.</li>
                     <li>🔔 Alertas para condições climáticas extremas.</li>
                 </ul>
-            </section>
+            </section> */}
 
             <div className="button-container">
                 <Link to="/lista/estacoes" className="button">Ver estações</Link>

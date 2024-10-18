@@ -9,15 +9,16 @@ import { ListaEstacoes } from './pages/estacoes/ListaEstacoes';
 import { CadastroSensor } from './pages/Sensores/CadastroSensor';
 import { ListaSensores } from './pages/Sensores/ListaSensores';
 import { EditaSensor } from './pages/Sensores/EditaSensor';
-import Home from './pages/Home';
-import Login from './pages/estacoes/Login';
-import CadastrarAdministrador from './pages/estacoes/CadastroAdm'
-import Perfil from './pages/estacoes/Perfil';
+import Home from './pages/homeAdm/Home';
+import Login from './pages/login/Login';
+import CadastrarAdministrador from './pages/cadastroAdm/CadastroAdm'
+import Perfil from './pages/perfil/Perfil';
 import { CadastroAlerta } from './pages/alertas/CadastroAlerta';
 import { EditaAlerta } from './pages/alertas/EditaAlerta';
 import { ListaAlertas } from './pages/alertas/ListaAlerta';
 import PrivateRoute from './components/PrivateRoute';
 import HomePub from './pages/home/HomePub';
+import BaseSuperior from './components/BaseSuperior';
 
 
 function App() {
@@ -25,9 +26,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* rotas Login */}
-        <Route path="/home" element={<HomePub />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<CadastrarAdministrador />} />
+        <Route element={ <BaseSuperior /> }>
+          <Route path="/home" element={<HomePub />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<CadastrarAdministrador />} />
+        </Route>
 
         <Route element={<BaseLateralHeader />}>
           {/* ROTAS PROTEGIDAS */}
@@ -59,7 +62,7 @@ function App() {
             <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
             <Route path="/lista/alertas" element={<ListaAlertas />} />       
         </Route>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<HomePub />} />
       </Routes>
     </BrowserRouter>
   );
