@@ -1,18 +1,16 @@
-#app-content-lr {
+#app-content-up {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
   }
   
-  #app-content-tb {
+
+#app-content-bt {
     background-color: #f7f7f7;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 5% 0 5% 15%;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 90vh;
   }
-  
-  
