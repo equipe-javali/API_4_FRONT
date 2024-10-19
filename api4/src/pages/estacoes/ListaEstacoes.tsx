@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // useNavigate para redirecionamento
 import { Estacao } from "../../types/Estacao";
 import "./css/ListaEstacoes.css"; 
 import { listarEstacoes, deletarEstacao } from "../../services/estacaoServices";
@@ -12,9 +12,28 @@ export function ListaEstacoes() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
+  const navigate = useNavigate(); // Para redirecionar
+
+  // Função para obter o token do local storage
+  const getToken = () => {
+    const token = localStorage.getItem('token'); // Busca o token armazenado
+    console.log("Token recebido:", token); // Log do token
+    return token;
+  };
 
   useEffect(() => {
     const fetchEstacoesESensores = async () => {
+      const token = getToken(); // Obter o token
+
+      // Verifica se o token existe
+      if (!token) {
+        setError("Usuário não autenticado. Faça login.");
+        navigate("/login"); // Redireciona para a página de login se o token não existir
+        return;
+      }
+
+      console.log("Iniciando a listagem de estações com o token:", token); // Log antes da requisição
+
       try {
         const responseEstacoes = await listarEstacoes();
 
@@ -34,6 +53,7 @@ export function ListaEstacoes() {
           }));
           
           setEstacoes(estacoesAjustadas);
+          console.log("Estações carregadas:", estacoesAjustadas); // Log das estações carregadas
         } else {
           throw new Error("Formato de resposta da API inesperado.");
         }
@@ -50,7 +70,7 @@ export function ListaEstacoes() {
     };
 
     fetchEstacoesESensores();
-  }, []);
+  }, [navigate]);
 
   const handleDelete = async (id: number) => {
     if (window.confirm("Tem certeza que deseja excluir esta estação?")) {
