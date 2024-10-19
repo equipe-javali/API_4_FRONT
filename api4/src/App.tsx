@@ -38,6 +38,12 @@ function App() {
           <Route element={<PrivateRoute />}>
             {/* rotas Usuário */}
             <Route path="/perfil" element={<Perfil />} />
+
+            {/* rotas sensores */}
+            <Route path="/cadastro/sensor" element={<CadastroSensor />} />
+            <Route path="/edita/sensor/:id" element={<EditaSensor />} />
+            <Route path="/lista/sensores" element={<ListaSensores />} />
+            
           </Route>
 
           {/* ROTAS PÚBLICAS */}
@@ -52,11 +58,6 @@ function App() {
             <Route path="/cadastro/parametro" element={<CadastroParametro />} />
             <Route path="/edita/parametro/:id" element={<EditarParametro />} />
             <Route path="/lista/parametros" element={<ListaParametros />} />
-
-            {/* rotas sensores */}
-            <Route path="/cadastro/sensor" element={<CadastroSensor />} />
-            <Route path="/edita/sensor/:id" element={<EditaSensor />} />
-            <Route path="/lista/sensores" element={<ListaSensores />} />
 
             {/* rotas alertas */}
             <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  

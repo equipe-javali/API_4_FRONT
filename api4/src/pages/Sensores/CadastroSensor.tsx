@@ -14,12 +14,12 @@ export function CadastroSensor() {
       nome: '',
       fator: 0,
       offset: 0,
-      nome_json:'',
+      nome_json: '',
       unidade_medida: {
         id: 0
       }
     }
-  });  
+  });
 
   const [parametros, setParametros] = useState<Parametro[]>([]);
   const [mensagem, setMensagem] = useState<string | null>(null);
@@ -52,8 +52,21 @@ export function CadastroSensor() {
 
   const handleSubmitSensor = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Obter o token do localStorage
+    const token = localStorage.getItem('token'); 
+    console.log('Token obtido:', token); // Verifica se o token foi obtido corretamente
+
+    if (!token) {
+      setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
+      return;
+    }
+
     try {
-      const responseSensor = await cadastrarSensor(formData);
+      // Passa o token no cabeçalho da requisição
+      console.log('FormData enviado:', formData); // Verifica os dados enviados
+      const responseSensor = await cadastrarSensor(formData, token);
+      console.log('Token enviado na requisição:', token); // Verifica se o token está sendo enviado corretamente
 
       if (responseSensor.errors && responseSensor.errors.length > 0) {
         console.error('Erro na resposta da API:', responseSensor.errors);
@@ -68,7 +81,7 @@ export function CadastroSensor() {
             nome: '',
             fator: 0,
             offset: 0,
-            nome_json:'',
+            nome_json: '',
             unidade_medida: {
               id: 0
             }
