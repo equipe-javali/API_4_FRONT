@@ -15,6 +15,18 @@ export function CadastroParametro() {
 
   const [unidadeOptions, setUnidadeOptions] = useState<any[]>([]);
   const [mensagem, setMensagem] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
+  // 1. Adiciona o useEffect para checar se o token está no localStorage
+  useEffect(() => {
+    const tokenSalvo = localStorage.getItem('token');
+    console.log('Token recebido do localStorage:', tokenSalvo); // Checando se o token está no localStorage
+    if (tokenSalvo) {
+      setToken(tokenSalvo);
+    } else {
+      setMensagem("Token não encontrado. Faça login novamente.");
+    }
+  }, []);
 
   useEffect(() => {
     const carregarUnidades = async () => {
@@ -49,16 +61,25 @@ export function CadastroParametro() {
     e.preventDefault();
     console.log("Form Data before submit:", formData); 
 
+    // 2. Checando se o token está disponível antes de tentar cadastrar
+    if (!token) {
+      setMensagem("Token inválido ou não encontrado. Não foi possível cadastrar o parâmetro.");
+      console.error("Erro: Tentativa de cadastro sem token.");
+      return; // Se o token não existir, não deixa prosseguir
+    }
+
     try {
       const dataToSubmit = {
         ...formData,
         offset: parseFloat(formData.offset) 
       };
 
-      const responseParametro = await cadastrarParametro(dataToSubmit); 
-      
+      console.log("Token sendo enviado com a requisição:", token); // Checa o token que está sendo enviado
+
+      const responseParametro = await cadastrarParametro(dataToSubmit, token); // Aqui passamos o token
+
       console.log("Response from cadastrarParametro:", responseParametro);
-      
+
       if (responseParametro.errors && responseParametro.errors.length > 0) {
         setMensagem("Erro ao cadastrar parâmetro: " + responseParametro.errors.join(", "));
       } else {

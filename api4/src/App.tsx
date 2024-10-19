@@ -43,16 +43,18 @@ function App() {
             <Route path="/cadastro/sensor" element={<CadastroSensor />} />
             <Route path="/edita/sensor/:id" element={<EditaSensor />} />
             <Route path="/lista/sensores" element={<ListaSensores />} />
-            
-          </Route>
-
-          {/* ROTAS PÚBLICAS */}
-            <Route path="/homeAdm" element={<Home />} />
 
             {/* rotas estacao */}
             <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
             <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
             <Route path="/lista/estacoes" element={<ListaEstacoes />} />
+
+            
+            
+          </Route>
+
+          {/* ROTAS PÚBLICAS */}
+            <Route path="/homeAdm" element={<Home />} />
 
             {/* rotas parametros */}
             <Route path="/cadastro/parametro" element={<CadastroParametro />} />
