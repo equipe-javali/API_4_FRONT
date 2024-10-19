@@ -3,9 +3,13 @@ import { Parametro } from '../types/Parametro';
 
 const API_URL = 'http://localhost:3001/parametro'; 
 
-export const cadastrarParametro = async (parametroData: Parametro) => { 
+export const cadastrarParametro = async (parametroData: Parametro, token: string) => { 
   try {
-    const response = await axios.post(`${API_URL}/cadastrar`, parametroData);
+    const response = await axios.post(`${API_URL}/cadastrar`, parametroData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data; 
   } catch (error) {
     console.error('Erro ao cadastrar parâmetro:', error);

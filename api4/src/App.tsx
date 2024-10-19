@@ -38,10 +38,11 @@ function App() {
           <Route element={<PrivateRoute />}>
             {/* rotas Usuário */}
             <Route path="/perfil" element={<Perfil />} />
-          </Route>
 
-          {/* ROTAS PÚBLICAS */}
-            <Route path="/homeAdm" element={<Home />} />
+            {/* rotas sensores */}
+            <Route path="/cadastro/sensor" element={<CadastroSensor />} />
+            <Route path="/edita/sensor/:id" element={<EditaSensor />} />
+            <Route path="/lista/sensores" element={<ListaSensores />} />
 
             {/* rotas estacao */}
             <Route path="/cadastro/estacao" element={<CadastroEstacao />} />
@@ -53,15 +54,16 @@ function App() {
             <Route path="/edita/parametro/:id" element={<EditarParametro />} />
             <Route path="/lista/parametros" element={<ListaParametros />} />
 
-            {/* rotas sensores */}
-            <Route path="/cadastro/sensor" element={<CadastroSensor />} />
-            <Route path="/edita/sensor/:id" element={<EditaSensor />} />
-            <Route path="/lista/sensores" element={<ListaSensores />} />
-
             {/* rotas alertas */}
             <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
             <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
-            <Route path="/lista/alertas" element={<ListaAlertas />} />       
+            <Route path="/lista/alertas" element={<ListaAlertas />} />    
+            
+          </Route>
+
+          {/* ROTAS PÚBLICAS */}
+            <Route path="/homeAdm" element={<Home />} />
+   
         </Route>
           
       </Routes>

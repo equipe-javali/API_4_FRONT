@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-import { Link } from "react-router-dom";
-import "./css/ListaParametro.css"
+import { Link, useNavigate } from "react-router-dom";
+import "./css/ListaParametro.css";
 import { listarParametros, deletarParametro } from "../../services/parametroServices";
 import { ClipLoader } from "react-spinners"; 
 import { FaEdit, FaTrash } from 'react-icons/fa'; 
@@ -10,12 +10,31 @@ export function ListaParametros() {
   const [parametros, setParametros] = useState<Record<string, any>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  // Função para obter o token do localStorage
+  const getToken = () => {
+    const token = localStorage.getItem('token');
+    console.log("Token recebido do localStorage:", token); // Log para verificar se o token foi obtido
+    return token;
+  };
 
   useEffect(() => {
     const fetchParametros = async () => {
+      // Verifica se o token existe
+      const token = getToken();
+
+      if (!token) {
+        setError("Usuário não autenticado. Faça login.");
+        console.log("Token não encontrado. Redirecionando para login."); // Log de verificação
+        navigate("/login");
+        return;
+      }
+
       try {
+        console.log("Enviando requisição para listar parâmetros com token:", token); // Verifica se o token está sendo enviado
         const response = await listarParametros();
-        
+
         if (!response || !response.data) {
           throw new Error("Resposta da API não é válida.");
         }
@@ -47,7 +66,7 @@ export function ListaParametros() {
     };
 
     fetchParametros();
-  }, []);
+  }, [navigate]);
 
   const handleDelete = async (id: number) => {
     if (window.confirm("Tem certeza que deseja excluir este parâmetro?")) {

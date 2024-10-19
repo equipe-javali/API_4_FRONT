@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { cadastrarEstacao, adicionarSensor } from "../../services/estacaoServices";
 import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
-import { listarSensores } from '../../services/sensorServices'; 
+import { listarSensores } from '../../services/sensorServices';
 
 export function CadastroEstacao() {
   const [formData, setFormData] = useState<Estacao>({
@@ -12,11 +12,11 @@ export function CadastroEstacao() {
     latitude: 0,
     longitude: 0,
     mac_address: '',
-    id_sensores: [], 
+    id_sensores: [],
   });
 
-  const [sensores, setSensores] = useState<any[]>([]); 
-  const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]); 
+  const [sensores, setSensores] = useState<any[]>([]);
+  const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]);
   const [mensagem, setMensagem] = useState<string | null>(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function CadastroEstacao() {
 
   const handleSelectChange = (selectedOptions: any) => {
     const selectedIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    setFormData({ ...formData, id_sensores: selectedIds });    
+    setFormData({ ...formData, id_sensores: selectedIds });
     const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
     setSensoresSelecionados(sensoresSelecionados);
   };
@@ -51,7 +51,14 @@ export function CadastroEstacao() {
   const handleSubmitEstacao = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const responseEstacao = await cadastrarEstacao(formData);
+      // Obtendo o token do localStorage (ou de onde estiver armazenado)
+      const token = localStorage.getItem('token'); // Ajuste conforme necessário
+
+      // Logando o token para verificação
+      console.log('Token utilizado para cadastrar estação:', token);
+
+      // Passando o token como segundo argumento
+      const responseEstacao = await cadastrarEstacao(formData, token!); // Use 'token!' se tiver certeza de que não é null
 
       if (responseEstacao.errors && responseEstacao.errors.length > 0) {
         console.error('Erro na resposta da API:', responseEstacao.errors);
@@ -59,12 +66,15 @@ export function CadastroEstacao() {
       } else {
         console.log('Sucesso:', responseEstacao);
         setMensagem("Estação cadastrada com sucesso!");
-        
+
         const estacaoId = responseEstacao.data.id;
         for (const sensorId of formData.id_sensores) {
+          // Logando a operação de adicionar sensor
+          console.log(`Adicionando sensor ID: ${sensorId} à estação ID: ${estacaoId} com token: ${token}`);
           await adicionarSensor(estacaoId, sensorId);
         }
 
+        // Resetar o formulário após o cadastro
         setFormData({
           nome: '',
           endereco: '',
@@ -73,7 +83,7 @@ export function CadastroEstacao() {
           mac_address: '',
           id_sensores: [],
         });
-        setSensoresSelecionados([]); 
+        setSensoresSelecionados([]);
       }
     } catch (error) {
       console.error('Erro:', error);
@@ -116,7 +126,7 @@ export function CadastroEstacao() {
                   type="text"
                   className="input"
                   placeholder="Digite o nome..."
-                  name="nome" 
+                  name="nome"
                   value={formData.nome}
                   onChange={handleChange} />
               </div>
@@ -171,7 +181,7 @@ export function CadastroEstacao() {
                   onChange={handleSelectChange}
                   value={sensorOptions.filter(option => formData.id_sensores.includes(option.value))}
                 />
-              </div>             
+              </div>
               <div className="form-group">
                 <button className="button" type="submit">Salvar</button>
                 {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}

@@ -3,9 +3,13 @@ import Alerta from '../types/Alerta';
 
 const API_URL = 'http://localhost:3001/alerta'; 
 
-export const cadastrarAlerta = async (alertaData: Alerta) => { 
+export const cadastrarAlerta = async (alertaData: Alerta, token: string) => { 
   try {
-    const response = await axios.post(`${API_URL}/cadastrar`, alertaData);
+    const response = await axios.post(`${API_URL}/cadastrar`, alertaData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data; 
   } catch (error) {
     throw error; 

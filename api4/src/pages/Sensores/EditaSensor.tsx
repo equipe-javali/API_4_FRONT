@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; 
 import Select from 'react-select';
 import { useParams } from 'react-router-dom';
 import { editarSensor, buscarSensorPorId } from '../../services/sensorServices';
@@ -60,8 +60,18 @@ export function EditaSensor() {
   const handleSubmitSensor = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData) {
+      const token = localStorage.getItem('token'); // Obter o token do localStorage
+      console.log('Token obtido:', token); // Log do token
+
+      if (!token) {
+        setMensagem("Erro: Você precisa estar logado para editar um sensor.");
+        console.log('Token não encontrado. Edição não permitida.'); // Log se o token não estiver presente
+        return;
+      }
+
       try {
-        const responseSensor = await editarSensor(formData);
+        console.log('Tentando editar sensor com token:', token); // Log antes de chamar a função de edição
+        const responseSensor = await editarSensor(formData, token); // Passa o token para a função
 
         if (responseSensor.errors && responseSensor.errors.length > 0) {
           console.error('Erro na resposta da API:', responseSensor.errors);

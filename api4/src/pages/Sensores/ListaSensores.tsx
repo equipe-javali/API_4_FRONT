@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";  
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 import Sensor from "../../types/Sensor";
@@ -16,6 +16,15 @@ export function ListaSensores() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const token = localStorage.getItem('token'); // Verifica o token do localStorage
+    console.log('Token obtido:', token); // Log do token
+
+    if (!token) {
+      setError("Você precisa estar logado para listar os sensores."); // Mensagem de erro se o token não existir
+      setIsLoading(false);
+      return; // Impede a execução se não houver token
+    }
+
     const fetchSensores = async () => {
       try {
         const response = await listarSensores();
@@ -69,9 +78,20 @@ export function ListaSensores() {
   }, []);
 
   const handleDelete = async (id: number) => {
+    const token = localStorage.getItem('token'); // Verifica o token do localStorage
+    console.log("Token utilizado para deleção:", token); // Log do token
+
+    if (!token) {
+      alert("Você precisa estar logado para deletar um sensor.");
+      return; // Se não houver token, não permite a deleção
+    }
+
     if (window.confirm("Tem certeza que deseja excluir este sensor?")) {
+      console.log("Tentando deletar o sensor com ID:", id); // Log do ID do sensor
+
       try {
         await deletarSensor(id);
+        console.log("Sensor com ID:", id, "deletado com sucesso."); // Log de sucesso
         setSensores(sensores.filter(sensor => sensor.id !== id));
       } catch (error) {
         console.error("Erro ao excluir sensor:", error);
@@ -91,6 +111,8 @@ export function ListaSensores() {
   if (error) {
     return <div className="error-message">{error}</div>;
   }
+
+  const token = localStorage.getItem('token'); // Verifica o token do localStorage
 
   const columns = [
     {
@@ -115,11 +137,22 @@ export function ListaSensores() {
       name: 'Ações',
       cell: (row: Sensor) => (
         <div>
-          <Link to={`/edita/sensor/${row.id}`} className="icon-button">
+          <Link 
+            to={`/edita/sensor/${row.id}`} 
+            className="icon-button" 
+            // Desabilita o link se não houver token
+            onClick={(e) => {
+              if (!token) {
+                e.preventDefault(); // Impede o clique no link se não houver token
+                alert("Você precisa estar logado para editar um sensor.");
+              }
+            }}
+          >
             <FaEdit />
           </Link>
           <button 
-            onClick={() => row.id !== undefined && handleDelete(row.id)} className="icon-button"
+            onClick={() => row.id !== undefined && handleDelete(row.id)} 
+            className="icon-button"
           >
             <FaTrash />
           </button>

@@ -3,7 +3,7 @@ import { Estacao } from '../types/Estacao';
 
 const API_URL = 'http://localhost:3001/estacao'; 
 
-export const cadastrarEstacao = async (estacaoData: Estacao) => { 
+export const cadastrarEstacao = async (estacaoData: Estacao, token: string) => { 
   try {
     const response = await axios.post(`${API_URL}/cadastrar`, estacaoData);
     return response.data; 

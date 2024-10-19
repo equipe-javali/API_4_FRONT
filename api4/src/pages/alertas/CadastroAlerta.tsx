@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; 
 import Select from 'react-select';
 import { cadastrarAlerta } from '../../services/alertaServices';
 import "./css/CadastraAlerta.css";
 import Alerta from '../../types/Alerta';
 import { listarParametros } from '../../services/parametroServices'; 
-import { listarEstacoes } from '../../services/estacaoServices'; // Importar o serviço de estações
+import { listarEstacoes } from '../../services/estacaoServices'; 
 import { Parametro } from '../../types/Parametro'; 
 
 export function CadastroAlerta() {
@@ -19,6 +19,7 @@ export function CadastroAlerta() {
   const [parametros, setParametros] = useState<Parametro[]>([]);
   const [estacoes, setEstacoes] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
+
   const condicoesOptions = [
     { value: '>', label: '>' },
     { value: '<', label: '<' },
@@ -26,6 +27,13 @@ export function CadastroAlerta() {
     { value: '<=', label: '<=' },
     { value: '=', label: '=' }
   ];
+
+  // Função para obter o token do localStorage
+  const getToken = () => {
+    const token = localStorage.getItem('token');
+    console.log("Token recebido do localStorage:", token); // Log do token
+    return token;
+  };
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -62,8 +70,19 @@ export function CadastroAlerta() {
 
   const handleSubmitAlerta = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Verifica se o token existe
+    const token = getToken();
+    if (!token) {
+      setMensagem("Usuário não autenticado. Faça login.");
+      console.log("Token não encontrado. Cadastro de alerta bloqueado."); // Log de verificação
+      return;
+    }
+    console.log("Dados enviados para cadastrar o alerta:", formData); // Log dos dados que estão sendo enviados
+
     try {
-      const responseAlerta = await cadastrarAlerta(formData);
+      // Faz o cadastro do alerta
+      const responseAlerta = await cadastrarAlerta(formData, token);
 
       if (responseAlerta.errors && responseAlerta.errors.length > 0) {
         console.error('Erro na resposta da API:', responseAlerta.errors);

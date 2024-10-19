@@ -3,12 +3,17 @@ import Sensor from '../types/Sensor';
 
 const API_URL = 'http://localhost:3001/sensor'; 
 
-export const cadastrarSensor = async (sensorData: Sensor) => { 
+export const cadastrarSensor = async (sensorData: Sensor, token: string) => {
   try {
-    const response = await axios.post(`${API_URL}/cadastrar`, sensorData);
-    return response.data; 
+    const response = await axios.post(`${API_URL}/cadastrar`, sensorData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
   } catch (error) {
-    throw error; 
+    console.error('Erro ao cadastrar sensor:', error);
+    throw error;
   }
 };
 
@@ -21,22 +26,33 @@ export const listarSensores = async (quantidade: number = 10, pagina: number = 0
   }
 };
 
-export const editarSensor = async (sensorData: Sensor) => { 
+export const editarSensor = async (sensorData: Sensor, token: string) => { 
   try {
-    const response = await axios.patch(`${API_URL}/atualizar`, sensorData);
-    return response.data; 
+    const response = await axios.patch(`${API_URL}/atualizar`, sensorData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
   } catch (error) {
-    throw error; 
+    console.error('Erro ao cadastrar sensor:', error);
+    throw error;
   }
 };
 
 export const deletarSensor = async (id: number) => { 
+  const token = localStorage.getItem('token'); // Obtém o token do localStorage
+
   try {
     const response = await axios.delete(`${API_URL}/deletar`, {
-      data: { id }
+      data: { id },
+      headers: {
+        Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
+      }
     });
     return response.data; 
   } catch (error) {
+    console.error('Erro ao deletar sensor:', error);
     throw error; 
   }
 };
