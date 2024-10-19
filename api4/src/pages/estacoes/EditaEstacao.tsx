@@ -71,19 +71,25 @@ export function EditaEstacao() {
     e.preventDefault();
     if (formData && id) {
       try {
+        const token = localStorage.getItem('token'); // Pegando o token do local storage
+
+        if (!token) {
+          setMensagem("Token não encontrado. Por favor, faça login novamente.");
+          return;
+        }
+
         const updatedData: Estacao = {
           ...formData,
           id: Number(id), 
-          
         };
-  
-        const responseEstacao = await editarEstacao(updatedData);
-  
+
+        const responseEstacao = await editarEstacao(updatedData, token);
+
         if (responseEstacao.errors && responseEstacao.errors.length > 0) {
           setMensagem("Erro ao atualizar estação: " + responseEstacao.errors.join(", "));
         } else {
           setMensagem("Estação atualizada com sucesso!");
-  
+
           const estacaoId = parseInt(id, 10);
           const sensoresAntigos = formData.sensores ? formData.sensores.map(sensor => sensor.id) : [];
           const sensoresNovos = formData.id_sensores;          
@@ -91,10 +97,9 @@ export function EditaEstacao() {
           for (const sensorId of sensoresParaRemover) {
             console.log(`Removendo sensor ${sensorId} da estação ${estacaoId}`);
             try {
-              await removerSensor(estacaoId, sensorId);
+              await removerSensor(estacaoId, sensorId, token);
             } catch (error) {
               console.error(`Erro ao remover sensor ${sensorId}:`, error);
-              
             }
           }  
           
@@ -102,7 +107,7 @@ export function EditaEstacao() {
           for (const sensorId of sensoresParaAdicionar) {
             console.log(`Adicionando sensor ${sensorId} à estação ${estacaoId}`);
             try {
-              await adicionarSensor(estacaoId, sensorId);
+              await adicionarSensor(estacaoId, sensorId, token); // Passando o token como terceiro argumento
             } catch (error) {
               console.error(`Erro ao adicionar sensor ${sensorId}:`, error);              
             }
@@ -115,7 +120,7 @@ export function EditaEstacao() {
               sensores: sensores.filter(sensor => sensoresNovos.includes(sensor.id))
             };
           });
-  
+
           navigate('/lista/estacoes');
         }
       } catch (error) {
