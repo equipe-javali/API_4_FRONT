@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/ListaAlertas.css"; 
 import { listarAlertas, deletarAlerta } from "../../services/alertaServices";
 import { listarEstacoes } from "../../services/estacaoServices";
@@ -17,8 +17,20 @@ export function ListaAlertas() {
   const [parametros, setParametros] = useState<Parametro[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    // Verifica se o token existe
+    if (!token) {
+      setError("Você precisa estar logado para acessar esta página.");
+      return;
+    }
+
+    // Log para mostrar que o token foi encontrado
+    console.log("Token encontrado:", token);
+
     const fetchData = async () => {
       try {
         const [responseAlertas, responseEstacoes, responseParametros] = await Promise.all([
@@ -31,6 +43,9 @@ export function ListaAlertas() {
           throw new Error("Resposta da API não é válida.");
         }
 
+        // Log para mostrar que o token foi utilizado para buscar os alertas
+        console.log("Token utilizado para listar alertas:", token);
+        
         setAlertas(responseAlertas.data.rows);
         setEstacoes(responseEstacoes.data.rows);
         setParametros(responseParametros.data.rows);

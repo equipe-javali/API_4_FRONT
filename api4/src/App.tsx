@@ -49,13 +49,6 @@ function App() {
             <Route path="/edita/estacao/:id" element={<EditaEstacao />} />
             <Route path="/lista/estacoes" element={<ListaEstacoes />} />
 
-            
-            
-          </Route>
-
-          {/* ROTAS PÚBLICAS */}
-            <Route path="/homeAdm" element={<Home />} />
-
             {/* rotas parametros */}
             <Route path="/cadastro/parametro" element={<CadastroParametro />} />
             <Route path="/edita/parametro/:id" element={<EditarParametro />} />
@@ -64,7 +57,13 @@ function App() {
             {/* rotas alertas */}
             <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
             <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
-            <Route path="/lista/alertas" element={<ListaAlertas />} />       
+            <Route path="/lista/alertas" element={<ListaAlertas />} />    
+            
+          </Route>
+
+          {/* ROTAS PÚBLICAS */}
+            <Route path="/homeAdm" element={<Home />} />
+   
         </Route>
           
       </Routes>
