@@ -25,23 +25,30 @@ export const listarAlertas = async (quantidade: number = 10, pagina: number = 0)
   }
 };
 
-export const editarAlerta = async (alertaData: Alerta) => { 
+export const editarAlerta = async (alertaData: Alerta, token: string) => { 
   try {
-    const response = await axios.patch(`${API_URL}/atualizar`, alertaData);
+    const response = await axios.patch(`${API_URL}/atualizar`, alertaData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data; 
   } catch (error) {
     throw error; 
   }
 };
 
-export const deletarAlerta = async (id: number) => { 
+export const deletarAlerta = async (id: number, token: string) => {
   try {
     const response = await axios.delete(`${API_URL}/deletar`, {
-      data: { id }
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      data: { id } 
     });
-    return response.data; 
+    return response.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 

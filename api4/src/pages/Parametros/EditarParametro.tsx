@@ -65,30 +65,34 @@ export function EditarParametro() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (formData) {
-            try {
-                const updatedData: Parametro = {
-                    ...formData,
-                    id: Number(id), 
-                };
-
-                console.log('Dados a serem enviados:', updatedData); 
-
-                const response = await editarParametro(updatedData); 
-                console.log('Resposta da API:', response); 
-
-                if (response.errors && response.errors.length > 0) {
-                    setMensagem("Erro ao atualizar parâmetro: " + response.errors.join(", "));
-                } else {
-                    setMensagem("Parâmetro atualizado com sucesso!");
-                    navigate('/lista/parametros');
-                }
-            } catch (error) {
-                console.error("Erro ao atualizar parâmetro:", error);
-                setMensagem("Erro ao atualizar parâmetro. Verifique os dados e tente novamente.");
+        if (formData && id) {
+          try {
+            const token = localStorage.getItem('token'); // Pegando o token do local storage
+      
+            if (!token) {
+              setMensagem("Token não encontrado. Por favor, faça login novamente.");
+              return;
             }
+      
+            const updatedData: Parametro = {
+              ...formData,
+              id: Number(id), 
+            };
+      
+            const responseParametro = await editarParametro(updatedData, token);
+      
+            if (responseParametro.errors && responseParametro.errors.length > 0) {
+              setMensagem("Erro ao atualizar parâmetro: " + responseParametro.errors.join(", "));
+            } else {
+              setMensagem("Parâmetro atualizado com sucesso!");
+              navigate('/lista/parametros');
+            }
+          } catch (error) {
+            console.error('Erro ao atualizar parâmetro:', error);
+            setMensagem("Erro ao atualizar parâmetro. Verifique os dados e tente novamente.");
+          }
         }
-    };
+      };
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout | null = null;

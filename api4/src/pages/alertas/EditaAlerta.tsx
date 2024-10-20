@@ -75,17 +75,25 @@ export function EditaAlerta() {
     e.preventDefault();
     if (formData && id) {
       try {
+        const token = localStorage.getItem('token'); // Pegando o token do local storage
+  
+        if (!token) {
+          setMensagem("Token não encontrado. Por favor, faça login novamente.");
+          return;
+        }
+  
         const updatedData: Alerta = {
           ...formData,
           id: Number(id), 
         };
   
-        const responseAlerta = await editarAlerta(updatedData);
+        const responseAlerta = await editarAlerta(updatedData, token);
   
         if (responseAlerta.errors && responseAlerta.errors.length > 0) {
           setMensagem("Erro ao atualizar alerta: " + responseAlerta.errors.join(", "));
         } else {
           setMensagem("Alerta atualizado com sucesso!");
+          console.log(`Alerta atualizado com sucesso: Nome - ${updatedData.nome}, ID - ${updatedData.id}`);
           navigate('/lista/alertas');
         }
       } catch (error) {
