@@ -75,8 +75,21 @@ export function ListaEstacoes() {
   const handleDelete = async (id: number) => {
     if (window.confirm("Tem certeza que deseja excluir esta estação?")) {
       try {
-        await deletarEstacao(id);
-        setEstacoes(estacoes.filter(estacao => estacao.id !== id));
+        const token = localStorage.getItem('token'); // Pegando o token do local storage
+  
+        if (!token) {
+          setError("Token não encontrado. Faça login novamente.");
+          return;
+        }
+  
+        const estacaoParaDeletar = estacoes.find(estacao => estacao.id === id);
+        if (estacaoParaDeletar) {
+          await deletarEstacao(id, token);
+          console.log(`Estação deletada: Nome - ${estacaoParaDeletar.nome}, ID - ${id}`);
+          setEstacoes(estacoes.filter(estacao => estacao.id !== id));
+        } else {
+          console.error("Estação não encontrada.");
+        }
       } catch (error) {
         console.error("Erro ao excluir estação:", error);
         setError("Erro ao excluir estação. Tente novamente.");

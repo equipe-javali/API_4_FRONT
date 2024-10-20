@@ -47,14 +47,16 @@ export const editarEstacao = async (estacaoData: Estacao, token: string) => {
   }
 };
 
-export const deletarEstacao = async (id: number) => {
+export const deletarEstacao = async (id: number, token: string) => {
   try {
     const response = await axios.delete(`${API_URL}/deletar`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       data: { id } 
     });
     return response.data;
   } catch (error) {
-    console.error('Erro ao deletar estação:', error);
     throw error;
   }
 };
