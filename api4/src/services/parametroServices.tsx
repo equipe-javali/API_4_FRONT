@@ -27,14 +27,16 @@ export const listarParametros = async (quantidade: number = 10, pagina: number =
   }
 };
 
-export const deletarParametro = async (id: number) => {
+export const deletarParametro = async (id: number, token: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/deletar/`, {
-    data: { id }
+    const response = await axios.delete(`${API_URL}/deletar`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      data: { id } 
     });
-  return response.data;
+    return response.data;
   } catch (error) {
-    console.error(`Erro ao excluir o parâmetro de id ${id}:`, error);
     throw error;
   }
 };

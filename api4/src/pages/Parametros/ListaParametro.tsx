@@ -3,8 +3,8 @@ import DataTable from 'react-data-table-component';
 import { Link, useNavigate } from "react-router-dom";
 import "./css/ListaParametro.css";
 import { listarParametros, deletarParametro } from "../../services/parametroServices";
-import { ClipLoader } from "react-spinners"; 
-import { FaEdit, FaTrash } from 'react-icons/fa'; 
+import { ClipLoader } from "react-spinners";
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export function ListaParametros() {
   const [parametros, setParametros] = useState<Record<string, any>[]>([]);
@@ -42,13 +42,13 @@ export function ListaParametros() {
         if (response.data.rows) {
           const parametrosAjustados = response.data.rows.map((parametro: any) => ({
             id: parametro.id,
-            unidade_medida: parametro.id_unidade ?? 0,  
+            unidade_medida: parametro.id_unidade ?? 0,
             nome: parametro.nome,
-            fator: parseFloat(parametro.fator), 
-            offset: parseFloat(parametro.valor_offset),  
+            fator: parseFloat(parametro.fator),
+            offset: parseFloat(parametro.valor_offset),
             nome_json: parametro.nome_json
           }));
-          
+
           setParametros(parametrosAjustados);
         } else {
           throw new Error("Formato de resposta da API inesperado.");
@@ -71,8 +71,22 @@ export function ListaParametros() {
   const handleDelete = async (id: number) => {
     if (window.confirm("Tem certeza que deseja excluir este parâmetro?")) {
       try {
-        await deletarParametro(id);
-        setParametros(parametros.filter(parametro => parametro.id !== id));
+        const token = localStorage.getItem('token'); // Pegando o token do local storage
+
+        if (!token) {
+          setError("Token não encontrado. Faça login novamente.");
+          return;
+        }
+
+        const parametroParaDeletar = parametros.find(parametro => parametro.id === id);
+        if (parametroParaDeletar) {
+          await deletarParametro(id, token);
+          console.log(`Parâmetro deletado: Nome - ${parametroParaDeletar.nome}, ID - ${id}`);
+          setParametros(parametros.filter(parametro => parametro.id !== id));
+          console.log("Parâmetro deletado com sucesso.");
+        } else {
+          console.error("Parâmetro não encontrado.");
+        }
       } catch (error) {
         console.error("Erro ao excluir parâmetro:", error);
         setError("Erro ao excluir parâmetro. Tente novamente.");
@@ -95,21 +109,21 @@ export function ListaParametros() {
   const columns = [
     {
       name: 'Nome',
-      selector: (row: Record<string, any>) => row.nome || 'N/A', 
+      selector: (row: Record<string, any>) => row.nome || 'N/A',
       sortable: true,
     },
     {
       name: 'Fator',
-      selector: (row: Record<string, any>) => row.fator || 'N/A', 
+      selector: (row: Record<string, any>) => row.fator || 'N/A',
       sortable: true,
     },
     {
-      name: 'Offset',  
-      selector: (row: Record<string, any>) => row.offset || 'N/A', 
+      name: 'Offset',
+      selector: (row: Record<string, any>) => row.offset || 'N/A',
       sortable: true,
     },
     {
-      name: 'Unidade de Medida',  
+      name: 'Unidade de Medida',
       selector: (row: Record<string, any>) => row.unidade_medida || 'N/A',
       sortable: true,
     },
@@ -125,8 +139,8 @@ export function ListaParametros() {
           <Link to={`/edita/parametro/${row.id}`} className="icon-button">
             <FaEdit />
           </Link>
-          <button 
-            onClick={() => row.id !== undefined && handleDelete(row.id)} 
+          <button
+            onClick={() => row.id !== undefined && handleDelete(row.id)}
             className="icon-button"
           >
             <FaTrash />
@@ -138,10 +152,10 @@ export function ListaParametros() {
   ];
 
   return (
-    <div className="lista-parametro"> 
+    <div className="lista-parametro">
       <div className="container">
-        <h2 className="text-wrapper-titulo">Lista de Parâmetros</h2> 
-        
+        <h2 className="text-wrapper-titulo">Lista de Parâmetros</h2>
+
         <DataTable
           columns={columns}
           data={parametros}
