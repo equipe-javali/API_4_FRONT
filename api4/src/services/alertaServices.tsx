@@ -25,9 +25,13 @@ export const listarAlertas = async (quantidade: number = 10, pagina: number = 0)
   }
 };
 
-export const editarAlerta = async (alertaData: Alerta) => { 
+export const editarAlerta = async (alertaData: Alerta, token: string) => { 
   try {
-    const response = await axios.patch(`${API_URL}/atualizar`, alertaData);
+    const response = await axios.patch(`${API_URL}/atualizar`, alertaData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data; 
   } catch (error) {
     throw error; 
