@@ -38,14 +38,17 @@ export const editarAlerta = async (alertaData: Alerta, token: string) => {
   }
 };
 
-export const deletarAlerta = async (id: number) => { 
+export const deletarAlerta = async (id: number, token: string) => {
   try {
     const response = await axios.delete(`${API_URL}/deletar`, {
-      data: { id }
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      data: { id } 
     });
-    return response.data; 
+    return response.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 

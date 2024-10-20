@@ -67,8 +67,22 @@ export function ListaAlertas() {
   const handleDelete = async (id: number) => {
     if (window.confirm("Tem certeza que deseja excluir este alerta?")) {
       try {
-        await deletarAlerta(id);
-        setAlertas(alertas.filter(alerta => alerta.id !== id));
+        const token = localStorage.getItem('token'); // Pegando o token do local storage
+  
+        if (!token) {
+          setError("Token não encontrado. Faça login novamente.");
+          return;
+        }
+  
+        const alertaParaDeletar = alertas.find(alerta => alerta.id === id);
+        if (alertaParaDeletar) {
+          await deletarAlerta(id, token);
+          console.log(`Alerta deletado: Nome - ${alertaParaDeletar.nome}, ID - ${id}`);
+          setAlertas(alertas.filter(alerta => alerta.id !== id));
+          console.log("Alerta deletado com sucesso.");
+        } else {
+          console.error("Alerta não encontrado.");
+        }
       } catch (error) {
         console.error("Erro ao excluir alerta:", error);
         setError("Erro ao excluir alerta. Tente novamente.");
