@@ -71,13 +71,18 @@ export function EditaEstacao() {
     e.preventDefault();
     if (formData && id) {
       try {
+        const token = localStorage.getItem('token'); // Pegando o token do local storage
+  
+        if (!token) {
+          setMensagem("Token não encontrado. Por favor, faça login novamente.");
+          return;
+        }
+  
         const updatedData: Estacao = {
           ...formData,
           id: Number(id), 
-          
         };
   
-        const token = "your_token_here"; // Replace with the actual token
         const responseEstacao = await editarEstacao(updatedData, token);
   
         if (responseEstacao.errors && responseEstacao.errors.length > 0) {
@@ -95,7 +100,6 @@ export function EditaEstacao() {
               await removerSensor(estacaoId, sensorId, token);
             } catch (error) {
               console.error(`Erro ao remover sensor ${sensorId}:`, error);
-              
             }
           }  
           
@@ -103,7 +107,7 @@ export function EditaEstacao() {
           for (const sensorId of sensoresParaAdicionar) {
             console.log(`Adicionando sensor ${sensorId} à estação ${estacaoId}`);
             try {
-              await adicionarSensor(estacaoId, sensorId, token);
+              await adicionarSensor(estacaoId, sensorId, token); // Passando o token como terceiro argumento
             } catch (error) {
               console.error(`Erro ao adicionar sensor ${sensorId}:`, error);              
             }
