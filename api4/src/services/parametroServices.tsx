@@ -39,9 +39,13 @@ export const deletarParametro = async (id: number) => {
   }
 };
 
-export const editarParametro = async (parametroData: Parametro) => { 
+export const editarParametro = async (parametroData: Parametro, token: string) => { 
   try {
-    const response = await axios.patch(`${API_URL}/atualizar`, parametroData);
+    const response = await axios.patch(`${API_URL}/atualizar`, parametroData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data; 
   } catch (error) {
     throw error; 
