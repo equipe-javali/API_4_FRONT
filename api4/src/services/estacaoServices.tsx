@@ -76,7 +76,7 @@ export const adicionarSensor = async (id_estacao: number, id_sensor: number, tok
 
 export const removerSensor = async (estacaoId: number, sensorId: number, token: string) => { 
   try {
-    const response = await axios.delete(`${API_URL}/${estacaoId}/removerSensor/${sensorId}`, {
+    const response = await axios.post(`${API_URL}/removerSensor`, { id_estacao: estacaoId, id_sensor: sensorId }, {
       headers: {
         Authorization: `Bearer ${token}`
       }
