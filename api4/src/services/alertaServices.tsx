@@ -16,7 +16,7 @@ export const cadastrarAlerta = async (alertaData: Alerta, token: string) => {
   }
 };
 
-export const listarAlertas = async (quantidade: number = 10, pagina: number = 0) => { 
+export const listarAlertas = async (quantidade: number = 200, pagina: number = 0) => { 
   try {
     const response = await axios.get(`${API_URL}/${quantidade}/${pagina}`); 
     return response.data; 

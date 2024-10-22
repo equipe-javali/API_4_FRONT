@@ -16,7 +16,7 @@ export const cadastrarEstacao = async (estacaoData: Estacao, token: string) => {
   }
 };
 
-export const listarEstacoes = async (quantidade: number = 10, pagina: number = 0) => { 
+export const listarEstacoes = async (quantidade: number = 200, pagina: number = 0) => { 
   try {
     const response = await axios.get(`${API_URL}/${quantidade}/${pagina}`); 
     return response.data; 

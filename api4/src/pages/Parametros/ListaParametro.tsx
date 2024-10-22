@@ -12,27 +12,25 @@ export function ListaParametros() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Função para obter o token do localStorage
   const getToken = () => {
     const token = localStorage.getItem('token');
-    console.log("Token recebido do localStorage:", token); // Log para verificar se o token foi obtido
+    console.log("Token recebido do localStorage:", token);
     return token;
   };
 
   useEffect(() => {
     const fetchParametros = async () => {
-      // Verifica se o token existe
       const token = getToken();
 
       if (!token) {
         setError("Usuário não autenticado. Faça login.");
-        console.log("Token não encontrado. Redirecionando para login."); // Log de verificação
+        console.log("Token não encontrado. Redirecionando para login.");
         navigate("/login");
         return;
       }
 
       try {
-        console.log("Enviando requisição para listar parâmetros com token:", token); // Verifica se o token está sendo enviado
+        console.log("Enviando requisição para listar parâmetros com token:", token);
         const response = await listarParametros();
 
         if (!response || !response.data) {
@@ -71,7 +69,7 @@ export function ListaParametros() {
   const handleDelete = async (id: number) => {
     if (window.confirm("Tem certeza que deseja excluir este parâmetro?")) {
       try {
-        const token = localStorage.getItem('token'); // Pegando o token do local storage
+        const token = localStorage.getItem('token');
 
         if (!token) {
           setError("Token não encontrado. Faça login novamente.");
@@ -119,8 +117,9 @@ export function ListaParametros() {
     },
     {
       name: 'Offset',
-      selector: (row: Record<string, any>) => row.offset || 'N/A',
+      selector: (row: Record<string, any>) => row.offset !== undefined ? row.offset : 'N/A',
       sortable: true,
+      cell: (row: Record<string, any>) => row.offset !== undefined ? row.offset : 0
     },
     {
       name: 'Unidade de Medida',
