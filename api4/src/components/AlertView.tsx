@@ -59,7 +59,7 @@ export default function AlertView() {
 
             {Array.isArray(ocorrencias) && ocorrencias?.map((ocorrencia) => (
                 <div className='alert-card' key={ ocorrencia.id }>
-                    <p>📢 { getEstacaoByAlerta(ocorrencia.id_alerta) } : { getAlertaNome(ocorrencia.id_alerta) }</p>
+                    <p>📢 { getEstacaoByAlerta(ocorrencia.id_alerta) } : { getAlertaNome(ocorrencia.id_alerta) } {ocorrencia.valor}</p>
                 </div>
             ))}
 

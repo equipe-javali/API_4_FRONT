@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Alerta from '../types/Alerta';
 
-const API_URL = 'http://localhost:3001/alerta'; 
+const API_URL = `http://34.204.31.143:3001/alerta`; 
 
 export const cadastrarAlerta = async (alertaData: Alerta, token: string) => { 
   try {

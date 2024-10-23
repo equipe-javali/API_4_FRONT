@@ -19,7 +19,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {      
-      const response = await axiosJWT.post('http://localhost:3001/usuario/login', formData, {
+      const response = await axiosJWT.post(`http://34.204.31.143:3001/usuario/login`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },

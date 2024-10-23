@@ -20,10 +20,11 @@ export const CadastroAdm: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(process.env)
     e.preventDefault();
     try {
 
-      const response = await axios.post('http://localhost:3001/usuario/cadastrar', formData);
+      const response = await axios.post(`http://34.204.31.143:3001/usuario/cadastrar`, formData);
 
       if (response.data && response.data.errors && response.data.errors.length > 0) {
         console.error('Erro na resposta da API:', response.data.errors);

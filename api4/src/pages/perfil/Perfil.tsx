@@ -36,7 +36,7 @@ const Perfil: React.FC = () => {
         senha: userData.senha
       };
 
-      const response = await axiosJWT.patch(`http://localhost:3001/usuario/atualizar`, updatedData);
+      const response = await axiosJWT.patch(`http://34.204.31.143:3001/usuario/atualizar`, updatedData);
 
       if (response.status === 200) {
         setEditable(false); 
@@ -56,7 +56,7 @@ const Perfil: React.FC = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      await axiosJWT.delete(`http://localhost:3001/usuario/deletar`, {
+      await axiosJWT.delete(`http://34.204.31.143:3001/usuario/deletar`, {
         data: { id: userData.id }
       });
       console.log('Conta deletada com sucesso!');
@@ -86,7 +86,7 @@ const Perfil: React.FC = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await axiosJWT.get(`http://localhost:3001/usuario/${usuarioId}`);
+        const response = await axiosJWT.get(`http://34.204.31.143:3001/usuario/${usuarioId}`);
         if (response.status === 200) {
           setUserData({ ...response.data.data, senha: usuarioSenha });
         } else {

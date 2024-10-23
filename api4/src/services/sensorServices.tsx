@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Sensor from '../types/Sensor';
 
-const API_URL = 'http://localhost:3001/sensor'; 
+const API_URL = `http://34.204.31.143:3001/sensor`; 
 
 export const cadastrarSensor = async (sensorData: Sensor, token: string) => {
   try {

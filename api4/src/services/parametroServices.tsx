@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Parametro } from '../types/Parametro';
 
-const API_URL = 'http://localhost:3001/parametro'; 
+const API_URL = `http://34.204.31.143:3001/parametro`; 
 
 export const cadastrarParametro = async (parametroData: Parametro, token: string) => { 
   try {

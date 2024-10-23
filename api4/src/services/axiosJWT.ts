@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiJWT = axios.create({
-    baseURL: 'http://localhost:3001', // URL base da sua API
+    baseURL: `http://34.204.31.143:3001`, // URL base da sua API
 });
 
 // Adiciona o token em todas as requisições feitas com esta instância
