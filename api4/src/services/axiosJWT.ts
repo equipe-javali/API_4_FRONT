@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiJWT = axios.create({
-    baseURL: `http://34.204.31.143:3001`, // URL base da sua API
+    baseURL: process.env.REACT_APP_API_BACK || 'http://localhost:3001', // Fallback para localhost
 });
 
 // Adiciona o token em todas as requisições feitas com esta instância

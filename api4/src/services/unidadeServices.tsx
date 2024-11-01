@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = `http://34.204.31.143:3001/unidademedida`;
+// `${process.env.REACT_APP_API_BACK}/
+const API_URL = `${process.env.REACT_APP_API_BACK}/unidademedida`;
 
 export const listarUnidades = async () => {
   try {

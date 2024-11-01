@@ -2,7 +2,8 @@ import axios from 'axios';
 import { cadastrarAdministrador, Perfil } from '../types/Administrador'; 
 import { Login } from '../types/Administrador';
 
-const API_URL = `http://34.204.31.143:3001/usuario`; 
+// `${process.env.REACT_APP_API_BACK}/usuario
+const API_URL = `${process.env.REACT_APP_API_BACK}/usuario`; 
 
 export const cadastrarAdm = async (usuarioData: cadastrarAdministrador) => { 
   try {

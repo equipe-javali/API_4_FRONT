@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Parametro } from '../types/Parametro';
 
-const API_URL = `http://34.204.31.143:3001/parametro`; 
+// `${process.env.REACT_APP_API_BACK}/
+const API_URL = `${process.env.REACT_APP_API_BACK}/parametro`; 
 
 export const cadastrarParametro = async (parametroData: Parametro, token: string) => { 
   try {

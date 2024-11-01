@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Sensor from '../types/Sensor';
 
-const API_URL = `http://34.204.31.143:3001/sensor`; 
+// `${process.env.REACT_APP_API_BACK}/
+const API_URL = `${process.env.REACT_APP_API_BACK}/sensor`; 
 
 export const cadastrarSensor = async (sensorData: Sensor, token: string) => {
   try {

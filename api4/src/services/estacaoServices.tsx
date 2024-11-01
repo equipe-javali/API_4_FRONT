@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Estacao } from '../types/Estacao'; 
 
-const API_URL = `http://34.204.31.143:3001/estacao`; 
+// `${process.env.REACT_APP_API_BACK}/estacao
+const API_URL = `${process.env.REACT_APP_API_BACK}/estacao`; 
 
 export const cadastrarEstacao = async (estacaoData: Estacao, token: string) => { 
   try {

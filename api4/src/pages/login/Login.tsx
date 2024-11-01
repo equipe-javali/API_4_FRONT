@@ -19,7 +19,8 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {      
-      const response = await axiosJWT.post(`http://34.204.31.143:3001/usuario/login`, formData, {
+      // const response = await axios.post(`${process.env.REACT_APP_API_BACK}/usuario/cadastrar`, formData);
+      const response = await axiosJWT.post(`${process.env.REACT_APP_API_BACK}/usuario/login`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
