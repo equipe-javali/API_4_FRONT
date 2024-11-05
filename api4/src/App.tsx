@@ -19,6 +19,7 @@ import { ListaAlertas } from './pages/alertas/ListaAlerta';
 import PrivateRoute from './components/PrivateRoute';
 import HomePub from './pages/home/HomePub';
 import BaseSuperior from './components/BaseSuperior';
+import Relatorios from './pages/relatorios/relatorios';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/home" element={<HomePub />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<CadastrarAdministrador />} />
+
         </Route>
 
         <Route element={<BaseLateralHeader />}>
@@ -57,7 +59,10 @@ function App() {
             {/* rotas alertas */}
             <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
             <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
-            <Route path="/lista/alertas" element={<ListaAlertas />} />    
+            <Route path="/lista/alertas" element={<ListaAlertas />} />   
+
+            {/* rotas relatorios */} 
+            <Route path="/relatorios" element={<Relatorios />} /> 
             
           </Route>
 
