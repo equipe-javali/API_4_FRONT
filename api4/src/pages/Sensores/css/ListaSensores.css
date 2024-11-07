@@ -82,13 +82,6 @@
     margin: 10px auto;   
 }
 
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-  }
-
 .icon-button {
     background: none;
     border: none;

@@ -19,7 +19,9 @@ import { ListaAlertas } from './pages/alertas/ListaAlerta';
 import PrivateRoute from './components/PrivateRoute';
 import HomePub from './pages/home/HomePub';
 import BaseSuperior from './components/BaseSuperior';
-import Relatorios from './pages/relatorios/relatorios';
+import { Relatorios } from './pages/relatorios/relatorios';
+
+
 
 
 function App() {
