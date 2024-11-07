@@ -100,13 +100,7 @@ export function ListaSensores() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="spinner-container">
-        <ClipLoader size={50} color={"#123abc"} loading={isLoading} />
-      </div>
-    );
-  }
+  
 
   if (error) {
     return <div className="error-message">{error}</div>;

@@ -36,11 +36,12 @@ export function Relatorios() {
   };
 
   return (
-    <div className="relatorio"> 
+    <div className="relatorio">
       <div className="container">
-        <h1 className="titulo">Relatórios</h1>
-        <div className="filters">
-          <div className="filter-section">
+        <h2 className="text-wrapper-titulo">Relatórios</h2>
+
+        <div className="filter-row">
+          <div className="filter-group">
             <label htmlFor="periodoInicial" className="label">Período inicial:</label>
             <input
               type="date"
@@ -50,7 +51,7 @@ export function Relatorios() {
               className="input"
             />
           </div>
-          <div className="filter-section">
+          <div className="filter-group">
             <label htmlFor="periodoFinal" className="label">Período final:</label>
             <input
               type="date"
@@ -60,14 +61,7 @@ export function Relatorios() {
               className="input"
             />
           </div>
-          <div className="filter-section">
-            <label htmlFor="estacoes" className="label">Selecionar estações:</label>
-            <select id="estacoes" onChange={handleEstacoesChange} className="input">
-              <option value="">Todas as estações</option>
-              {/* Adicionar as opções de estações aqui */}
-            </select>
-          </div>
-          <div className="filter-section">
+          <div className="filter-group">
             <label htmlFor="tipoRelatorio" className="label">Selecionar tipo relatório:</label>
             <select id="tipoRelatorio" onChange={handleTipoRelatorioChange} className="input">
               <option value="">Selecione um tipo de relatório</option>
@@ -79,34 +73,50 @@ export function Relatorios() {
           </div>
           <button onClick={exportarRelatorio} className="button">Exportar relatório</button>
         </div>
+
+        <div className="filter-group">
+          <label htmlFor="estacoes" className="label">Selecionar estações:</label>
+          <select id="estacoes" onChange={handleEstacoesChange} className="input">
+            <option value="">Todas as estações</option>
+            {/* Adicionar as opções de estações aqui */}
+          </select>
+        </div>
+
         <div className="content">
-          {/* Renderizar os gráficos de acordo com o tipo de relatório selecionado */}
-          <div className="card">
-            <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
-            <img src="https://via.placeholder.com/325x538" alt="Mapa de Estações" className="mapa" />
-          </div>
-          <div className="card">
-            <h2 className="card-title">QUANTIDADE MÉDIA DE ALERTAS POR ESTAÇÕES</h2>
-            <div className="chart-container">
-              {/* Gráfico de Alertas */}
+          <div className="mapa-container">
+            <div className="card mapa-card">
+              <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
+              <img src="https://via.placeholder.com/325x538" alt="Mapa de Estações" className="mapa" />
             </div>
           </div>
-          <div className="card">
-            <h2 className="card-title">MÉDIA DE TEMPERATURA POR PERÍODO</h2>
-            <div className="chart-container">
-              {/* Gráfico de Temperatura */}
+          <div className="graficos-container">
+            <div className="grafico-row">
+              <div className="card">
+                <h2 className="card-title">QUANTIDADE MÉDIA DE ALERTAS POR ESTAÇÕES</h2>
+                <div className="chart-container">
+                  {/* Gráfico de Alertas */}
+                </div>
+              </div>
+              <div className="card">
+                <h2 className="card-title">MÉDIA DE TEMPERATURA POR PERÍODO</h2>
+                <div className="chart-container">
+                  {/* Gráfico de Temperatura */}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR LOCAL</h2>
-            <div className="chart-container">
-              {/* Gráfico de Chuva por Local */}
-            </div>
-          </div>
-          <div className="card">
-            <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR PERÍODO</h2>
-            <div className="chart-container">
-              {/* Gráfico de Chuva por Período */}
+            <div className="grafico-row">
+              <div className="card">
+                <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR LOCAL</h2>
+                <div className="chart-container">
+                  {/* Gráfico de Chuva por Local */}
+                </div>
+              </div>
+              <div className="card">
+                <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR PERÍODO</h2>
+                <div className="chart-container">
+                  {/* Gráfico de Chuva por Período */}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -114,4 +124,3 @@ export function Relatorios() {
     </div>
   );
 }
-
