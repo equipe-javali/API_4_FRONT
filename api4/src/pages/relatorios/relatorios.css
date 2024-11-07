@@ -1,0 +1,109 @@
+.relatorio .container {
+  padding: 30px;    
+  background-color: white;
+  width: calc(100% - 200px); 
+  margin-left: 120px;
+  margin-top: 150px;
+  border-radius: 20px;    
+  min-height: 30vh; 
+}
+
+.relatorio .titulo {
+  color: #020202;
+    font-family: "Onest-Regular", Helvetica;
+    font-size: 30px;  
+    text-align: center; 
+    margin-top: 40px; 
+}
+
+.relatorio .filters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.relatorio .filter-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.relatorio .label {
+  display: block;
+  margin-bottom: 5px;
+  color: #444444;
+  font-size: 16px;
+  font-family: 'Kantumruy';
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.relatorio .input {
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 10px;
+  height: 31px;
+  width: 100%;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 17px;
+  color: #5f5e63;
+  padding: 5px 10px;
+}
+
+.relatorio .button {
+  background-color: #0178d4;
+    border-radius: 5px;
+    height: 47px;
+    width: 200px;
+    color: #edf4ff;
+    font-family: "Kantumruy-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 47px;
+    border: none;
+    cursor: pointer;    
+    margin:  auto;
+}
+
+.relatorio .button:hover {
+  background-color: #0069d9;
+}
+
+.relatorio .content {
+  display: flex;
+  gap: 20px;
+}
+
+.relatorio .card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  width: calc(33.33% - 20px); /* Ajuste a largura para o espaçamento entre as colunas */
+}
+
+.relatorio .card-title {
+  background-color: #f8f8f8;
+    border: none;
+    border-radius: 10px;
+    height: 31px;
+    width: 100%;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 17px;
+    color: #5f5e63;
+    padding: 5px 10px;
+}
+
+.relatorio .mapa {
+  width: 100%;
+  height: auto;
+}
+
+.relatorio .chart-container {
+  width: 100%;
+  height: 200px; /* Define a altura dos gráficos */
+}
+
+.relatorio .chart-container canvas {
+  width: 100%;
+  height: 100%;
+}

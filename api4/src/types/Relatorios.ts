@@ -30,8 +30,9 @@ export interface Relatorios {
     alertaPorEstacoes: Graficos,
     medicaoPorSensor: Graficos,
     ocorrenciaPorAlerta: Graficos
+    id: number,
 };
 
-interface RelatoriosProps {
+export interface RelatoriosProps {
     relatorios: Relatorios;
 }

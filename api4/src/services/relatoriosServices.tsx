@@ -1,4 +1,4 @@
-import axios from 'axios';// Ajuste o caminho conforme necessário
+import axios from 'axios';
 import { Relatorios } from '../types/Relatorios';
 
 // URL base da API
