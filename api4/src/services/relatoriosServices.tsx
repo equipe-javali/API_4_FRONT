@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { Relatorios } from '../types/Relatorios';
+import { IRelatorios } from '../types/Relatorios';
 
 // URL base da API
 const API_URL = `${process.env.REACT_APP_API_BACK}/relatorio`; 
 
 // Função para buscar relatórios
-export const fetchRelatorios = async (): Promise<Relatorios> => {
+export const fetchRelatorios = async (): Promise<IRelatorios> => {
     try {
-        const response = await axios.get<Relatorios>(`${API_URL}/relatorios`);
+        const response = await axios.get<IRelatorios>(`${API_URL}/relatorios`);
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
@@ -16,9 +16,9 @@ export const fetchRelatorios = async (): Promise<Relatorios> => {
 };
 
 // Função para buscar um relatório específico
-export const fetchRelatorioById = async (id: string): Promise<Relatorios> => {
+export const fetchRelatorioById = async (id: string): Promise<IRelatorios> => {
     try {
-        const response = await axios.get<Relatorios>(`${API_URL}/relatorios/${id}`);
+        const response = await axios.get<IRelatorios>(`${API_URL}/relatorios/${id}`);
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar relatório:', error);
@@ -27,9 +27,9 @@ export const fetchRelatorioById = async (id: string): Promise<Relatorios> => {
 };
 
 // Função para criar um novo relatório
-export const createRelatorio = async (relatorio: Relatorios): Promise<Relatorios> => {
+export const createRelatorio = async (relatorio: IRelatorios): Promise<IRelatorios> => {
     try {
-        const response = await axios.post<Relatorios>(`${API_URL}/relatorios`, relatorio);
+        const response = await axios.post<IRelatorios>(`${API_URL}/relatorios`, relatorio);
         return response.data;
     } catch (error) {
         console.error('Erro ao criar relatório:', error);
@@ -38,9 +38,9 @@ export const createRelatorio = async (relatorio: Relatorios): Promise<Relatorios
 };
 
 // Função para atualizar um relatório existente
-export const updateRelatorio = async (id: string, relatorio: Relatorios): Promise<Relatorios> => {
+export const updateRelatorio = async (id: string, relatorio: IRelatorios): Promise<IRelatorios> => {
     try {
-        const response = await axios.put<Relatorios>(`${API_URL}/relatorios/${id}`, relatorio);
+        const response = await axios.put<IRelatorios>(`${API_URL}/relatorios/${id}`, relatorio);
         return response.data;
     } catch (error) {
         console.error('Erro ao atualizar relatório:', error);
