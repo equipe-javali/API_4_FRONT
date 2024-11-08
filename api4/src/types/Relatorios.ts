@@ -40,6 +40,6 @@ export interface IRelatoriosProps {
 
 export interface ExportarRelatoriosProps {
 
-    relatorios?: IRelatorios | null;
+    relatorios?: IRelatorios;
   
   }
