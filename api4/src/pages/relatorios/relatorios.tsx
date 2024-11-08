@@ -1,11 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./relatorios.css";
+import { IRelatorios } from "../../types/Relatorios";
+import axios from "axios";
+import { Toast } from "react-bootstrap";
+
+const API_URL = "https://your-api-url.com"; // Defina a URL da sua API aqui
 
 export function Relatorios() {
   const [periodoInicial, setPeriodoInicial] = useState("");
   const [periodoFinal, setPeriodoFinal] = useState("");
   const [estacoes, setEstacoes] = useState<string[]>([]);
   const [tipoRelatorio, setTipoRelatorio] = useState("");
+  
+  const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
+
+  useEffect(() => {
+    const fetchRelatorios = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/relatorio/geral`); // Ajuste a rota da API
+        setRelatorios(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar relatórios:', error);
+        throw error;
+      }
+    };
+
+    fetchRelatorios();
+  }, []);
 
   const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPeriodoInicial(event.target.value);
@@ -71,7 +92,9 @@ export function Relatorios() {
               <option value="chuvaPeriodo">Quantidade Média de Chuva por Período</option>
             </select>
           </div>
-          <button onClick={exportarRelatorio} className="button">Exportar relatório</button>
+          <button className="button" onClick={exportarRelatorio}> 
+            Exportar Relatório
+          </button>
         </div>
 
         <div className="filter-group">

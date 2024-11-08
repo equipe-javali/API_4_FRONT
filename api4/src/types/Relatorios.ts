@@ -1,38 +1,45 @@
-export interface Arquivo {
+export interface IArquivo {
     nomeArquivo: string,
-    tabelas: Graficos[]
+    tabelas: IGraficos[]
 }
 
-export interface Barras {
+export interface IBarras {
     y: number,
     x: string
 }
 
-export interface FiltroRelatorios {
+export interface IFiltroRelatorios {
     dataInicio?: Date,
     dataFim?: Date,
     estacoes?: number[]
 }
 
-export interface Graficos {
+export interface IGraficos {
     dados: string[][],
     titulo: string,
     subtitulos: string[]
 }
 
-export interface PontoMapa {
+export interface IPontoMapa {
     latitude: number,
     longitude: number
 }
 
-export interface Relatorios {
-    mapaEstacoes: Graficos,
-    alertaPorEstacoes: Graficos,
-    medicaoPorSensor: Graficos,
-    ocorrenciaPorAlerta: Graficos
+export interface IRelatorios {
+    mapaEstacoes: IGraficos,
+    alertaPorEstacoes: IGraficos,
+    medicaoPorSensor: IGraficos,
+    ocorrenciaPorAlerta: IGraficos
     id: number,
 };
 
-export interface RelatoriosProps {
-    relatorios: Relatorios;
+export interface IRelatoriosProps {
+    relatorios: IRelatorios;
 }
+
+
+export interface ExportarRelatoriosProps {
+
+    relatorios?: IRelatorios | null;
+  
+  }
