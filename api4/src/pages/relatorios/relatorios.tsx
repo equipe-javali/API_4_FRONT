@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "./relatorios.css";
 import { IRelatorios } from "../../types/Relatorios";
-import axios from "axios";
-import { Toast } from "react-bootstrap";
+import { fetchRelatorios } from "../../services/relatoriosServices";
+import { toast } from 'react-toastify';
+import ExportarRelatorios from "../../components/ExportarRelatorios";
 
-const API_URL = "https://your-api-url.com"; // Defina a URL da sua API aqui
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
 
 export function Relatorios() {
   const [periodoInicial, setPeriodoInicial] = useState("");
   const [periodoFinal, setPeriodoFinal] = useState("");
   const [estacoes, setEstacoes] = useState<string[]>([]);
   const [tipoRelatorio, setTipoRelatorio] = useState("");
-  
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
 
   useEffect(() => {
-    const fetchRelatorios = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/relatorio/geral`); // Ajuste a rota da API
-        setRelatorios(response.data);
+        const data = await fetchRelatorios();
+        setRelatorios(data);
       } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
-        throw error;
+        toast.error('Erro ao buscar relatórios.');
       }
     };
 
-    fetchRelatorios();
+    fetchData();
   }, []);
 
   const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,17 +43,6 @@ export function Relatorios() {
 
   const handleTipoRelatorioChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTipoRelatorio(event.target.value);
-  };
-
-  const exportarRelatorio = () => {
-    // Lógica para exportar o relatório
-    console.log(
-      "Exportando relatório com as seguintes informações:",
-      periodoInicial,
-      periodoFinal,
-      estacoes,
-      tipoRelatorio
-    );
   };
 
   return (
@@ -92,14 +81,12 @@ export function Relatorios() {
               <option value="chuvaPeriodo">Quantidade Média de Chuva por Período</option>
             </select>
           </div>
-          <button className="button" onClick={exportarRelatorio}> 
-            Exportar Relatório
-          </button>
+          <ExportarRelatorios relatorios={relatorios} />
         </div>
 
         <div className="filter-group">
           <label htmlFor="estacoes" className="label">Selecionar estações:</label>
-          <select id="estacoes" onChange={handleEstacoesChange} className="input">
+          <select id="estacoes" onChange={handleEstacoesChange} className="input" multiple>
             <option value="">Todas as estações</option>
             {/* Adicionar as opções de estações aqui */}
           </select>
