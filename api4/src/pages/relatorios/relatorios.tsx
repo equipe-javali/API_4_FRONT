@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./relatorios.css";
 import { IRelatorios } from "../../types/Relatorios";
 import { fetchRelatorios } from "../../services/relatoriosServices";
+import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
 import ExportarRelatorios from "../../components/ExportarRelatorios";
+import Select from 'react-select';
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
 
 export function Relatorios() {
   const [periodoInicial, setPeriodoInicial] = useState("");
   const [periodoFinal, setPeriodoFinal] = useState("");
-  const [estacoes, setEstacoes] = useState<string[]>([]);
+  const [estacoes, setEstacoes] = useState<any[]>([]);
   const [tipoRelatorio, setTipoRelatorio] = useState("");
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
 
@@ -18,7 +20,8 @@ export function Relatorios() {
     const fetchData = async () => {
       try {
         const data = await fetchRelatorios();
-        setRelatorios(data);
+        setRelatorios(data); 
+        console.log('Relatórios carregados:', data); 
       } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
         toast.error('Erro ao buscar relatórios.');
@@ -26,6 +29,23 @@ export function Relatorios() {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const carregarEstacoes = async () => {
+      try {
+        const responseEstacoes = await listarEstacoes();
+        if (responseEstacoes.data && Array.isArray(responseEstacoes.data.rows)) {
+          setEstacoes(responseEstacoes.data.rows);
+        } else {
+          console.error('Resposta da API de estações não é um array:', responseEstacoes);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar estações:', error);
+      }
+    };
+
+    carregarEstacoes();
   }, []);
 
   const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,14 +56,19 @@ export function Relatorios() {
     setPeriodoFinal(event.target.value);
   };
 
-  const handleEstacoesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
-    setEstacoes(selectedOptions);
+  const handleEstacoesChange = (selectedOptions: any) => {
+    const selectedEstacoes = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
+    setEstacoes(selectedEstacoes);
   };
 
   const handleTipoRelatorioChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTipoRelatorio(event.target.value);
   };
+
+  const estacaoOptions = estacoes.map(estacao => ({
+    value: estacao.id,
+    label: estacao.nome
+  }));
 
   return (
     <div className="relatorio">
@@ -71,6 +96,7 @@ export function Relatorios() {
               className="input"
             />
           </div>
+          
           <div className="filter-group">
             <label htmlFor="tipoRelatorio" className="label">Selecionar tipo relatório:</label>
             <select id="tipoRelatorio" onChange={handleTipoRelatorioChange} className="input">
@@ -83,22 +109,25 @@ export function Relatorios() {
           </div>
           <ExportarRelatorios relatorios={relatorios} />
         </div>
-
         <div className="filter-group">
-          <label htmlFor="estacoes" className="label">Selecionar estações:</label>
-          <select id="estacoes" onChange={handleEstacoesChange} className="input" multiple>
-            <option value="">Todas as estações</option>
-            {/* Adicionar as opções de estações aqui */}
-          </select>
+            <label htmlFor="estacoes" className="label">Selecionar estações:</label>
+            <Select
+              id="estacoes"
+              isMulti
+              options={estacaoOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={handleEstacoesChange}
+            />
         </div>
 
         <div className="content">
-          <div className="mapa-container">
+          {/* <div className="mapa-container">
             <div className="card mapa-card">
               <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
               <img src="https://via.placeholder.com/325x538" alt="Mapa de Estações" className="mapa" />
             </div>
-          </div>
+          </div> */}
           <div className="graficos-container">
             <div className="grafico-row">
               <div className="card">
