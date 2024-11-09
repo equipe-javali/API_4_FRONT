@@ -1,9 +1,10 @@
 .lista-estacao .container {     
     padding: 15px;    
-    background-color: white;
-    width: 100%; 
-    border-radius: 20px;    
-    min-height: 30vh; 
+    background-color: white;    
+    border-radius: 20px;   
+    width: 90%;      
+    margin: 5% ;
+    
    
 }
 
