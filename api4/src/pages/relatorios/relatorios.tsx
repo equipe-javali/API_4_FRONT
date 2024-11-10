@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./relatorios.css";
-import { IRelatorios } from "../../types/Relatorios";
+import { IFiltroRelatorios, IRelatorios } from "../../types/Relatorios";
 import { fetchRelatorios } from "../../services/relatoriosServices";
 import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
@@ -8,54 +8,62 @@ import ExportarRelatorios from "../../components/ExportarRelatorios";
 import Select from 'react-select';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { Estacao } from "../../types/Estacao";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+
+function obterDataHoje(): string {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  const dia = String(hoje.getDate()).padStart(2, '0');
+  return `${ano}-${mes}-${dia}`;
+}
 
 export function Relatorios() {
-  const [estacoes, setEstacoes] = useState<any[]>([]);
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
-  const [periodoInicial, setPeriodoInicial] = useState("");
-  const [periodoFinal, setPeriodoFinal] = useState("");
+  const [estacoes, setEstacoes] = useState<Estacao[]>([]);
+  const [filtrosData, setFiltrosData] = useState<IFiltroRelatorios>({
+    dataInicio: obterDataHoje(),
+    dataFim: obterDataHoje(),
+    estacoes: []
+  });
   const [mensagem, setMensagem] = useState<string | null>(null);
-  const mapRef = useRef<HTMLDivElement>(null); // Ref para o mapa
-  const leafletMap = useRef<L.Map | null>(null); // Referência para o mapa Leaflet
+  const mapRef = useRef<HTMLDivElement>(null);
+  const leafletMap = useRef<L.Map | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log('Token obtido:', token);
-
         if (!token) {
-          setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
+          setMensagem("Erro: Você precisa estar logado para visualizar os relatórios");
           return;
         }
-        const data = await fetchRelatorios(token);
+        const data = await fetchRelatorios(filtrosData, token);
         setRelatorios(data);
-        console.log('Relatórios carregados:', data);
       } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
         toast.error('Erro ao buscar relatórios.');
       }
     };
-
     fetchData();
-  }, []);
+  }, [filtrosData]);
 
   useEffect(() => {
     const carregarEstacoes = async () => {
       try {
         const responseEstacoes = await listarEstacoes();
-        if (responseEstacoes.data && Array.isArray(responseEstacoes.data.rows)) {
-          setEstacoes(responseEstacoes.data.rows);
-        } else {
-          console.error('Resposta da API de estações não é um array:', responseEstacoes);
+        if (responseEstacoes && Array.isArray(responseEstacoes.data.rows)) {
+          const todasEstacoes = responseEstacoes.data.rows;
+          setEstacoes(todasEstacoes);
+          const todosIdsEstacoes = todasEstacoes.map((estacao: Estacao) => estacao.id);
+          setFiltrosData(prevFiltros => ({ ...prevFiltros, estacoes: todosIdsEstacoes }));
         }
       } catch (error) {
         console.error('Erro ao carregar estações:', error);
       }
     };
-
     carregarEstacoes();
   }, []);
 
@@ -64,7 +72,7 @@ export function Relatorios() {
       leafletMap.current = L.map(mapRef.current, {
         center: [-15.0, -47.0],
         zoom: 2,
-        dragging: false,
+        dragging: true,
         zoomControl: true,
       });
 
@@ -75,7 +83,6 @@ export function Relatorios() {
 
     if (leafletMap.current) {
       estacoes.forEach(estacao => {
-        // Verifica se a latitude e longitude são válidas antes de adicionar o marcador
         if (estacao.latitude && estacao.longitude) {
           const marker = L.marker([estacao.latitude, estacao.longitude], {
             title: estacao.nome,
@@ -86,21 +93,20 @@ export function Relatorios() {
     }
   }, [estacoes]);
 
-  const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodoInicial(event.target.value);
-  };
-
-  const handlePeriodoFinalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodoFinal(event.target.value);
+  const handlePeriodoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFiltrosData(prevFiltros => ({ ...prevFiltros, [name]: value }));
   };
 
   const handleEstacoesChange = (selectedOptions: any) => {
-    const selectedEstacoes = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    setEstacoes(selectedEstacoes);
+    const estacoesIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
+    setFiltrosData(prevFiltros => ({ ...prevFiltros, estacoes: estacoesIds }));
   };
 
-  const estacaoOptions = estacoes.map(estacao => ({
-    value: estacao.id,
+  const estacaoOptions = estacoes
+  .filter((estacao) => estacao.id !== undefined) // Filtra estações com `id` válido
+  .map((estacao) => ({
+    value: estacao.id as number,
     label: estacao.nome
   }));
 
@@ -108,15 +114,15 @@ export function Relatorios() {
     <div className="relatorio">
       <div className="container">
         <h2 className="text-wrapper-titulo">Relatórios</h2>
-
         <div className="filter-row">
           <div className="filter-group">
             <label htmlFor="periodoInicial" className="label">Período inicial:</label>
             <input
               type="date"
               id="periodoInicial"
-              value={periodoInicial}
-              onChange={handlePeriodoInicialChange}
+              name="dataInicio"
+              value={filtrosData.dataInicio}
+              onChange={handlePeriodoChange}
               className="input"
             />
           </div>
@@ -125,8 +131,9 @@ export function Relatorios() {
             <input
               type="date"
               id="periodoFinal"
-              value={periodoFinal}
-              onChange={handlePeriodoFinalChange}
+              name="dataFim"
+              value={filtrosData.dataFim}
+              onChange={handlePeriodoChange}
               className="input"
             />
           </div>
@@ -136,11 +143,13 @@ export function Relatorios() {
           <label htmlFor="estacoes" className="label">Selecionar estações:</label>
           <Select
             id="estacoes"
+            name="id_estacoes"
             isMulti
             options={estacaoOptions}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={handleEstacoesChange}
+            value={estacaoOptions.filter(option => filtrosData.estacoes?.includes(option.value))}
           />
         </div>
 
@@ -175,14 +184,14 @@ export function Relatorios() {
               </div>
             </div>
           </div>
-          
-            <div className="mapa-card">
-              <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
-              {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
-                <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
-              )}
-            </div>
+
+          <div className="mapa-card">
+            <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
+            {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
+              <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
+            )}
           </div>
+        </div>
       </div>
     </div>
   );
