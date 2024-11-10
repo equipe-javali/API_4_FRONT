@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Select from 'react-select';
 import { useParams, useNavigate } from 'react-router-dom';
 import { editarEstacao, buscarEstacaoPorId, adicionarSensor, removerSensor } from "../../services/estacaoServices";
@@ -6,15 +6,19 @@ import { Estacao } from '../../types/Estacao';
 import "./css/CadastraEstacoes.css";
 import { listarSensores } from '../../services/sensorServices'; 
 import { ClipLoader } from "react-spinners";
+import L from 'leaflet';  // Importando o Leaflet
 
 export function EditaEstacao() {
   const { id } = useParams<{ id: string }>(); 
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState<Estacao | null>(null);
   const [sensores, setSensores] = useState<any[]>([]); 
   const [mensagem, setMensagem] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true); 
+
+  const mapRef = useRef<HTMLDivElement>(null); // Ref para o mapa
+  const mapInstanceRef = useRef<L.Map | null>(null); // Ref para instância do mapa
+  const markerRef = useRef<L.Marker | null>(null); // Ref para o marcador
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -49,6 +53,33 @@ export function EditaEstacao() {
 
     carregarDados();
   }, [id]);
+
+  useEffect(() => {
+    if (formData && formData.latitude && formData.longitude && mapRef.current && !mapInstanceRef.current) {
+      const map = L.map(mapRef.current).setView([formData.latitude, formData.longitude], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      mapInstanceRef.current = map;
+
+      // Cria um marcador com a localização da estação
+      markerRef.current = L.marker([formData.latitude, formData.longitude], { draggable: true }).addTo(map);
+
+      // Atualiza a latitude e longitude quando o marcador for movido
+      markerRef.current.on('dragend', () => {
+        const { lat, lng } = markerRef.current!.getLatLng();
+        setFormData(prevData => prevData ? { ...prevData, latitude: lat, longitude: lng } : prevData);
+      });
+
+      // Atualiza a latitude e longitude quando o mapa for clicado
+      map.on('click', (e: L.LeafletMouseEvent) => {
+        const { lat, lng } = e.latlng;
+        setFormData(prevData => prevData ? { ...prevData, latitude: lat, longitude: lng } : prevData);
+        markerRef.current?.setLatLng([lat, lng]);
+      });
+    }
+  }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (formData) {
@@ -109,7 +140,7 @@ export function EditaEstacao() {
             try {
               await adicionarSensor(estacaoId, sensorId, token); // Passando o token como terceiro argumento
             } catch (error) {
-              console.error(`Erro ao adicionar sensor ${sensorId}:`, error);              
+              console.error(`Erro ao adicionar sensor ${sensorId}:`, error);               
             }
           }
             
@@ -233,6 +264,10 @@ export function EditaEstacao() {
                   value={sensorOptions.filter(option => formData.id_sensores.includes(option.value))}
                 />
               </div>             
+              <div className="form-group">
+                <label className="text-wrapper">Mapa de Localização</label>
+                <div className="map-container" style={{ height: "300px" }} ref={mapRef}></div>
+              </div>
               <div className="form-group">
                 <button className="button" type="submit">Salvar</button>
                 {mensagem && <div className={mensagem.includes("Erro") ? "error-message" : "success-message"}>{mensagem}</div>}
