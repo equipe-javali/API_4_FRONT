@@ -10,18 +10,25 @@ import Select from 'react-select';
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
 
 export function Relatorios() {
+  const [estacoes, setEstacoes] = useState<any[]>([]);
+  const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
   const [periodoInicial, setPeriodoInicial] = useState("");
   const [periodoFinal, setPeriodoFinal] = useState("");
-  const [estacoes, setEstacoes] = useState<any[]>([]);
-  const [tipoRelatorio, setTipoRelatorio] = useState("");
-  const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
+  const [mensagem, setMensagem] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchRelatorios();
-        setRelatorios(data); 
-        console.log('Relatórios carregados:', data); 
+        const token = localStorage.getItem('token');
+        console.log('Token obtido:', token);
+
+        if (!token) {
+          setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
+          return;
+        }
+        const data = await fetchRelatorios(token);
+        setRelatorios(data);
+        console.log('Relatórios carregados:', data);
       } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
         toast.error('Erro ao buscar relatórios.');
@@ -61,10 +68,6 @@ export function Relatorios() {
     setEstacoes(selectedEstacoes);
   };
 
-  const handleTipoRelatorioChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTipoRelatorio(event.target.value);
-  };
-
   const estacaoOptions = estacoes.map(estacao => ({
     value: estacao.id,
     label: estacao.nome
@@ -96,29 +99,18 @@ export function Relatorios() {
               className="input"
             />
           </div>
-          
-          <div className="filter-group">
-            <label htmlFor="tipoRelatorio" className="label">Selecionar tipo relatório:</label>
-            <select id="tipoRelatorio" onChange={handleTipoRelatorioChange} className="input">
-              <option value="">Selecione um tipo de relatório</option>
-              <option value="alerta">Quantidade Média de Alertas por Estação</option>
-              <option value="temperatura">Média de Temperatura por Período</option>
-              <option value="chuvaLocal">Quantidade Média de Chuva por Local</option>
-              <option value="chuvaPeriodo">Quantidade Média de Chuva por Período</option>
-            </select>
-          </div>
           <ExportarRelatorios relatorios={relatorios} />
         </div>
         <div className="filter-group">
-            <label htmlFor="estacoes" className="label">Selecionar estações:</label>
-            <Select
-              id="estacoes"
-              isMulti
-              options={estacaoOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={handleEstacoesChange}
-            />
+          <label htmlFor="estacoes" className="label">Selecionar estações:</label>
+          <Select
+            id="estacoes"
+            isMulti
+            options={estacaoOptions}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={handleEstacoesChange}
+          />
         </div>
 
         <div className="content">

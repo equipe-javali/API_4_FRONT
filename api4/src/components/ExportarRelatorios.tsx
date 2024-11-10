@@ -1,86 +1,108 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { IRelatorios } from '../types/Relatorios';
+import { ExportarRelatoriosProps, IArquivo, IGraficos, IRelatorios } from '../types/Relatorios';
 import "../pages/relatorios/relatorios.css";
+import { fetchRelatoriosDownload } from '../services/relatoriosServices';
 
-const API_URL = process.env.REACT_APP_API_URL ; 
-
-interface ExportarRelatoriosProps {
-  relatorios?: IRelatorios | null; 
+declare global {
+  interface Window {
+    exportarRelatoriosParaExcel: () => void;
+    relatorios: ExportarRelatoriosProps
+  }
 }
 
 function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [nomeArquivo, setNomeArquivo] = useState('relatorios.xlsx'); // Estado para o nome do arquivo
+  const [arquivo, setArquivo] = useState<IArquivo>({
+    nomeArquivo: "",
+    tabelas: []
+  })
+
+  const [mensagem, setMensagem] = useState<string | null>(null);
 
   const exportarRelatoriosParaExcel = async () => {
-    console.log('Exportar Relatórios chamado'); // Log para depuração
-    console.log('Relatórios:', relatorios); // Log para depuração
-    if (!relatorios || !relatorios.alertaPorEstacoes?.dados || !relatorios.medicaoPorSensor?.dados || !relatorios.ocorrenciaPorAlerta?.dados) {
-      toast.error('Nenhum relatório para exportar.');
+
+    const token = localStorage.getItem('token'); 
+
+    if (!token) {
+      setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
       return;
     }
 
-    setIsLoading(true);
+    console.log('Exportar Relatórios chamado');
+    console.log('Relatórios:', relatorios);
+
+    if (!relatorios) {
+      console.log("Nenhum relatório para exportar")
+    }
 
     try {
-      const response = await axios.post(`${API_URL}/download`, {
-        nomeArquivo: nomeArquivo.replace('.xlsx', ''), 
-        tabelas: [
-          {
-            titulo: 'Quantidade Média de Alertas por Estação',
-            subtitulos: ['Estação', 'Quantidade de Alertas'],
-            dados: relatorios.alertaPorEstacoes.dados
-          },
-          {
-            titulo: 'Média de Medição por Sensor',
-            subtitulos: ['Sensor', 'Média de Medição'],
-            dados: relatorios.medicaoPorSensor.dados
-          },
-          {
-            titulo: 'Quantidade de Ocorrências por Alerta',
-            subtitulos: ['Alerta', 'Quantidade de Ocorrências'],
-            dados: relatorios.ocorrenciaPorAlerta.dados
-          }
-        ]
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        responseType: 'blob'
-    });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', nomeArquivo); // Usa o nome do arquivo do estado
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      const responseBlob = await fetchRelatoriosDownload(arquivo, token);
 
-      toast.success('Relatórios exportados com sucesso!');
+      if (responseBlob.size === 0) {
+        throw new Error("O arquivo está vazio");
+      }
+
+      const url = window.URL.createObjectURL(responseBlob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `${arquivo.nomeArquivo}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      console.log("Relatórios exportados com sucesso!")
+
     } catch (error: any) {
       console.error('Erro ao exportar relatórios', error);
-      toast.error('Ocorreu um erro ao exportar os relatórios.');
+
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleTipoRelatorioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target
+
+    setArquivo((prevArquivo) => ({
+      ...prevArquivo,
+      nomeArquivo: value,
+      tabelas:
+      value === "alertaPorEstacoes" && relatorios?.data.rows.alertaPorEstacoes
+          ? [relatorios?.data.rows.alertaPorEstacoes]
+          : value === "medicaoPorSensor" && relatorios?.data.rows.medicaoPorSensor
+            ? [relatorios?.data.rows.medicaoPorSensor]
+            : value === "ocorrenciaPorAlerta" && relatorios?.data.rows.ocorrenciaPorAlerta
+              ? [relatorios?.data.rows.ocorrenciaPorAlerta]
+              : [
+                relatorios?.data.rows.alertaPorEstacoes,
+                relatorios?.data.rows.medicaoPorSensor,
+                relatorios?.data.rows.ocorrenciaPorAlerta,
+              ].filter((tabela): tabela is IGraficos => tabela !== undefined),
+    }));
+
+    console.log(value)
+  }
+  window.exportarRelatoriosParaExcel = exportarRelatoriosParaExcel;
+
   return (
     <div>
-      {/* Input para o usuário digitar o nome do arquivo */}
       <div className="filter-row">
         <div className="filter-group">
-          <input 
-            type="text" 
-            value={nomeArquivo} 
-            onChange={(e) => setNomeArquivo(e.target.value)} 
-            placeholder="Nome do arquivo (ex: relatorios.xlsx)" 
-            className='input'
-          />
+          <label htmlFor="tipoRelatorio" className="label">Selecionar tipo relatório:</label>
+          <select id="tipoRelatorio" onChange={handleTipoRelatorioChange} className="input">
+            <option value="">Selecione um tipo de relatório</option>
+            <option value="relatorioGeral">Geral</option>
+            <option value="alertaPorEstacoes">Quantidade Média de Alertas por Estação</option>
+            <option value="medicaoPorSensor">Média de Medição por sensor</option>
+            <option value="ocorrenciaPorAlerta">Quantidade de ocorrências por alerta</option>
+          </select>
         </div>
       </div>
+
       <button className="button" onClick={exportarRelatoriosParaExcel} disabled={isLoading}>
         {isLoading ? 'Exportando...' : 'Exportar'}
       </button>
@@ -88,4 +110,9 @@ function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
   );
 }
 
+
 export default ExportarRelatorios;
+
+function setMensagem(arg0: string) {
+  throw new Error('Function not implemented.');
+}

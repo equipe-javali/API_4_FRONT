@@ -26,11 +26,15 @@ export interface IPontoMapa {
 }
 
 export interface IRelatorios {
-    mapaEstacoes: IGraficos,
-    alertaPorEstacoes: IGraficos,
-    medicaoPorSensor: IGraficos,
-    ocorrenciaPorAlerta: IGraficos
-    id: number,
+    data: {
+        rows: {
+            mapaEstacoes: IGraficos,
+            alertaPorEstacoes: IGraficos,
+            medicaoPorSensor: IGraficos,
+            ocorrenciaPorAlerta: IGraficos
+        }
+        fields: string[][]
+    }
 };
 
 export interface IRelatoriosProps {
@@ -39,7 +43,5 @@ export interface IRelatoriosProps {
 
 
 export interface ExportarRelatoriosProps {
-
-    relatorios?: IRelatorios;
-  
-  }
+    relatorios?: IRelatorios | null;
+}
