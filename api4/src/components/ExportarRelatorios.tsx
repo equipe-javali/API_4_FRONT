@@ -84,9 +84,8 @@ function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
               ].filter((tabela): tabela is IGraficos => tabela !== undefined),
     }));
 
-    console.log(value)
+    console.log('arquivo: ', value)
   }
-  window.exportarRelatoriosParaExcel = exportarRelatoriosParaExcel;
 
   return (
     <div>

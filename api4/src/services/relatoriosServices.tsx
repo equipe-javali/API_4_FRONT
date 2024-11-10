@@ -1,12 +1,15 @@
 import axios from 'axios';
-import { IArquivo, IRelatorios } from '../types/Relatorios';
+import { IArquivo, IFiltroRelatorios, IRelatorios } from '../types/Relatorios';
 
 const API_URL = `${process.env.REACT_APP_API_BACK}/relatorio`;
 
-export const fetchRelatorios = async (token: string): Promise<IRelatorios> => {
+export const fetchRelatorios = async (filtroData: IFiltroRelatorios, token: string): Promise<IRelatorios> => {
     try {
-        const response = await axios.post<IRelatorios>(`${API_URL}/geral`, {
-            Authorization: `Bearer ${token}`
+        const response = await axios.post<IRelatorios>(`${API_URL}/geral`, filtroData, {
+            headers: {
+                "Content-Type": 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         });
         return response.data;
     } catch (error) {

@@ -1,49 +1,45 @@
 import React, { useEffect, useState } from "react";
 import "./relatorios.css";
-import { IRelatorios } from "../../types/Relatorios";
+import { IFiltroRelatorios, IRelatorios } from "../../types/Relatorios";
 import { fetchRelatorios } from "../../services/relatoriosServices";
 import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
 import ExportarRelatorios from "../../components/ExportarRelatorios";
 import Select from 'react-select';
+import { Estacao } from "../../types/Estacao";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
 
+function obterDataHoje(): string {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Meses começam do 0, então adicione 1
+  const dia = String(hoje.getDate()).padStart(2, '0');
+
+  return `${ano}-${mes}-${dia}`;
+}
+
 export function Relatorios() {
-  const [estacoes, setEstacoes] = useState<any[]>([]);
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
-  const [periodoInicial, setPeriodoInicial] = useState("");
-  const [periodoFinal, setPeriodoFinal] = useState("");
+  const [estacoes, setEstacoes] = useState<any[]>([]);
+  const [filtrosData, setFiltrosData] = useState<IFiltroRelatorios>({
+    dataInicio: obterDataHoje(),
+    dataFim: obterDataHoje(),
+    estacoes: []
+  })
   const [mensagem, setMensagem] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        console.log('Token obtido:', token);
-
-        if (!token) {
-          setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
-          return;
-        }
-        const data = await fetchRelatorios(token);
-        setRelatorios(data);
-        console.log('Relatórios carregados:', data);
-      } catch (error) {
-        console.error('Erro ao buscar relatórios:', error);
-        toast.error('Erro ao buscar relatórios.');
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  
   useEffect(() => {
     const carregarEstacoes = async () => {
       try {
         const responseEstacoes = await listarEstacoes();
-        if (responseEstacoes.data && Array.isArray(responseEstacoes.data.rows)) {
-          setEstacoes(responseEstacoes.data.rows);
+        if (responseEstacoes && Array.isArray(responseEstacoes.data.rows)) {
+          const todasEstacoes = responseEstacoes.data.rows
+          setEstacoes(todasEstacoes);
+
+          const todosIdsEstacoes = todasEstacoes.map((estacao: Estacao) => estacao.id);
+          setFiltrosData({...filtrosData, estacoes: todosIdsEstacoes})
+
         } else {
           console.error('Resposta da API de estações não é um array:', responseEstacoes);
         }
@@ -55,17 +51,38 @@ export function Relatorios() {
     carregarEstacoes();
   }, []);
 
-  const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodoInicial(event.target.value);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Token obtido:', token);
 
-  const handlePeriodoFinalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodoFinal(event.target.value);
+        if (!token) {
+          setMensagem("Erro: Você precisa estar logado para visualizar os relatórios");
+          return;
+        }
+
+        const data = await fetchRelatorios(filtrosData, token);
+        setRelatorios(data);
+        console.log('Relatórios carregados:', data);
+      } catch (error) {
+        console.error('Erro ao buscar relatórios:', error);
+        toast.error('Erro ao buscar relatórios.');
+      }
+    };
+
+    fetchData();
+  }, [filtrosData]);
+
+  
+  const handlePeriodoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setFiltrosData({...filtrosData, [name]: value})
   };
 
   const handleEstacoesChange = (selectedOptions: any) => {
-    const selectedEstacoes = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    setEstacoes(selectedEstacoes);
+    const estacoesIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];    
+    setFiltrosData({...filtrosData, estacoes: estacoesIds})
   };
 
   const estacaoOptions = estacoes.map(estacao => ({
@@ -84,8 +101,9 @@ export function Relatorios() {
             <input
               type="date"
               id="periodoInicial"
-              value={periodoInicial}
-              onChange={handlePeriodoInicialChange}
+              name="dataInicio"
+              value={filtrosData.dataInicio}
+              onChange={handlePeriodoChange}
               className="input"
             />
           </div>
@@ -94,8 +112,9 @@ export function Relatorios() {
             <input
               type="date"
               id="periodoFinal"
-              value={periodoFinal}
-              onChange={handlePeriodoFinalChange}
+              name="dataFim"
+              value={filtrosData.dataFim}
+              onChange={handlePeriodoChange}
               className="input"
             />
           </div>
@@ -105,11 +124,13 @@ export function Relatorios() {
           <label htmlFor="estacoes" className="label">Selecionar estações:</label>
           <Select
             id="estacoes"
+            name="id_estacoes"
             isMulti
             options={estacaoOptions}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={handleEstacoesChange}
+            value={estacaoOptions.filter(option => filtrosData.estacoes?.includes(option.value))}
           />
         </div>
 
