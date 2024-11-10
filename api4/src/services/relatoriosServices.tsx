@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { IRelatorios } from '../types/Relatorios';
+import { IArquivo, IRelatorios } from '../types/Relatorios';
 
-// URL base da API
-const API_URL = `${process.env.REACT_APP_API_BACK}/relatorio`; 
+const API_URL = `${process.env.REACT_APP_API_BACK}/relatorio`;
 
-// Função para buscar relatórios
-export const fetchRelatorios = async (): Promise<IRelatorios> => {
+export const fetchRelatorios = async (token: string): Promise<IRelatorios> => {
     try {
-        const response = await axios.post<IRelatorios>(`${API_URL}/geral`);
+        const response = await axios.post<IRelatorios>(`${API_URL}/geral`, {
+            Authorization: `Bearer ${token}`
+        });
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
@@ -15,13 +15,25 @@ export const fetchRelatorios = async (): Promise<IRelatorios> => {
     }
 };
 
-// Função para buscar um relatório específico
-export const fetchRelatoriosDownload = async (): Promise<IRelatorios> => {
+export const fetchRelatoriosDownload = async (arquivoData: IArquivo, token: string) => {
     try {
-        const response = await axios.post<IRelatorios>(`${API_URL}/download`);
+        const response = await axios.post(`${API_URL}/download`, arquivoData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                Authorization: `Bearer ${token}`
+            },
+
+            responseType: 'blob'
+        });
+
         return response.data;
+        
     } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
+        if (axios.isAxiosError(error) && error.response) {
+            console.error("Detalhes do erro:", error.response.data);
+        }
         throw error;
     }
 };
