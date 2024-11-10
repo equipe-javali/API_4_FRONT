@@ -1,0 +1,159 @@
+.relatorio .container {
+  padding: 10px;    
+  background-color: white;
+  width: 90%;   
+  margin: 5%;   
+  margin-top: 10%;
+  border-radius: 20px;    
+  
+}
+
+.relatorio .text-wrapper-titulo {
+  color: #020202;
+  font-family: "Onest-Regular", Helvetica;
+  font-size: 30px;  
+  text-align: center; 
+  margin-top: 30px; 
+  margin-bottom: 30px;
+}
+
+.relatorio .filters {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.relatorio .filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.relatorio .filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;  
+  margin-right: 30px;
+}
+
+.relatorio .filter-group-relatorio {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  
+  margin-right: 30px;
+  margin-left: 100px;
+}
+
+.relatorio .filter-group-estacoes {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.relatorio .label {
+  color: #40587e;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 18px; 
+  margin-bottom: 10px;
+}
+
+.relatorio .input {
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 10px;
+  height: 31px;
+  width: 100%;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 15px;
+  color: #5f5e63;
+  padding: 5px 10px;
+}
+
+.relatorio .button {
+  background-color: #0178d4;
+  border-radius: 5px;
+  height: 40px;
+  width: 150px;
+  color: #edf4ff;
+  font-family: "Kantumruy-Regular", Helvetica;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 47px;
+  border: none;
+  cursor: pointer;
+  
+}
+
+.relatorio .button:hover {
+  background-color: #0069d9;
+}
+
+.relatorio .content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding-left: 30px;
+}
+
+.relatorio .mapa-container {
+  width: 45%; 
+  margin-right: 5px;
+}
+
+.relatorio .mapa-card {
+  
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.relatorio .graficos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.relatorio .grafico-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.relatorio .card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  width: 50%;
+  margin-right: 50px;
+}
+
+.relatorio .card-title {
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 10px;
+  height: 30px;
+  width: 90%;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 14px;
+  color: #5f5e63;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.relatorio .mapa {
+  width: 100%;
+  height: auto;
+}
+
+.relatorio .chart-container {
+  width: 100%;
+  height: 200px;
+}
+
+.relatorio .chart-container canvas {
+  width: 100%;
+  height: 100%;
+}

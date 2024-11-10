@@ -1,7 +1,8 @@
 .cadastro-sensor .container {
-    padding: 15px;    
+    padding: 30px;    
     background-color: white;
     width: 60vw; 
+    height: 100%;
     border-radius: 20px;
     margin-top: 20px;
     min-height: 30vh; 

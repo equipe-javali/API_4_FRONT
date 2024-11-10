@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa'; // Importando FaHome
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome, FaList } from 'react-icons/fa'; // Importando FaHome
 import './css/SideMenu.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -93,6 +93,15 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
               </Link>
             </div>
           </div>
+          <div className='collapse-options'>
+            <div className='collapse-icon'><FaList /></div>
+            <div id='collapse-expand'>
+              <p>Relatórios</p>
+              <Link to="relatorios" className="menu-link">
+                <p className='link-text'>Visualizar relatórios</p>
+              </Link>
+            </div>
+          </div>
 
           <div className='menu-bottom'>
             <div className='user-collapse'>
@@ -134,6 +143,14 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
               )}
             </details>
           ))}
+            
+            {/* Adicionando a opção Relatórios */}
+            <details className='menu-details'>
+              <summary><FaList /> Relatórios</summary>
+              <Link to="relatorios" className="menu-link">
+                <p className='link-text'>Visualizar relatórios</p>
+              </Link>
+            </details>
 
           <div className='menu-bottom'>
             <div className='user-profile'>
