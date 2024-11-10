@@ -6,55 +6,40 @@ import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
 import ExportarRelatorios from "../../components/ExportarRelatorios";
 import Select from 'react-select';
+import { Estacao } from "../../types/Estacao";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
+
+function obterDataHoje(): string {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Meses começam do 0, então adicione 1
+  const dia = String(hoje.getDate()).padStart(2, '0');
+
+  return `${ano}-${mes}-${dia}`;
+}
 
 export function Relatorios() {
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
   const [estacoes, setEstacoes] = useState<any[]>([]);
-  const [periodoInicial, setPeriodoInicial] = useState("");
-  const [periodoFinal, setPeriodoFinal] = useState("");
   const [filtrosData, setFiltrosData] = useState<IFiltroRelatorios>({
-    dataInicio: "",
-    dataFim: "",
+    dataInicio: obterDataHoje(),
+    dataFim: obterDataHoje(),
     estacoes: []
   })
   const [mensagem, setMensagem] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        console.log('Token obtido:', token);
-
-        if (!token) {
-          setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
-          return;
-        }
-        setFiltrosData({...filtrosData, 
-          dataFim: periodoFinal,
-          dataInicio: periodoInicial,
-          estacoes: estacoes
-        })
-
-        const data = await fetchRelatorios(filtrosData, token);
-        setRelatorios(data);
-        console.log('Relatórios carregados:', data);
-      } catch (error) {
-        console.error('Erro ao buscar relatórios:', error);
-        toast.error('Erro ao buscar relatórios.');
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  
   useEffect(() => {
     const carregarEstacoes = async () => {
       try {
         const responseEstacoes = await listarEstacoes();
-        if (responseEstacoes.data && Array.isArray(responseEstacoes.data.rows)) {
-          setEstacoes(responseEstacoes.data.rows);
+        if (responseEstacoes && Array.isArray(responseEstacoes.data.rows)) {
+          const todasEstacoes = responseEstacoes.data.rows
+          setEstacoes(todasEstacoes);
+
+          const todosIdsEstacoes = todasEstacoes.map((estacao: Estacao) => estacao.id);
+          setFiltrosData({...filtrosData, estacoes: todosIdsEstacoes})
+
         } else {
           console.error('Resposta da API de estações não é um array:', responseEstacoes);
         }
@@ -66,17 +51,38 @@ export function Relatorios() {
     carregarEstacoes();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Token obtido:', token);
+
+        if (!token) {
+          setMensagem("Erro: Você precisa estar logado para visualizar os relatórios");
+          return;
+        }
+
+        const data = await fetchRelatorios(filtrosData, token);
+        setRelatorios(data);
+        console.log('Relatórios carregados:', data);
+      } catch (error) {
+        console.error('Erro ao buscar relatórios:', error);
+        toast.error('Erro ao buscar relatórios.');
+      }
+    };
+
+    fetchData();
+  }, [filtrosData]);
+
+  
   const handlePeriodoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setFiltrosData({...filtrosData, [name]: value})
   };
 
   const handleEstacoesChange = (selectedOptions: any) => {
-    const selectedEstacoes = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    const estacoesSelecionadas = estacoes.filter(estacao => selectedEstacoes.includes(estacao.id))
-    
-    setEstacoes(estacoesSelecionadas);
-    setFiltrosData({...filtrosData, estacoes: estacoesSelecionadas})
+    const estacoesIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];    
+    setFiltrosData({...filtrosData, estacoes: estacoesIds})
   };
 
   const estacaoOptions = estacoes.map(estacao => ({
