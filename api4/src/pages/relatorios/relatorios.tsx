@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./relatorios.css";
 import { IFiltroRelatorios, IRelatorios } from "../../types/Relatorios";
 import { fetchRelatorios } from "../../services/relatoriosServices";
@@ -6,87 +6,107 @@ import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
 import ExportarRelatorios from "../../components/ExportarRelatorios";
 import Select from 'react-select';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { Estacao } from "../../types/Estacao";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 function obterDataHoje(): string {
   const hoje = new Date();
   const ano = hoje.getFullYear();
-  const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Meses começam do 0, então adicione 1
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
   const dia = String(hoje.getDate()).padStart(2, '0');
-
   return `${ano}-${mes}-${dia}`;
 }
 
 export function Relatorios() {
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
-  const [estacoes, setEstacoes] = useState<any[]>([]);
+  const [estacoes, setEstacoes] = useState<Estacao[]>([]);
   const [filtrosData, setFiltrosData] = useState<IFiltroRelatorios>({
     dataInicio: obterDataHoje(),
     dataFim: obterDataHoje(),
     estacoes: []
-  })
+  });
   const [mensagem, setMensagem] = useState<string | null>(null);
-  
-  useEffect(() => {
-    const carregarEstacoes = async () => {
-      try {
-        const responseEstacoes = await listarEstacoes();
-        if (responseEstacoes && Array.isArray(responseEstacoes.data.rows)) {
-          const todasEstacoes = responseEstacoes.data.rows
-          setEstacoes(todasEstacoes);
-
-          const todosIdsEstacoes = todasEstacoes.map((estacao: Estacao) => estacao.id);
-          setFiltrosData({...filtrosData, estacoes: todosIdsEstacoes})
-
-        } else {
-          console.error('Resposta da API de estações não é um array:', responseEstacoes);
-        }
-      } catch (error) {
-        console.error('Erro ao carregar estações:', error);
-      }
-    };
-
-    carregarEstacoes();
-  }, []);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const leafletMap = useRef<L.Map | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log('Token obtido:', token);
-
         if (!token) {
           setMensagem("Erro: Você precisa estar logado para visualizar os relatórios");
           return;
         }
-
         const data = await fetchRelatorios(filtrosData, token);
         setRelatorios(data);
-        console.log('Relatórios carregados:', data);
       } catch (error) {
         console.error('Erro ao buscar relatórios:', error);
         toast.error('Erro ao buscar relatórios.');
       }
     };
-
     fetchData();
   }, [filtrosData]);
 
-  
+  useEffect(() => {
+    const carregarEstacoes = async () => {
+      try {
+        const responseEstacoes = await listarEstacoes();
+        if (responseEstacoes && Array.isArray(responseEstacoes.data.rows)) {
+          const todasEstacoes = responseEstacoes.data.rows;
+          setEstacoes(todasEstacoes);
+          const todosIdsEstacoes = todasEstacoes.map((estacao: Estacao) => estacao.id);
+          setFiltrosData(prevFiltros => ({ ...prevFiltros, estacoes: todosIdsEstacoes }));
+        }
+      } catch (error) {
+        console.error('Erro ao carregar estações:', error);
+      }
+    };
+    carregarEstacoes();
+  }, []);
+
+  useEffect(() => {
+    if (mapRef.current && !leafletMap.current) {
+      leafletMap.current = L.map(mapRef.current, {
+        center: [-15.0, -47.0],
+        zoom: 2,
+        dragging: true,
+        zoomControl: true,
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(leafletMap.current);
+    }
+
+    if (leafletMap.current) {
+      estacoes.forEach(estacao => {
+        if (estacao.latitude && estacao.longitude) {
+          const marker = L.marker([estacao.latitude, estacao.longitude], {
+            title: estacao.nome,
+          }).addTo(leafletMap.current!);
+          marker.bindTooltip(estacao.nome, { permanent: false, direction: 'top' });
+        }
+      });
+    }
+  }, [estacoes]);
+
   const handlePeriodoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    setFiltrosData({...filtrosData, [name]: value})
+    const { name, value } = event.target;
+    setFiltrosData(prevFiltros => ({ ...prevFiltros, [name]: value }));
   };
 
   const handleEstacoesChange = (selectedOptions: any) => {
-    const estacoesIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];    
-    setFiltrosData({...filtrosData, estacoes: estacoesIds})
+    const estacoesIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
+    setFiltrosData(prevFiltros => ({ ...prevFiltros, estacoes: estacoesIds }));
   };
 
-  const estacaoOptions = estacoes.map(estacao => ({
-    value: estacao.id,
+  const estacaoOptions = estacoes
+  .filter((estacao) => estacao.id !== undefined) // Filtra estações com `id` válido
+  .map((estacao) => ({
+    value: estacao.id as number,
     label: estacao.nome
   }));
 
@@ -94,7 +114,6 @@ export function Relatorios() {
     <div className="relatorio">
       <div className="container">
         <h2 className="text-wrapper-titulo">Relatórios</h2>
-
         <div className="filter-row">
           <div className="filter-group">
             <label htmlFor="periodoInicial" className="label">Período inicial:</label>
@@ -135,12 +154,6 @@ export function Relatorios() {
         </div>
 
         <div className="content">
-          {/* <div className="mapa-container">
-            <div className="card mapa-card">
-              <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
-              <img src="https://via.placeholder.com/325x538" alt="Mapa de Estações" className="mapa" />
-            </div>
-          </div> */}
           <div className="graficos-container">
             <div className="grafico-row">
               <div className="card">
@@ -170,6 +183,13 @@ export function Relatorios() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="mapa-card">
+            <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
+            {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
+              <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
+            )}
           </div>
         </div>
       </div>

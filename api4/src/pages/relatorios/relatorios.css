@@ -104,11 +104,11 @@
 }
 
 .relatorio .mapa-card {
-  
   height: auto;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 10px;
+  margin-top: 10px;
+  margin-right: 50px;
 }
 
 .relatorio .graficos-container {
