@@ -38,6 +38,8 @@ export function Relatorios() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!filtrosData.estacoes?.length) return;
+
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -116,7 +118,7 @@ export function Relatorios() {
 
   // Gerar o gráfico de alertas por estação
   const gerarGraficoAlertas = () => {
-    if (!relatorios || !relatorios.rows) {
+    if (!relatorios || !relatorios.data.rows) {
       return {
         labels: [],
         datasets: [
@@ -133,9 +135,10 @@ export function Relatorios() {
 
     const labels: any[] = [];
     const data: any[] = [];
-    relatorios.rows.forEach((row: { fields: { X: any; Y: any; }; }) => {
-      const estacaoNome = row.fields.X; 
-      const quantidadeAlertas = row.fields.Y; 
+
+    relatorios.data.rows.alertaPorEstacoes.dados.forEach((row: string[]) => {
+      const estacaoNome = row[0];
+      const quantidadeAlertas = parseFloat(row[1]);
 
       if (!labels.includes(estacaoNome)) {
         labels.push(estacaoNome);
