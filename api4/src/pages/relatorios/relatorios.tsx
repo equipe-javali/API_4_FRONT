@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./relatorios.css";
 import { IRelatorios } from "../../types/Relatorios";
 import { fetchRelatorios } from "../../services/relatoriosServices";
@@ -6,6 +6,8 @@ import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
 import ExportarRelatorios from "../../components/ExportarRelatorios";
 import Select from 'react-select';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
 
@@ -15,6 +17,8 @@ export function Relatorios() {
   const [periodoInicial, setPeriodoInicial] = useState("");
   const [periodoFinal, setPeriodoFinal] = useState("");
   const [mensagem, setMensagem] = useState<string | null>(null);
+  const mapRef = useRef<HTMLDivElement>(null); // Ref para o mapa
+  const leafletMap = useRef<L.Map | null>(null); // Referência para o mapa Leaflet
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +58,33 @@ export function Relatorios() {
 
     carregarEstacoes();
   }, []);
+
+  useEffect(() => {
+    if (mapRef.current && !leafletMap.current) {
+      leafletMap.current = L.map(mapRef.current, {
+        center: [-15.0, -47.0],
+        zoom: 4,
+        dragging: false,
+        zoomControl: false,
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(leafletMap.current);
+    }
+
+    if (leafletMap.current) {
+      estacoes.forEach(estacao => {
+        // Verifica se a latitude e longitude são válidas antes de adicionar o marcador
+        if (estacao.latitude && estacao.longitude) {
+          const marker = L.marker([estacao.latitude, estacao.longitude], {
+            title: estacao.nome,
+          }).addTo(leafletMap.current!);
+          marker.bindTooltip(estacao.nome, { permanent: false, direction: 'top' });
+        }
+      });
+    }
+  }, [estacoes]);
 
   const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPeriodoInicial(event.target.value);
@@ -114,12 +145,6 @@ export function Relatorios() {
         </div>
 
         <div className="content">
-          {/* <div className="mapa-container">
-            <div className="card mapa-card">
-              <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
-              <img src="https://via.placeholder.com/325x538" alt="Mapa de Estações" className="mapa" />
-            </div>
-          </div> */}
           <div className="graficos-container">
             <div className="grafico-row">
               <div className="card">
@@ -150,7 +175,14 @@ export function Relatorios() {
               </div>
             </div>
           </div>
-        </div>
+          
+            <div className="mapa-card">
+              <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
+              {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
+                <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
+              )}
+            </div>
+          </div>
       </div>
     </div>
   );
