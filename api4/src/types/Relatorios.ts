@@ -9,8 +9,8 @@ export interface IBarras {
 }
 
 export interface IFiltroRelatorios {
-    dataInicio?: Date,
-    dataFim?: Date,
+    dataInicio?: string,
+    dataFim?: string,
     estacoes?: number[]
 }
 

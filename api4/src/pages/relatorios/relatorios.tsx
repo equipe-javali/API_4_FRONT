@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./relatorios.css";
-import { IRelatorios } from "../../types/Relatorios";
+import { IFiltroRelatorios, IRelatorios } from "../../types/Relatorios";
 import { fetchRelatorios } from "../../services/relatoriosServices";
 import { listarEstacoes } from '../../services/estacaoServices';
 import { toast } from 'react-toastify';
@@ -10,10 +10,15 @@ import Select from 'react-select';
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Defina a URL da sua API aqui
 
 export function Relatorios() {
-  const [estacoes, setEstacoes] = useState<any[]>([]);
   const [relatorios, setRelatorios] = useState<IRelatorios | null>(null);
+  const [estacoes, setEstacoes] = useState<any[]>([]);
   const [periodoInicial, setPeriodoInicial] = useState("");
   const [periodoFinal, setPeriodoFinal] = useState("");
+  const [filtrosData, setFiltrosData] = useState<IFiltroRelatorios>({
+    dataInicio: "",
+    dataFim: "",
+    estacoes: []
+  })
   const [mensagem, setMensagem] = useState<string | null>(null);
 
   useEffect(() => {
@@ -26,7 +31,13 @@ export function Relatorios() {
           setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
           return;
         }
-        const data = await fetchRelatorios(token);
+        setFiltrosData({...filtrosData, 
+          dataFim: periodoFinal,
+          dataInicio: periodoInicial,
+          estacoes: estacoes
+        })
+
+        const data = await fetchRelatorios(filtrosData, token);
         setRelatorios(data);
         console.log('Relatórios carregados:', data);
       } catch (error) {
@@ -55,17 +66,17 @@ export function Relatorios() {
     carregarEstacoes();
   }, []);
 
-  const handlePeriodoInicialChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodoInicial(event.target.value);
-  };
-
-  const handlePeriodoFinalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodoFinal(event.target.value);
+  const handlePeriodoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setFiltrosData({...filtrosData, [name]: value})
   };
 
   const handleEstacoesChange = (selectedOptions: any) => {
     const selectedEstacoes = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    setEstacoes(selectedEstacoes);
+    const estacoesSelecionadas = estacoes.filter(estacao => selectedEstacoes.includes(estacao.id))
+    
+    setEstacoes(estacoesSelecionadas);
+    setFiltrosData({...filtrosData, estacoes: estacoesSelecionadas})
   };
 
   const estacaoOptions = estacoes.map(estacao => ({
@@ -84,8 +95,9 @@ export function Relatorios() {
             <input
               type="date"
               id="periodoInicial"
-              value={periodoInicial}
-              onChange={handlePeriodoInicialChange}
+              name="dataInicio"
+              value={filtrosData.dataInicio}
+              onChange={handlePeriodoChange}
               className="input"
             />
           </div>
@@ -94,8 +106,9 @@ export function Relatorios() {
             <input
               type="date"
               id="periodoFinal"
-              value={periodoFinal}
-              onChange={handlePeriodoFinalChange}
+              name="dataFim"
+              value={filtrosData.dataFim}
+              onChange={handlePeriodoChange}
               className="input"
             />
           </div>
@@ -105,11 +118,13 @@ export function Relatorios() {
           <label htmlFor="estacoes" className="label">Selecionar estações:</label>
           <Select
             id="estacoes"
+            name="id_estacoes"
             isMulti
             options={estacaoOptions}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={handleEstacoesChange}
+            value={estacaoOptions.filter(option => filtrosData.estacoes?.includes(option.value))}
           />
         </div>
 
