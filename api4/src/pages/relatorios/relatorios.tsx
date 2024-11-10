@@ -63,9 +63,9 @@ export function Relatorios() {
     if (mapRef.current && !leafletMap.current) {
       leafletMap.current = L.map(mapRef.current, {
         center: [-15.0, -47.0],
-        zoom: 4,
+        zoom: 2,
         dragging: false,
-        zoomControl: false,
+        zoomControl: true,
       });
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
