@@ -9,8 +9,12 @@ import Select from 'react-select';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Estacao } from "../../types/Estacao";
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function obterDataHoje(): string {
   const hoje = new Date();
@@ -104,11 +108,57 @@ export function Relatorios() {
   };
 
   const estacaoOptions = estacoes
-  .filter((estacao) => estacao.id !== undefined) // Filtra estações com `id` válido
-  .map((estacao) => ({
-    value: estacao.id as number,
-    label: estacao.nome
-  }));
+    .filter((estacao) => estacao.id !== undefined) // Filtra estações com `id` válido
+    .map((estacao) => ({
+      value: estacao.id as number,
+      label: estacao.nome
+    }));
+
+  // Gerar o gráfico de alertas por estação
+  const gerarGraficoAlertas = () => {
+    if (!relatorios || !relatorios.rows) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Alertas por Estação',
+            data: [],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      };
+    }
+
+    const labels: any[] = [];
+    const data: any[] = [];
+    relatorios.rows.forEach((row: { fields: { X: any; Y: any; }; }) => {
+      const estacaoNome = row.fields.X; 
+      const quantidadeAlertas = row.fields.Y; 
+
+      if (!labels.includes(estacaoNome)) {
+        labels.push(estacaoNome);
+        data.push(quantidadeAlertas);
+      } else {
+        const index = labels.indexOf(estacaoNome);
+        data[index] += quantidadeAlertas;
+      }
+    });
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Alertas por Estação',
+          data,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
 
   return (
     <div className="relatorio">
@@ -159,27 +209,7 @@ export function Relatorios() {
               <div className="card">
                 <h2 className="card-title">QUANTIDADE MÉDIA DE ALERTAS POR ESTAÇÕES</h2>
                 <div className="chart-container">
-                  {/* Gráfico de Alertas */}
-                </div>
-              </div>
-              <div className="card">
-                <h2 className="card-title">MÉDIA DE TEMPERATURA POR PERÍODO</h2>
-                <div className="chart-container">
-                  {/* Gráfico de Temperatura */}
-                </div>
-              </div>
-            </div>
-            <div className="grafico-row">
-              <div className="card">
-                <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR LOCAL</h2>
-                <div className="chart-container">
-                  {/* Gráfico de Chuva por Local */}
-                </div>
-              </div>
-              <div className="card">
-                <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR PERÍODO</h2>
-                <div className="chart-container">
-                  {/* Gráfico de Chuva por Período */}
+                  <Bar data={gerarGraficoAlertas()} />
                 </div>
               </div>
             </div>
