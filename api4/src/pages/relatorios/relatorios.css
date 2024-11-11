@@ -1,11 +1,10 @@
 .relatorio .container {
   padding: 10px;    
   background-color: white;
-  width: 90%;   
-  margin: 5%;   
-  margin-top: 10%;
+  width:max-content;  
+  height: 100%;     
   border-radius: 20px;    
-  
+  margin-top: 15%;
 }
 
 .relatorio .text-wrapper-titulo {
@@ -135,7 +134,7 @@
   border: none;
   border-radius: 10px;
   height: 30px;
-  width: 90%;
+  width: 80%;
   font-family: "Inter-Regular", Helvetica;
   font-size: 14px;
   color: #5f5e63;
@@ -148,7 +147,7 @@
 
 .relatorio .mapa {
   width: 100%;
-  height: auto;
+  max-height: fit-content;
   margin-top: 10px;
   margin-left: 30px;
   margin-right: 50px;
