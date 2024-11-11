@@ -163,6 +163,56 @@ export function Relatorios() {
     };
   };
 
+  const gerarGraficoChuva = () => {
+    if (!relatorios || !relatorios.data.rows) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Média de Chuva por Estação',
+            data: [],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+          },
+        ],
+      };
+    }
+  
+    const labels: any[] = [];
+    const data: any[] = [];
+  
+    relatorios.data.rows.medicaoPorSensor.dados.forEach((row: string[]) => {
+      const sensorNome = row[0];
+      const mediaChuva = parseFloat(row[1]);
+  
+      if (sensorNome.includes('Chuva')) {
+        const estacaoNome = sensorNome.split(' (')[1].replace(')', '');
+        if (!labels.includes(estacaoNome)) {
+          labels.push(estacaoNome);
+          data.push(mediaChuva);
+        } else {
+          const index = labels.indexOf(estacaoNome);
+          data[index] += mediaChuva;
+        }
+      }
+    });
+  
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Média de Chuva por Estação',
+          data,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
+  
+
   return (
     <div className="relatorio">
       <div className="container">
@@ -217,6 +267,19 @@ export function Relatorios() {
               </div>
             </div>
           </div>
+
+          <div className="graficos-container">
+          <div className="grafico-row">
+            {/* ... (gráfico de alertas) ... */}
+            <div className="card">
+              <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR LOCAL</h2>
+              <div className="chart-container">
+                {/* **Novo gráfico de chuva:** */}
+                <Bar data={gerarGraficoChuva()} /> 
+              </div>
+            </div>
+          </div>
+        </div>
 
           <div className="mapa-card">
             <h2 className="card-title">MAPA DE ESTAÇÕES</h2>

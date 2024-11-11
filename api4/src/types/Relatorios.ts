@@ -31,7 +31,8 @@ export interface IRelatorios {
             mapaEstacoes: IGraficos,
             alertaPorEstacoes: IGraficos,
             medicaoPorSensor: IGraficos,
-            ocorrenciaPorAlerta: IGraficos
+            ocorrenciaPorAlerta: IGraficos,
+            mediaChuvaPorEstacao: IGraficos; 
         }
         fields: string[][]
     }
