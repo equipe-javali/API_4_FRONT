@@ -212,6 +212,128 @@ export function Relatorios() {
     };
   };
   
+  const gerarGraficoChuvaPorPeriodo = () => {
+    if (!relatorios || !relatorios.data.rows) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Média de Chuva por Mês',
+            data: [],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+          },
+        ],
+      };
+    }
+  
+    const labels: any[] = [];
+    const data: any[] = [];
+    const periodos: { [key: string]: number[] } = {};
+  
+    console.log('Dados de medição por sensor:', relatorios.data.rows.medicaoPorSensor.dados);
+  
+    relatorios.data.rows.medicaoPorSensor.dados.forEach((row: string[]) => {
+      const sensorNome = row[0];
+      const mediaChuva = parseFloat(row[1]);
+      const dataMedicao = row[1]; // Supondo que a data da medição está na terceira coluna
+  
+      if (sensorNome.includes('Chuva')) {
+        const [datePart] = dataMedicao.split(' '); // Extrai a parte da data
+        const [year, month] = datePart.split('-'); // Extrai ano e mês
+        const periodo = `${year}-${month}`; // Formato YYYY-MM
+        if (!periodos[periodo]) {
+          periodos[periodo] = [];
+        }
+        periodos[periodo].push(mediaChuva);
+      }
+    });
+  
+    Object.keys(periodos).forEach(periodo => {
+      labels.push(periodo);
+      const soma = periodos[periodo].reduce((acc, val) => acc + val, 0);
+      const media = soma / periodos[periodo].length;
+      data.push(media);
+    });
+  
+    console.log('Labels:', labels);
+    console.log('Data:', data);
+  
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Média de Chuva por Mês',
+          data,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          
+        },
+      ],
+    };
+  };
+
+  const gerarGraficoTemperaturaPorPeriodo = () => {
+    if (!relatorios || !relatorios.data.rows) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Média de Temperatura por Mês',
+            data: [],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          },
+        ],
+      };
+    }
+  
+    const labels: any[] = [];
+    const data: any[] = [];
+    const periodos: { [key: string]: number[] } = {};
+  
+    relatorios.data.rows.medicaoPorSensor.dados.forEach((row: string[]) => {
+      const sensorNome = row[0];
+      const mediaTemperatura = parseFloat(row[1]);
+      const dataMedicao = row[1]; // Supondo que a data da medição está na terceira coluna
+  
+      if (sensorNome.includes('Temperatura')) {
+        const [datePart] = dataMedicao.split(' '); // Extrai a parte da data
+        const [year, month] = datePart.split('-'); // Extrai ano e mês
+        const periodo = `${year}-${month}`; // Formato YYYY-MM
+        if (!periodos[periodo]) {
+          periodos[periodo] = [];
+        }
+        periodos[periodo].push(mediaTemperatura);
+      }
+    });
+  
+    Object.keys(periodos).forEach(periodo => {
+      labels.push(periodo);
+      const soma = periodos[periodo].reduce((acc, val) => acc + val, 0);
+      const media = soma / periodos[periodo].length;
+      data.push(media);
+    });
+  
+    console.log('Labels:', labels);
+    console.log('Data:', data);
+  
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Média de Temperatura por Mês',
+          data,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
 
   return (
     <div className="relatorio">
@@ -264,31 +386,43 @@ export function Relatorios() {
                 <div className="chart-container">
                   <Bar data={gerarGraficoAlertas()} />
                 </div>
+              </div>              
+            
+              
+              <div className="card">
+                <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR LOCAL</h2>
+                <div className="chart-container">
+                  {/* **Novo gráfico de chuva:** */}
+                  <Bar data={gerarGraficoChuva()} /> 
+                </div>              
               </div>
-            </div>
-          </div>
-
-          <div className="graficos-container">
+            </div>            
+            <div className="grafico-row">
+              <div className="card">
+                <h2 className="card-title">MÉDIA DE CHUVA POR PERÍODO</h2>
+                <div className="chart-container">
+                  <Bar data={gerarGraficoChuvaPorPeriodo()} />
+                </div>
+              </div>
+              <div className="card">
+                <h2 className="card-title">MÉDIA DE TEMPERATURA POR MÊS</h2>
+                <div className="chart-container">
+                  <Bar data={gerarGraficoTemperaturaPorPeriodo()} />
+                </div>
+              </div>
+            </div>  
+          </div>    
+          </div>  
           <div className="grafico-row">
-            {/* ... (gráfico de alertas) ... */}
-            <div className="card">
-              <h2 className="card-title">QUANTIDADE MÉDIA DE CHUVA POR LOCAL</h2>
-              <div className="chart-container">
-                {/* **Novo gráfico de chuva:** */}
-                <Bar data={gerarGraficoChuva()} /> 
-              </div>
-            </div>
-          </div>
-        </div>
-
-          <div className="mapa-card">
-            <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
-            {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
-              <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
-            )}
-          </div>
-        </div>
+            <div className="mapa">
+              <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
+              {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
+                <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
+              )}
+            </div>    
+          </div>     
+        
       </div>
-    </div>
+    </div>    
   );
 }
