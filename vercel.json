@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api4/build/index.html",
+      "src": "api4/package.json",
       "use": "@now/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "api4/build/index.html"
+      "source": "/(.*)",
+      "destination": "/api4/build/index.html"
     }
   ]
 }
