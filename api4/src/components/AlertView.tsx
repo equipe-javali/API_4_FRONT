@@ -30,7 +30,7 @@ export default function AlertView() {
                 if (err instanceof Error) {
                     setError(err.message)
                 } else {
-                    setError("Erro desconhecido")
+                    setError("Erro ao buscar dados: Erro desconhecido")
                 }
             }
         }
