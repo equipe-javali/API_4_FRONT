@@ -21,22 +21,21 @@ export default function AlertView() {
                 const responseAlertas = await listarAlertas();
                 const responseEstacoes = await listarEstacoes();
 
-                setOcorrencias(responseOcorrencias.data.rows)
-                setAlertas(responseAlertas.data.rows)
-                setEstacoes(responseEstacoes.data.rows)
+                setOcorrencias(responseOcorrencias.data.rows);
+                setAlertas(responseAlertas.data.rows);
+                setEstacoes(responseEstacoes.data.rows);
 
             } catch (err) {
-                console.error("Erro ao buscar dados:", err)
+                console.error("Erro ao buscar dados:", err);
                 if (err instanceof Error) {
-                    setError(err.message)
+                    setError(err.message);
                 } else {
-                    setError("Erro ao buscar dados: Erro desconhecido")
+                    setError("Erro desconhecido");
                 }
             }
-        }
+        };
 
-        fetchData()
-        console.log(ocorrencias)
+        fetchData();
     }, []);
 
     const getAlertaNome = (id: number) => {
@@ -55,15 +54,19 @@ export default function AlertView() {
     }
 
     return (
-        <section className='alert-section'>
-
-            {Array.isArray(ocorrencias) && ocorrencias?.map((ocorrencia) => (
-                <div className='alert-card' key={ ocorrencia.id }>
-                    <p>📢 { getEstacaoByAlerta(ocorrencia.id_alerta) } : { getAlertaNome(ocorrencia.id_alerta) } {ocorrencia.valor}</p>
+        <div>
+            {error && (
+                <div data-testid="error-message">
+                    Erro ao buscar dados: {error}
                 </div>
-            ))}
-
-        </section>
-    )
-
+            )}
+            <section className='alert-section'>
+                {Array.isArray(ocorrencias) && ocorrencias?.map((ocorrencia) => (
+                    <div className='alert-card' key={ocorrencia.id}>
+                        <p>📢 {getEstacaoByAlerta(ocorrencia.id_alerta)} : {getAlertaNome(ocorrencia.id_alerta)} {ocorrencia.valor}</p>
+                    </div>
+                ))}
+            </section>
+        </div>
+    );
 }
