@@ -1,4 +1,4 @@
-export interface cadastrarAdministrador {
+export interface CadastrarAdministrador {
     nome: string;
     email: string;
     senha: string;
@@ -19,7 +19,7 @@ export interface cadastrarAdministrador {
     senha: string;
   };
 
-  export interface editarAdministrador {
+  export interface EditarAdministrador {
     nome: string;
     email: string;
     senha: string;

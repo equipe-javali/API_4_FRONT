@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { cadastrarAdministrador, Perfil, Login } from '../types/Administrador';
+import { CadastrarAdministrador, Perfil, Login } from '../types/Administrador';
 
 // `${process.env.REACT_APP_API_BACK}/usuario
 const API_URL = `${process.env.REACT_APP_API_BACK}/usuario`; 
 
-export const cadastrarAdm = async (usuarioData: cadastrarAdministrador) => { 
+export const cadastrarAdm = async (usuarioData: CadastrarAdministrador) => { 
   try {
     const response = await axios.post(`${API_URL}/cadastrar`, usuarioData);
     return response.data; 
