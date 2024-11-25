@@ -176,7 +176,7 @@ export function CadastroEstacao() {
         });
       });
     }
-  }, [formData.latitude, formData.longitude]);
+  }, [formData]);
 
   // Função para lidar com a perda de foco do campo "Localização"
   const handleBlurLocalizacao = async () => {

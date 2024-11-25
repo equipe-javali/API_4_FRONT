@@ -35,7 +35,7 @@ export default function AlertView() {
 
         fetchData()
         console.log(ocorrencias)
-    }, []);
+    }, [ocorrencias]);
 
     const getAlertaNome = (id: number) => {
         const alerta = alertas.find( alerta => alerta.id === id )
