@@ -62,7 +62,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
     <div id="side-menu" className='sideMenu-open'>
       {collMenu ? (
         <>
-          <img className='collapse-pic' src='https://tecsus.com.br/wp-content/uploads/2020/11/cropped-ICONE-TECSUS-32x32.png' />
+          <img className='collapse-pic' src='https://tecsus.com.br/wp-content/uploads/2020/11/cropped-ICONE-TECSUS-32x32.png' alt=''/>
 
           {links.map(([name, pathCad, pathList, icon]) => (
             <div className='collapse-options' key={name}>
@@ -119,7 +119,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
         </>
       ) : (
         <>
-          <img className='menu-logo-horizontal' src='https://tecsus.com.br/wp-content/uploads/2020/10/logo_tecsus_horizontal.png ' />
+          <img className='menu-logo-horizontal' src='https://tecsus.com.br/wp-content/uploads/2020/10/logo_tecsus_horizontal.png' alt=''/>
 
           <details className='menu-details'>
             <summary><FaHome /> Home</summary>
