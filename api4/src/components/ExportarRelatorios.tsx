@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { ExportarRelatoriosProps, IArquivo, IGraficos, IRelatorios } from '../types/Relatorios';
+import { ExportarRelatoriosProps, IArquivo, IGraficos } from '../types/Relatorios';
 import "../pages/relatorios/relatorios.css";
 import { fetchRelatoriosDownload } from '../services/relatoriosServices';
 
@@ -18,8 +16,6 @@ function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
     nomeArquivo: "",
     tabelas: []
   })
-
-  const [mensagem, setMensagem] = useState<string | null>(null);
 
   const exportarRelatoriosParaExcel = async () => {
 

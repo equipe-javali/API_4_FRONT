@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome, FaList } from 'react-icons/fa'; // Importando FaHome
+import { FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome, FaList } from 'react-icons/fa'; // Importando FaHome
 import './css/SideMenu.css';
 import { useNavigate } from 'react-router-dom';
 
