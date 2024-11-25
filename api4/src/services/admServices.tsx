@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { cadastrarAdministrador, Perfil } from '../types/Administrador'; 
-import { Login } from '../types/Administrador';
+import { cadastrarAdministrador, Perfil, Login } from '../types/Administrador';
 
 // `${process.env.REACT_APP_API_BACK}/usuario
 const API_URL = `${process.env.REACT_APP_API_BACK}/usuario`; 
