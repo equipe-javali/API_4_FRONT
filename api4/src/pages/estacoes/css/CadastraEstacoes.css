@@ -1,17 +1,17 @@
 .cadastro-estacao .container {
-    padding: 15px;    
+    padding: 15px;
     background-color: white;
-    width: 60vw; 
+    width: 60vw;
     border-radius: 20px;
-    min-height: 30vh; 
+    min-height: 30vh;
 }
 
 .cadastro-estacao .text-wrapper-titulo {
     color: #020202;
-    font-family: "Onest-Regular", Helvetica;
-    font-size: 30px; /* Reduz o tamanho da fonte */
+    font-family: "Onest-Regular", "Helvetica", sans-serif;
+    font-size: 30px;
     text-align: center;
-    margin-top: 20px; /* Reduz a margem superior */
+    margin-top: 20px;
 }
 
 .cadastro-estacao .content {
@@ -27,14 +27,14 @@
 }
 
 .cadastro-estacao .form-group {
-    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
+    margin-bottom: 5px;
     padding: 8px;
 }
 
 .cadastro-estacao .text-wrapper {
     color: #40587e;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 20px; /* Reduz o tamanho da fonte */
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
+    font-size: 20px;
     margin-bottom: 10px;
     display: block;
 }
@@ -45,7 +45,7 @@
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
     font-size: 17px;
     color: #5f5e63;
     padding: 5px 10px;
@@ -57,7 +57,7 @@
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
     font-size: 17px;
     color: #5f5e63;
     padding: 20px 10px;
@@ -69,14 +69,14 @@
     height: 47px;
     width: 198px;
     color: #edf4ff;
-    font-family: "Kantumruy-Regular", Helvetica;
+    font-family: "Kantumruy-Regular", "Helvetica", sans-serif;
     font-size: 24px;
     font-weight: 400;
     text-align: center;
     line-height: 47px;
     border: none;
-    cursor: pointer;    
-    margin:  auto;
+    cursor: pointer;
+    margin: auto;
 }
 
 .success-message {
@@ -89,7 +89,8 @@
     margin-bottom: 10px;
 }
 
-.success-message, .error-message {
+.success-message,
+.error-message {
     text-align: center;
     margin: 10px auto;
 }
