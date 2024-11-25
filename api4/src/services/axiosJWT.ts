@@ -14,7 +14,7 @@ apiJWT.interceptors.request.use(
         return config;
     },
     (error) => {
-        return Promise.reject(error);
+        return Promise.reject(new Error(error.message || 'Erro na configuração da requisição'));
     }
 );
 
@@ -31,7 +31,11 @@ apiJWT.interceptors.response.use(
             }
             console.error('Erro na resposta da API:', error.response.data);
         }
-        return Promise.reject(error);
+        const customError = new Error(
+            error.response?.data?.message || error.message || 'Erro desconhecido'
+        );
+        customError.name = error.response?.status ? `HTTP_${error.response.status}` : 'UnknownError';
+        return Promise.reject(customError);
     }
 );
 
