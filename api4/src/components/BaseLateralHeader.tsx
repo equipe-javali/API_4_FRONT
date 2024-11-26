@@ -1,7 +1,6 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import SideMenu from '../components/SideMenu';
-import { FaHome, FaList, FaPlus, FaCogs, FaThermometerHalf, FaClipboardList, FaRegUserCircle } from 'react-icons/fa';
+import { FaPlus, FaCogs, FaThermometerHalf, FaClipboardList } from 'react-icons/fa';
 import './css/BaseLateralHeader.css';
 
 const BaseLateralHeader = () => {

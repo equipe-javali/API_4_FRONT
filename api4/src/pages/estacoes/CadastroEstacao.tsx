@@ -32,7 +32,7 @@ export function CadastroEstacao() {
   });
 
   const [sensores, setSensores] = useState<any[]>([]); 
-  const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]); 
+  //const [sensoresSelecionados, setSensoresSelecionados] = useState<any[]>([]);
   const [mensagem, setMensagem] = useState<string | null>(null);
   const navigate = useNavigate(); // Para redirecionar
 
@@ -76,8 +76,8 @@ export function CadastroEstacao() {
   const handleSelectChange = (selectedOptions: any) => {
     const selectedIds = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
     setFormData({ ...formData, id_sensores: selectedIds });    
-    const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
-    setSensoresSelecionados(sensoresSelecionados);
+    //const sensoresSelecionados = sensores.filter(sensor => selectedIds.includes(sensor.id));
+    //setSensoresSelecionados(sensoresSelecionados);
   };
 
   const handleSubmitEstacao = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -109,7 +109,7 @@ export function CadastroEstacao() {
           mac_address: '',
           id_sensores: [],
         });
-        setSensoresSelecionados([]); 
+        //setSensoresSelecionados([]); 
       }
     } catch (error) {
       console.error('Erro:', error);
@@ -176,7 +176,7 @@ export function CadastroEstacao() {
         });
       });
     }
-  }, [formData.latitude, formData.longitude]);
+  }, [formData]);
 
   // Função para lidar com a perda de foco do campo "Localização"
   const handleBlurLocalizacao = async () => {

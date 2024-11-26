@@ -1,18 +1,20 @@
 .cadastro-parametro .container {
-    padding: 15px;    
+    padding: 15px;
     background-color: white;
-    width: 60vw; 
+    width: 60vw;
     border-radius: 20px;
     margin-top: 20px;
-    min-height: 30vh; 
+    min-height: 30vh;
 }
 
 .cadastro-parametro .text-wrapper-titulo {
     color: #020202;
-    font-family: "Onest-Regular", Helvetica;
-    font-size: 30px; /* Reduz o tamanho da fonte */
+    font-family: "Onest-Regular", Helvetica, sans-serif;
+    font-size: 30px;
+    /* Reduz o tamanho da fonte */
     text-align: center;
-    margin-top: 20px; /* Reduz a margem superior */
+    margin-top: 20px;
+    /* Reduz a margem superior */
 }
 
 .cadastro-parametro .content {
@@ -28,14 +30,16 @@
 }
 
 .cadastro-parametro .form-group {
-    margin-bottom: 5px; /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
+    margin-bottom: 5px;
+    /* Reduz a margem inferior para diminuir o espaçamento entre os inputs */
     padding: 8px;
 }
 
 .cadastro-parametro .text-wrapper {
     color: #40587e;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 20px; /* Reduz o tamanho da fonte */
+    font-family: "Inter-Regular", Helvetica, sans-serif;
+    font-size: 20px;
+    /* Reduz o tamanho da fonte */
     margin-bottom: 10px;
     display: block;
 }
@@ -46,7 +50,7 @@
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", Helvetica, sans-serif;
     font-size: 17px;
     color: #5f5e63;
     padding: 5px 10px;
@@ -58,7 +62,7 @@
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", Helvetica, sans-serif;
     font-size: 17px;
     color: #5f5e63;
     padding: 20px 10px;
@@ -70,13 +74,13 @@
     height: 47px;
     width: 198px;
     color: #edf4ff;
-    font-family: "Kantumruy-Regular", Helvetica;
+    font-family: "Kantumruy-Regular", Helvetica, sans-serif;
     font-size: 24px;
     font-weight: 400;
     text-align: center;
     line-height: 47px;
     border: none;
-    cursor: pointer;    
+    cursor: pointer;
     margin: 0 auto;
 }
 
@@ -90,7 +94,8 @@
     margin-bottom: 10px;
 }
 
-.success-message, .error-message {
+.success-message,
+.error-message {
     text-align: center;
     margin: 10px auto;
 }

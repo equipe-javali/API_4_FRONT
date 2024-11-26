@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./css/ListaAlertas.css"; 
 import { listarAlertas, deletarAlerta } from "../../services/alertaServices";
 import { listarEstacoes } from "../../services/estacaoServices";
@@ -17,7 +17,6 @@ export function ListaAlertas() {
   const [parametros, setParametros] = useState<Parametro[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');

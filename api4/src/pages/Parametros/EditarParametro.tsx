@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Select from 'react-select';
 import { useParams, useNavigate } from "react-router-dom";
 import { editarParametro, buscarParametroPorID } from "../../services/parametroServices"; 
 import { listarUnidades } from "../../services/unidadeServices"; 

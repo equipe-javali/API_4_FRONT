@@ -12,8 +12,6 @@ import { Estacao } from "../../types/Estacao";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
-
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function obterDataHoje(): string {
@@ -32,7 +30,6 @@ export function Relatorios() {
     dataFim: obterDataHoje(),
     estacoes: []
   });
-  const [mensagem, setMensagem] = useState<string | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMap = useRef<L.Map | null>(null);
 
@@ -43,7 +40,6 @@ export function Relatorios() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          setMensagem("Erro: Você precisa estar logado para visualizar os relatórios");
           return;
         }
         const data = await fetchRelatorios(filtrosData, token);

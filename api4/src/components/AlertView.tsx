@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './css/alertView.css';
-import { userInfo } from 'os';
 import Alerta from '../types/Alerta';
 import Ocorrencia from '../types/Ocorrencia';
 import { listarOcorrencia } from '../services/ocorrenciaServices';
@@ -12,7 +11,6 @@ export default function AlertView() {
     const [ocorrencias, setOcorrencias] = useState<Ocorrencia[]>([]);
     const [alertas, setAlertas] = useState<Alerta[]>([]);
     const [estacoes, setEstacoes] = useState<Estacao[]>([]);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,15 +26,16 @@ export default function AlertView() {
             } catch (err) {
                 console.error("Erro ao buscar dados:", err);
                 if (err instanceof Error) {
-                    setError(err.message);
+                    console.error(err.message)
                 } else {
-                    setError("Erro desconhecido");
+                    console.error("Erro desconhecido")
                 }
             }
         };
 
-        fetchData();
-    }, []);
+        fetchData()
+        console.log(ocorrencias)
+    }, [ocorrencias]);
 
     const getAlertaNome = (id: number) => {
         const alerta = alertas.find( alerta => alerta.id === id )

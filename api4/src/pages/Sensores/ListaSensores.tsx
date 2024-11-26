@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Sensor from "../../types/Sensor";
 import "./css/ListaSensores.css"; 
 import { listarSensores, deletarSensor } from "../../services/sensorServices";
-import { ClipLoader } from "react-spinners"; 
 import { FaEdit, FaTrash } from 'react-icons/fa'; 
 import { listarParametros } from "../../services/parametroServices";
 import { Parametro } from "../../types/Parametro";
@@ -12,7 +11,6 @@ import { Parametro } from "../../types/Parametro";
 export function ListaSensores() {
   const [sensores, setSensores] = useState<Sensor[]>([]);
   const [parametros, setParametros] = useState<Parametro[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -21,7 +19,6 @@ export function ListaSensores() {
 
     if (!token) {
       setError("Você precisa estar logado para listar os sensores."); // Mensagem de erro se o token não existir
-      setIsLoading(false);
       return; // Impede a execução se não houver token
     }
 
@@ -71,7 +68,6 @@ export function ListaSensores() {
 
     async function fetchAllData() {
       await Promise.all([fetchSensores(), fetchParametros()]);
-      setIsLoading(false);
     }
 
     fetchAllData();

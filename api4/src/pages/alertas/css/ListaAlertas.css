@@ -1,18 +1,17 @@
-.lista-alerta .container {     
-    padding: 15px;    
+.lista-alerta .container {
+    padding: 15px;
     background-color: white;
-    width: 60vw; 
-    border-radius: 20px;    
-    min-height: 30vh; 
-   
+    width: 60vw;
+    border-radius: 20px;
+    min-height: 30vh;
 }
 
 .lista-alerta .text-wrapper-titulo {
     color: #020202;
-    font-family: "Onest-Regular", Helvetica;
-    font-size: 30px;  
-    text-align: center; 
-    margin-top: 40px;   
+    font-family: "Onest-Regular", "Helvetica", sans-serif;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 40px;
 }
 
 .lista-alerta .content {
@@ -23,7 +22,7 @@
 
 .lista-alerta .form {
     flex: 1;
-    padding: 3dvw;
+    padding: 3vw;
 }
 
 .lista-alerta .form-group {
@@ -33,8 +32,8 @@
 
 .lista-alerta .text-wrapper {
     color: #40587e;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 22px;    
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
+    font-size: 22px;
     margin-bottom: 10px;
     display: block;
 }
@@ -44,11 +43,11 @@
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;    
-    font-family: "Inter-Regular", Helvetica;
+    width: 100%;
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
     font-size: 17px;
     color: #5f5e63;
-    padding: 5px 10px; 
+    padding: 5px 10px;
 }
 
 .cadastro-alerta .select {
@@ -56,11 +55,11 @@
     border: none;
     border-radius: 10px;
     height: 31px;
-    width: 100%;    
-    font-family: "Inter-Regular", Helvetica;
+    width: 100%;
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
     font-size: 17px;
     color: #5f5e63;
-    padding: 20px 10px; 
+    padding: 20px 10px;
 }
 
 .success-message {
@@ -73,23 +72,25 @@
     margin-bottom: 10px;
 }
 
-.success-message, .error-message {
-    text-align: center; 
-    margin: 10px auto;   
+.success-message,
+.error-message {
+    text-align: center;
+    margin: 10px auto;
 }
 
 .spinner-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
-  }
+    height: 100vh;
+}
 
 .icon-button {
     background: none;
     border: none;
     cursor: pointer;
     color: #40587e;
+    font-family: "Inter-Regular", "Helvetica", sans-serif;
     font-size: 1.5em;
     margin: 0 5px;
 }
@@ -98,14 +99,11 @@
     color: #334766;
 }
 
-.rdt_TableHeadRow > div {
-    font-size: 18px; 
-    font-weight: bold;     
+.rdt_TableHeadRow>div {
+    font-size: 18px;
+    font-weight: bold;
     padding: 19px;
-    
-    
 }
-
 
 .rdt_TableCell {
     font-size: 18px;

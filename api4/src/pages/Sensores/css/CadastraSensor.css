@@ -1,19 +1,19 @@
 .cadastro-sensor .container {
-    padding: 30px;    
+    padding: 30px;
     background-color: white;
-    width: 60vw; 
+    width: 60vw;
     height: 100%;
     border-radius: 20px;
     margin-top: 20px;
-    min-height: 30vh; 
+    min-height: 30vh;
 }
 
 .cadastro-sensor .text-wrapper-titulo {
     color: #020202;
-    font-family: "Onest-Regular", Helvetica;
-    font-size: 30px; 
+    font-family: "Onest-Regular", Helvetica, sans-serif;
+    font-size: 30px;
     text-align: center;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
 .cadastro-sensor .content {
@@ -29,13 +29,13 @@
 }
 
 .cadastro-sensor .form-group {
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
     padding: 8px;
 }
 
 .cadastro-sensor .text-wrapper {
     color: #40587e;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", Helvetica, sans-serif;
     font-size: 20px;
     margin-bottom: 10px;
     display: block;
@@ -47,7 +47,7 @@
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", Helvetica, sans-serif;
     font-size: 17px;
     color: #5f5e63;
     padding: 5px 10px;
@@ -59,7 +59,7 @@
     border-radius: 10px;
     height: 31px;
     width: 100%;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Regular", Helvetica, sans-serif;
     font-size: 17px;
     color: #5f5e63;
     padding: 20px 10px;
@@ -71,13 +71,13 @@
     height: 47px;
     width: 198px;
     color: #edf4ff;
-    font-family: "Kantumruy-Regular", Helvetica;
+    font-family: "Kantumruy-Regular", Helvetica, sans-serif;
     font-size: 24px;
     font-weight: 400;
     text-align: center;
     line-height: 47px;
     border: none;
-    cursor: pointer;    
+    cursor: pointer;
     margin: 0 auto;
 }
 
@@ -91,7 +91,8 @@
     margin-bottom: 10px;
 }
 
-.success-message, .error-message {
+.success-message,
+.error-message {
     text-align: center;
     margin: 10px auto;
 }

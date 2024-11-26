@@ -1,45 +1,39 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { ExportarRelatoriosProps, IArquivo, IGraficos, IRelatorios } from '../types/Relatorios';
+import { ExportarRelatoriosProps, IArquivo, IGraficos } from '../types/Relatorios';
 import "../pages/relatorios/relatorios.css";
 import { fetchRelatoriosDownload } from '../services/relatoriosServices';
 
 declare global {
   interface Window {
     exportarRelatoriosParaExcel: () => void;
-    relatorios: ExportarRelatoriosProps
+    relatorios: ExportarRelatoriosProps;
   }
 }
 
-function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
+function ExportarRelatorios({ relatorios }: Readonly<ExportarRelatoriosProps>) {
   const [isLoading, setIsLoading] = useState(false);
   const [arquivo, setArquivo] = useState<IArquivo>({
     nomeArquivo: "",
-    tabelas: []
-  })
-
-  const [mensagem, setMensagem] = useState<string | null>(null);
+    tabelas: [],
+  });
 
   const exportarRelatoriosParaExcel = async () => {
-
-    const token = localStorage.getItem('token'); 
-
+    const token = localStorage.getItem('token');
     if (!token) {
-      setMensagem("Erro: Você precisa estar logado para cadastrar um sensor.");
+      console.error("Erro: Você precisa estar logado para exportar relatórios.");
       return;
     }
 
-    console.log('Exportar Relatórios chamado');
-    console.log('Relatórios:', relatorios);
-
     if (!relatorios) {
-      console.log("Nenhum relatório para exportar")
+      console.warn("Nenhum relatório para exportar.");
+      return;
     }
 
     try {
-      const responseBlob = await fetchRelatoriosDownload(arquivo, token);
+      setIsLoading(true);
+      console.log('Exportando relatórios:', relatorios);
 
+      const responseBlob = await fetchRelatoriosDownload(arquivo, token);
       if (responseBlob.size === 0) {
         throw new Error("O arquivo está vazio");
       }
@@ -54,38 +48,34 @@ function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
 
-      console.log("Relatórios exportados com sucesso!")
-
-    } catch (error: any) {
-      console.error('Erro ao exportar relatórios', error);
-
+      console.log("Relatórios exportados com sucesso!");
+    } catch (error) {
+      console.error('Erro ao exportar relatórios:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleTipoRelatorioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target
-
+    const { value } = e.target;
     setArquivo((prevArquivo) => ({
       ...prevArquivo,
       nomeArquivo: value,
       tabelas:
-      value === "alertaPorEstacoes" && relatorios?.data.rows.alertaPorEstacoes
-          ? [relatorios?.data.rows.alertaPorEstacoes]
+        value === "alertaPorEstacoes" && relatorios?.data.rows.alertaPorEstacoes
+          ? [relatorios.data.rows.alertaPorEstacoes]
           : value === "medicaoPorSensor" && relatorios?.data.rows.medicaoPorSensor
-            ? [relatorios?.data.rows.medicaoPorSensor]
+            ? [relatorios.data.rows.medicaoPorSensor]
             : value === "ocorrenciaPorAlerta" && relatorios?.data.rows.ocorrenciaPorAlerta
-              ? [relatorios?.data.rows.ocorrenciaPorAlerta]
+              ? [relatorios.data.rows.ocorrenciaPorAlerta]
               : [
                 relatorios?.data.rows.alertaPorEstacoes,
                 relatorios?.data.rows.medicaoPorSensor,
                 relatorios?.data.rows.ocorrenciaPorAlerta,
               ].filter((tabela): tabela is IGraficos => tabela !== undefined),
     }));
-
-    console.log('arquivo: ', value)
-  }
+    console.log('arquivo: ', value);
+  };
 
   return (
     <div>
@@ -96,8 +86,8 @@ function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
             <option value="">Selecione um tipo de relatório</option>
             <option value="relatorioGeral">Geral</option>
             <option value="alertaPorEstacoes">Quantidade Média de Alertas por Estação</option>
-            <option value="medicaoPorSensor">Média de Medição por sensor</option>
-            <option value="ocorrenciaPorAlerta">Quantidade de ocorrências por alerta</option>
+            <option value="medicaoPorSensor">Média de Medição por Sensor</option>
+            <option value="ocorrenciaPorAlerta">Quantidade de Ocorrências por Alerta</option>
           </select>
         </div>
       </div>
@@ -109,9 +99,4 @@ function ExportarRelatorios({ relatorios }: ExportarRelatoriosProps) {
   );
 }
 
-
 export default ExportarRelatorios;
-
-function setMensagem(arg0: string) {
-  throw new Error('Function not implemented.');
-}
