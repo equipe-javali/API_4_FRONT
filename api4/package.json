@@ -8,6 +8,7 @@
     "api4": "file:",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "dotenv-ts": "^0.2.1",
     "exceljs": "^4.4.0",
     "leaflet": "^1.9.4",

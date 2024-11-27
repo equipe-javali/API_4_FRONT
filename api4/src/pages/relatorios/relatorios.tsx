@@ -219,7 +219,7 @@ export function Relatorios() {
               <div className="card">
                 <h2 className="card-title">VARIAÇÃO DA TEMPERATURA NO PERÍODO</h2>
                 <div className="chart-container">
-                  <GraficoTemperatura relatorios={relatorios} />
+                  <GraficoTemperatura relatorios={relatorios}  />
                 </div>
               </div>
             </div>
