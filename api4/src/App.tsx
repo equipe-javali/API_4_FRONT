@@ -21,6 +21,8 @@ import HomePub from './pages/home/HomePub';
 import BaseSuperior from './components/BaseSuperior';
 import { Relatorios } from './pages/relatorios/relatorios';
 import Parametros from './pages/institucional/institucionalParametro';
+import Sensores from './pages/institucional/institucionalSensor';
+
 
 
 function App() {
@@ -64,6 +66,8 @@ function App() {
 
             {/* rotas institucional */}
             <Route path="/institucional/parametros" element={<Parametros />} />   
+            <Route path="/institucional/sensores" element={<Sensores />} />   
+
 
             {/* rotas relatorios */} 
             <Route path="/relatorios" element={<Relatorios />} /> 
