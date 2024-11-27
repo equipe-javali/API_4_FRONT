@@ -9,10 +9,11 @@ import Select from 'react-select';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Estacao } from "../../types/Estacao";
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar, Line } from 'react-chartjs-2';
+import { Chart as  ChartJS, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import GraficoTemperatura from "../../components/GraficoTemperatura";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, BarElement, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, );
 
 function obterDataHoje(): string {
   const hoje = new Date();
@@ -111,6 +112,7 @@ export function Relatorios() {
       value: estacao.id as number,
       label: estacao.nome
     }));
+    
 
   // Gerar o gráfico de alertas por estação
   const gerarGraficoAlertas = () => {
@@ -131,6 +133,8 @@ export function Relatorios() {
 
     const labels: any[] = [];
     const data: any[] = [];
+    
+    
 
     relatorios.data.rows.alertaPorEstacoes.dados.forEach((row: string[]) => {
       const estacaoNome = row[0];
@@ -157,7 +161,9 @@ export function Relatorios() {
         },
       ],
     };
-  };
+  }; 
+
+  
 
   return (
     <div className="relatorio">
@@ -201,7 +207,6 @@ export function Relatorios() {
             value={estacaoOptions.filter(option => filtrosData.estacoes?.includes(option.value))}
           />
         </div>
-
         <div className="content">
           <div className="graficos-container">
             <div className="grafico-row">
@@ -211,17 +216,23 @@ export function Relatorios() {
                   <Bar data={gerarGraficoAlertas()} />
                 </div>
               </div>
+              <div className="card">
+                <h2 className="card-title">VARIAÇÃO DA TEMPERATURA NO PERÍODO</h2>
+                <div className="chart-container">
+                  <GraficoTemperatura relatorios={relatorios} />
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="mapa-card">
             <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
             {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
-              <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
-            )}
+                  <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      );
 }
