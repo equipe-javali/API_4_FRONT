@@ -11,7 +11,8 @@ export interface IBarras {
 export interface IFiltroRelatorios {
     dataInicio?: string,
     dataFim?: string,
-    estacoes?: number[]
+    estacoes?: number[],
+
 }
 
 export interface IGraficos {
@@ -31,7 +32,8 @@ export interface IRelatorios {
             mapaEstacoes: IGraficos,
             alertaPorEstacoes: IGraficos,
             medicaoPorSensor: IGraficos,
-            ocorrenciaPorAlerta: IGraficos
+            ocorrenciaPorAlerta: IGraficos,
+            temperatura: IGraficos,
         }
         fields: string[][]
     }

@@ -9,10 +9,10 @@ import Select from 'react-select';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Estacao } from "../../types/Estacao";
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar, Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function obterDataHoje(): string {
   const hoje = new Date();
@@ -159,6 +159,52 @@ export function Relatorios() {
     };
   };
 
+  const gerarGraficoTemperatura = () => {
+    if (!relatorios || !relatorios.data.rows.temperatura) {
+      return {
+        labels: [],
+        datasets: [],
+      };
+    }
+  
+    const dadosPorEstacao: { [key: string]: { data: number[], labels: string[] } } = {};
+  
+    relatorios.data.rows.temperatura.dados.forEach((row: string[]) => {
+      const estacao = row[1];
+      const dataHora = new Date(row[2]).toLocaleString();
+      const temperatura = parseFloat(row[3]);
+  
+      if (!dadosPorEstacao[estacao]) {
+        dadosPorEstacao[estacao] = { data: [], labels: [] };
+      }
+  
+      dadosPorEstacao[estacao].data.push(temperatura);
+      dadosPorEstacao[estacao].labels.push(dataHora);
+    });
+  
+    if (Object.keys(dadosPorEstacao).length === 0) {
+      return {
+        labels: [],
+        datasets: [],
+      };
+    }
+  
+    const datasets = Object.keys(dadosPorEstacao).map(estacao => ({
+      label: estacao,
+      data: dadosPorEstacao[estacao].data,
+      borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+      backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
+      fill: false,
+    }));
+  
+    const labels = dadosPorEstacao[Object.keys(dadosPorEstacao)[0]].labels;
+  
+    return {
+      labels,
+      datasets,
+    };
+  };
+
   return (
     <div className="relatorio">
       <div className="container">
@@ -209,6 +255,12 @@ export function Relatorios() {
                 <h2 className="card-title">QUANTIDADE MÉDIA DE ALERTAS POR ESTAÇÕES</h2>
                 <div className="chart-container">
                   <Bar data={gerarGraficoAlertas()} />
+                </div>
+              </div>
+              <div className="card">
+                <h2 className="card-title">VARIAÇÃO DA TEMPERATURA NO PERÍODO</h2>
+                <div className="chart-container">
+                  <Line data={gerarGraficoTemperatura()} />
                 </div>
               </div>
             </div>
