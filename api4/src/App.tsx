@@ -20,8 +20,7 @@ import PrivateRoute from './components/PrivateRoute';
 import HomePub from './pages/home/HomePub';
 import BaseSuperior from './components/BaseSuperior';
 import { Relatorios } from './pages/relatorios/relatorios';
-
-
+import Parametros from './pages/institucional/institucionalParametro';
 
 
 function App() {
@@ -61,7 +60,10 @@ function App() {
             {/* rotas alertas */}
             <Route path="/cadastro/alerta" element={<CadastroAlerta />} />  
             <Route path="/edita/alerta/:id" element={<EditaAlerta />} />                
-            <Route path="/lista/alertas" element={<ListaAlertas />} />   
+            <Route path="/lista/alertas" element={<ListaAlertas />} />  
+
+            {/* rotas institucional */}
+            <Route path="/institucional/parametros" element={<Parametros />} />   
 
             {/* rotas relatorios */} 
             <Route path="/relatorios" element={<Relatorios />} /> 
