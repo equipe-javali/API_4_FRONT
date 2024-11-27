@@ -1,4 +1,3 @@
-// api4/jest.config.js
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
@@ -9,10 +8,17 @@ const config: Config.InitialOptions = {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^axios$': require.resolve('axios')
   },
   transform: {
-    '^.+\\.(ts|tsx)$': 'babel-jest',
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      tsconfig: 'tsconfig.json'
+    }]
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(axios)/.*)'
+  ],
+  moduleDirectories: ['node_modules', 'src']
 };
 
 export default config;

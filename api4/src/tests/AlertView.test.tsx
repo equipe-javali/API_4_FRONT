@@ -1,3 +1,4 @@
+// src/tests/AlertView.test.tsx
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
@@ -7,10 +8,10 @@ import { listarOcorrencia } from '../services/ocorrenciaServices';
 import { listarAlertas } from '../services/alertaServices';
 import { listarEstacoes } from '../services/estacaoServices';
 
-// Mocking axios
+// Mock do axios
 const mock = new MockAdapter(axios);
 
-// Mocking the services
+// Mock dos serviços
 jest.mock('../services/ocorrenciaServices', () => ({
   listarOcorrencia: jest.fn(),
 }));
@@ -20,7 +21,7 @@ jest.mock('../services/alertaServices', () => ({
 }));
 
 jest.mock('../services/estacaoServices', () => ({
-  listarEstacoes: jest.fn(() => Promise.resolve({ data: { rows: [] } })),
+  listarEstacoes: jest.fn(),
 }));
 
 describe('AlertView', () => {
@@ -28,8 +29,13 @@ describe('AlertView', () => {
     process.env.REACT_APP_API_BACK = 'http://localhost:3001';
   });
 
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
   afterEach(() => {
     mock.reset();
+    jest.restoreAllMocks();
   });
 
   test('deve renderizar ocorrências, alertas e estações corretamente', async () => {
@@ -41,6 +47,7 @@ describe('AlertView', () => {
         ]
       }
     };
+
     const mockAlertas = {
       data: {
         rows: [
@@ -49,6 +56,7 @@ describe('AlertView', () => {
         ]
       }
     };
+
     const mockEstacoes = {
       data: {
         rows: [
@@ -71,16 +79,20 @@ describe('AlertView', () => {
   });
 
   test('deve lidar com erro na resposta da API', async () => {
-    (listarOcorrencia as jest.Mock).mockRejectedValue(new Error('Erro ao buscar dados'));
-    (listarAlertas as jest.Mock).mockRejectedValue(new Error('Erro ao buscar dados'));
-    (listarEstacoes as jest.Mock).mockRejectedValue(new Error('Erro ao buscar dados'));
+    const errorMessage = 'Erro ao buscar dados';
+    
+    (listarOcorrencia as jest.Mock).mockRejectedValue(new Error(errorMessage));
+    (listarAlertas as jest.Mock).mockRejectedValue(new Error(errorMessage));
+    (listarEstacoes as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
     render(<AlertView />);
 
     await waitFor(() => {
-      const errorMessage = screen.getByTestId('error-message');
-      expect(errorMessage).toBeInTheDocument();
-      expect(errorMessage).toHaveTextContent('Erro ao buscar dados');
+      expect(console.error).toHaveBeenCalledWith(
+        'Erro ao buscar dados:',
+        expect.any(Error)
+      );
+      expect(console.error).toHaveBeenCalledWith(errorMessage);
     });
   });
 });

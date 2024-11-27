@@ -19,23 +19,23 @@ export default function AlertView() {
                 const responseAlertas = await listarAlertas();
                 const responseEstacoes = await listarEstacoes();
 
-                setOcorrencias(responseOcorrencias.data.rows);
-                setAlertas(responseAlertas.data.rows);
-                setEstacoes(responseEstacoes.data.rows);
+                setOcorrencias(responseOcorrencias.data.rows)
+                setAlertas(responseAlertas.data.rows)
+                setEstacoes(responseEstacoes.data.rows)
 
             } catch (err) {
-                console.error("Erro ao buscar dados:", err);
+                console.error("Erro ao buscar dados:", err)
                 if (err instanceof Error) {
                     console.error(err.message)
                 } else {
                     console.error("Erro desconhecido")
                 }
             }
-        };
+        }
 
         fetchData()
         console.log(ocorrencias)
-    }, [ocorrencias]);
+    }, []);
 
     const getAlertaNome = (id: number) => {
         const alerta = alertas.find( alerta => alerta.id === id )
@@ -53,19 +53,15 @@ export default function AlertView() {
     }
 
     return (
-        <div>
-            {error && (
-                <div data-testid="error-message">
-                    Erro ao buscar dados: {error}
+        <section className='alert-section'>
+
+            {Array.isArray(ocorrencias) && ocorrencias?.map((ocorrencia) => (
+                <div className='alert-card' key={ ocorrencia.id }>
+                    <p>📢 { getEstacaoByAlerta(ocorrencia.id_alerta) } : { getAlertaNome(ocorrencia.id_alerta) } {ocorrencia.valor}</p>
                 </div>
-            )}
-            <section className='alert-section'>
-                {Array.isArray(ocorrencias) && ocorrencias?.map((ocorrencia) => (
-                    <div className='alert-card' key={ocorrencia.id}>
-                        <p>📢 {getEstacaoByAlerta(ocorrencia.id_alerta)} : {getAlertaNome(ocorrencia.id_alerta)} {ocorrencia.valor}</p>
-                    </div>
-                ))}
-            </section>
-        </div>
-    );
+            ))}
+
+        </section>
+    )
+
 }
