@@ -10,9 +10,10 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Estacao } from "../../types/Estacao";
 import { Bar, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as  ChartJS, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import GraficoTemperatura from "../../components/GraficoTemperatura";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, BarElement, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, );
 
 function obterDataHoje(): string {
   const hoje = new Date();
@@ -111,6 +112,7 @@ export function Relatorios() {
       value: estacao.id as number,
       label: estacao.nome
     }));
+    
 
   // Gerar o gráfico de alertas por estação
   const gerarGraficoAlertas = () => {
@@ -131,6 +133,8 @@ export function Relatorios() {
 
     const labels: any[] = [];
     const data: any[] = [];
+    
+    
 
     relatorios.data.rows.alertaPorEstacoes.dados.forEach((row: string[]) => {
       const estacaoNome = row[0];
@@ -157,53 +161,9 @@ export function Relatorios() {
         },
       ],
     };
-  };
+  }; 
 
-  const gerarGraficoTemperatura = () => {
-    if (!relatorios || !relatorios.data.rows.temperatura) {
-      return {
-        labels: [],
-        datasets: [],
-      };
-    }
   
-    const dadosPorEstacao: { [key: string]: { data: number[], labels: string[] } } = {};
-  
-    relatorios.data.rows.temperatura.dados.forEach((row: string[]) => {
-      const estacao = row[1];
-      const dataHora = new Date(row[2]).toLocaleString();
-      const temperatura = parseFloat(row[3]);
-  
-      if (!dadosPorEstacao[estacao]) {
-        dadosPorEstacao[estacao] = { data: [], labels: [] };
-      }
-  
-      dadosPorEstacao[estacao].data.push(temperatura);
-      dadosPorEstacao[estacao].labels.push(dataHora);
-    });
-  
-    if (Object.keys(dadosPorEstacao).length === 0) {
-      return {
-        labels: [],
-        datasets: [],
-      };
-    }
-  
-    const datasets = Object.keys(dadosPorEstacao).map(estacao => ({
-      label: estacao,
-      data: dadosPorEstacao[estacao].data,
-      borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
-      backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
-      fill: false,
-    }));
-  
-    const labels = dadosPorEstacao[Object.keys(dadosPorEstacao)[0]].labels;
-  
-    return {
-      labels,
-      datasets,
-    };
-  };
 
   return (
     <div className="relatorio">
@@ -247,7 +207,6 @@ export function Relatorios() {
             value={estacaoOptions.filter(option => filtrosData.estacoes?.includes(option.value))}
           />
         </div>
-
         <div className="content">
           <div className="graficos-container">
             <div className="grafico-row">
@@ -260,7 +219,7 @@ export function Relatorios() {
               <div className="card">
                 <h2 className="card-title">VARIAÇÃO DA TEMPERATURA NO PERÍODO</h2>
                 <div className="chart-container">
-                  <Line data={gerarGraficoTemperatura()} />
+                  <GraficoTemperatura relatorios={relatorios} />
                 </div>
               </div>
             </div>
@@ -269,11 +228,11 @@ export function Relatorios() {
           <div className="mapa-card">
             <h2 className="card-title">MAPA DE ESTAÇÕES</h2>
             {estacoes.some(estacao => estacao.latitude && estacao.longitude) && (
-              <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
-            )}
+                  <div ref={mapRef} style={{ width: '100%', height: '300px' }} />
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      );
 }
