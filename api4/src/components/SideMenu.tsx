@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome, FaList } from 'react-icons/fa'; // Importando FaHome
+import { FaAngleDoubleRight, FaEllipsisV, FaRegUserCircle, FaSignOutAlt, FaHome, FaList, FaFile } from 'react-icons/fa'; // Importando FaHome
 import './css/SideMenu.css';
 
 import apiJWT from '../services/axiosJWT';
@@ -143,6 +143,14 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
             </details>
           ))}
             
+            {/* Adicionando a opção Relatórios */}
+            <details className='menu-details'>
+              <summary><FaFile /> Institucional</summary>
+              <Link to="institucional/parametros" className="menu-link">
+                <p className='link-text'>Parâmetros</p>
+              </Link>
+            </details>
+
             {/* Adicionando a opção Relatórios */}
             <details className='menu-details'>
               <summary><FaList /> Relatórios</summary>
