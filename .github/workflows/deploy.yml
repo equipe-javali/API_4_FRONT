@@ -1,0 +1,35 @@
+name: Deploy Frontend
+
+on:
+  workflow_run:
+    workflows: ["CI Frontend Integration Tests"]  # Nome exato do workflow de CI
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Vercel
+        run: vercel --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Verify Deployment
+        run: |
+          curl -f https://frontend.yourdomain.com || exit 1
