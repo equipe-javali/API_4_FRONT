@@ -1,9 +1,21 @@
-.relatorio .container {
+.relatorio {  
+  height:min-content;
+  margin-top: 200px;
+  margin-left: 100px;
+  margin-right: 60px;  
+  max-width: 100%;
   padding: 10px;
-  background-color: white;
-  width: 100%; 
-  margin-top: 10%;
+  
+  
+ 
+  
+}
+
+.relatorio .container {
+  padding: 30px;
+  background-color: white;   
   border-radius: 20px;
+    
 
 }
 
@@ -114,8 +126,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 90%;
-  margin-right: 15px;
 }
 
 .relatorio .grafico-row {
@@ -123,6 +133,10 @@
   justify-content: space-between;
 }
 
+.relatorio .grafico-alerta {
+  display: flex;
+  justify-content: center;
+}
 .relatorio .card {
   border: 1px solid #ccc;
   border-radius: 4px;
