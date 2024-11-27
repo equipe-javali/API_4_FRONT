@@ -149,6 +149,9 @@ const SideMenu: React.FC<SideMenuProps> = ({ links }) => {
               <Link to="institucional/parametros" className="menu-link">
                 <p className='link-text'>Parâmetros</p>
               </Link>
+              <Link to="institucional/sensores" className="menu-link">
+                <p className='link-text'>Sensores</p>
+              </Link>        
             </details>
 
             {/* Adicionando a opção Relatórios */}
