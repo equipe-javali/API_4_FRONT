@@ -67,10 +67,7 @@ const options: ChartOptions<'line'> = {
         display: true,
         text: 'Temperatura (°C)',
       },
-      ticks: {
-        callback: (tickValue: string | number) => `${tickValue}°C`,
-        
-      }
+      
     },
   },
 };

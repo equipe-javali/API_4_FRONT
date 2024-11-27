@@ -65,12 +65,9 @@ const options: ChartOptions<'line'> = {
       type: 'linear',
       title: {
         display: true,
-        text: 'Temperatura (°C)',
+        text: 'Umidade (%)',
       },
-      ticks: {
-        callback: (tickValue: string | number) => `${tickValue}°C`,
-        
-      }
+      
     },
   },
 };

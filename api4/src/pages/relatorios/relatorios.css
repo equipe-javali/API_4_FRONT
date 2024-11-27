@@ -1,22 +1,18 @@
-.relatorio {  
-  height:min-content;
-  margin-top: 200px;
+.relatorio {
+  
   margin-left: 100px;
-  margin-right: 60px;  
+  margin-right: 60px;
   max-width: 100%;
   padding: 10px;
-  
-  
- 
+  max-height: 120vh; 
   
 }
 
 .relatorio .container {
   padding: 30px;
-  background-color: white;   
+  background-color: white;
   border-radius: 20px;
-    
-
+  height: auto;  
 }
 
 .relatorio .text-wrapper-titulo {
