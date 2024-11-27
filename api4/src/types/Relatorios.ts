@@ -15,6 +15,14 @@ export interface IFiltroRelatorios {
 
 }
 
+export interface ILeituraSensor {
+    sensor: string,
+    estacao: string,
+    unidade: string,
+    data_hora: Date,
+    valor: number
+}
+
 export interface IGraficos {
     dados: string[][],
     titulo: string,
@@ -38,6 +46,8 @@ export interface IRelatorios {
         fields: string[][]
     }
 };
+
+
 
 export interface IRelatoriosProps {
     relatorios: IRelatorios;

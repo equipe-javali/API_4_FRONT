@@ -9,7 +9,11 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeScale,
+  ChartOptions
 } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+import { ptBR } from 'date-fns/locale';
 
 ChartJS.register(
   CategoryScale,
@@ -18,7 +22,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale
 );
 
 const cores = [
@@ -30,16 +35,47 @@ const cores = [
   { borderColor: 'rgba(255, 159, 64, 1)', backgroundColor: 'rgba(255, 159, 64, 0.2)' },
 ];
 
-const options = {
-  
+const options: ChartOptions<'line'> = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+    },
+  },
   scales: {
-    
+    x: {
+      type: 'time',
+      adapters: {
+        date: {
+          locale: ptBR,
+        },
+      },
+      time: {
+        unit: 'day',
+        // displayFormats: {
+        //   day: 'dd/MM/yyyy',
+        // },
+      },
+      title: {
+        display: true,
+        text: 'Período',
+      },
+      ticks: {
+        maxTicksLimit: 10,
+        autoSkip: true,
+      },
+    },
     y: {
+      type: 'linear',
       title: {
         display: true,
         text: 'Temperatura (°C)',
       },
-      
+      ticks: {
+        callback: (tickValue: string | number) => `${tickValue}°C`,
+        
+      }
     },
   },
 };
@@ -52,27 +88,19 @@ const gerarGraficoTemperatura = (relatorios: any) => {
     };
   }
 
-  const dadosPorEstacao: { [key: string]: { data: number[], labels: string[] } } = {};
+  const dadosPorEstacao: { [key: string]: { data: { x: Date, y: number }[] } } = {};
 
   relatorios.data.rows.temperatura.dados.forEach((row: string[]) => {
     const estacao = row[1];
-    const dataHora = new Date(row[2]).toLocaleDateString('pt-BR', { day: 'numeric', month: 'numeric', year: 'numeric' });
+    const dataHora = new Date(row[2]);
     const temperatura = parseFloat(row[3]);
 
     if (!dadosPorEstacao[estacao]) {
-      dadosPorEstacao[estacao] = { data: [], labels: [] };
+      dadosPorEstacao[estacao] = { data: [] };
     }
 
-    dadosPorEstacao[estacao].data.push(temperatura);
-    dadosPorEstacao[estacao].labels.push(dataHora);
+    dadosPorEstacao[estacao].data.push({ x: dataHora, y: temperatura });
   });
-
-  if (Object.keys(dadosPorEstacao).length === 0) {
-    return {
-      labels: [],
-      datasets: [],
-    };
-  }
 
   const datasets = Object.keys(dadosPorEstacao).map((estacao, index) => ({
     label: estacao,
@@ -82,10 +110,7 @@ const gerarGraficoTemperatura = (relatorios: any) => {
     fill: false,
   }));
 
-  const labels = dadosPorEstacao[Object.keys(dadosPorEstacao)[0]].labels;
-
   return {
-    labels,
     datasets,
   };
 };
