@@ -12,6 +12,7 @@ import { Estacao } from "../../types/Estacao";
 import { Bar, Line } from 'react-chartjs-2';
 import { Chart as  ChartJS, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import GraficoTemperatura from "../../components/GraficoTemperatura";
+import GraficoUmidade from "../../components/GraficoUmidade";
 
 ChartJS.register(CategoryScale, BarElement, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, );
 
@@ -158,6 +159,8 @@ export function Relatorios() {
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
+          barThickness: 30,                  
+          
         },
       ],
     };
@@ -209,20 +212,30 @@ export function Relatorios() {
         </div>
         <div className="content">
           <div className="graficos-container">
-            <div className="grafico-row">
+            <div className="grafico-alerta">
               <div className="card">
                 <h2 className="card-title">QUANTIDADE MÉDIA DE ALERTAS POR ESTAÇÕES</h2>
                 <div className="chart-container">
                   <Bar data={gerarGraficoAlertas()} />
                 </div>
               </div>
+            </div>
+            <div className="grafico-row">
               <div className="card">
                 <h2 className="card-title">VARIAÇÃO DA TEMPERATURA NO PERÍODO</h2>
                 <div className="chart-container">
                   <GraficoTemperatura relatorios={relatorios}  />
                 </div>
               </div>
+            
+              <div className="card">
+                <h2 className="card-title">VARIAÇÃO DA UMIDADE NO PERÍODO</h2>
+                <div className="chart-container">
+                  <GraficoUmidade relatorios={relatorios}  />
+                </div>
+              </div>
             </div>
+            
           </div>
 
           <div className="mapa-card">

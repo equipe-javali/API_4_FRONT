@@ -65,15 +65,15 @@ const options: ChartOptions<'line'> = {
       type: 'linear',
       title: {
         display: true,
-        text: 'Temperatura (°C)',
+        text: 'Umidade (%)',
       },
       
     },
   },
 };
 
-const gerarGraficoTemperatura = (relatorios: any) => {
-  if (!relatorios || !relatorios.data.rows.temperatura) {
+const gerarGraficoUmidade = (relatorios: any) => {
+  if (!relatorios || !relatorios.data.rows.umidade) {
     return {
       labels: [],
       datasets: [],
@@ -82,16 +82,16 @@ const gerarGraficoTemperatura = (relatorios: any) => {
 
   const dadosPorEstacao: { [key: string]: { data: { x: Date, y: number }[] } } = {};
 
-  relatorios.data.rows.temperatura.dados.forEach((row: string[]) => {
+  relatorios.data.rows.umidade.dados.forEach((row: string[]) => {
     const estacao = row[1];
     const dataHora = new Date(row[2]);
-    const temperatura = parseFloat(row[3]);
+    const umidade = parseFloat(row[3]);
 
     if (!dadosPorEstacao[estacao]) {
       dadosPorEstacao[estacao] = { data: [] };
     }
 
-    dadosPorEstacao[estacao].data.push({ x: dataHora, y: temperatura });
+    dadosPorEstacao[estacao].data.push({ x: dataHora, y: umidade });
   });
 
   const datasets = Object.keys(dadosPorEstacao).map((estacao, index) => ({
@@ -107,10 +107,10 @@ const gerarGraficoTemperatura = (relatorios: any) => {
   };
 };
 
-const GraficoTemperatura = ({ relatorios }: { relatorios: any }) => {
-  const data = gerarGraficoTemperatura(relatorios);
+const GraficoUmidade = ({ relatorios }: { relatorios: any }) => {
+  const data = gerarGraficoUmidade(relatorios);
 
   return <Line data={data} options={options} />;
 };
 
-export default GraficoTemperatura;
+export default GraficoUmidade;
