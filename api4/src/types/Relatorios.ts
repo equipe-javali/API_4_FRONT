@@ -42,6 +42,7 @@ export interface IRelatorios {
             medicaoPorSensor: IGraficos,
             ocorrenciaPorAlerta: IGraficos,
             temperatura: IGraficos,
+            umidade: IGraficos,
         }
         fields: string[][]
     }

@@ -73,7 +73,7 @@ const options: ChartOptions<'line'> = {
 };
 
 const gerarGraficoUmidade = (relatorios: any) => {
-  if (!relatorios || !relatorios.data.rows.Umidade) {
+  if (!relatorios || !relatorios.data.rows.umidade) {
     return {
       labels: [],
       datasets: [],
@@ -82,16 +82,16 @@ const gerarGraficoUmidade = (relatorios: any) => {
 
   const dadosPorEstacao: { [key: string]: { data: { x: Date, y: number }[] } } = {};
 
-  relatorios.data.rows.Umidade.dados.forEach((row: string[]) => {
+  relatorios.data.rows.umidade.dados.forEach((row: string[]) => {
     const estacao = row[1];
     const dataHora = new Date(row[2]);
-    const Umidade = parseFloat(row[3]);
+    const umidade = parseFloat(row[3]);
 
     if (!dadosPorEstacao[estacao]) {
       dadosPorEstacao[estacao] = { data: [] };
     }
 
-    dadosPorEstacao[estacao].data.push({ x: dataHora, y: Umidade });
+    dadosPorEstacao[estacao].data.push({ x: dataHora, y: umidade });
   });
 
   const datasets = Object.keys(dadosPorEstacao).map((estacao, index) => ({
