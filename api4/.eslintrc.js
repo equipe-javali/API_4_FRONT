@@ -25,7 +25,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-extra-semi': 'off',
@@ -33,9 +33,11 @@ module.exports = {
     'no-debugger': 'warn',
     'no-duplicate-imports': 'warn',
     '@typescript-eslint/no-inferrable-types': 'off',
-    'no-useless-catch': 'warn',
+    'no-useless-catch': 'off',
     'react/jsx-key': 'off',
     '@typescript-eslint/no-empty-function': 'warn',
-    'no-empty-function': 'off'
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'react-hooks/exhaustive-deps': 'warn'
   }
 }; 
