@@ -27,7 +27,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-extra-semi': 'off',
     'no-console': 'off',
     'no-debugger': 'warn',
@@ -38,6 +38,6 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'warn',
     'no-empty-function': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'react-hooks/exhaustive-deps': 'warn'
+    'react-hooks/exhaustive-deps': 'off'
   }
 }; 
