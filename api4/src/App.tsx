@@ -22,7 +22,7 @@ import BaseSuperior from './components/BaseSuperior';
 import { Relatorios } from './pages/relatorios/relatorios';
 import Parametros from './pages/institucional/institucionalParametro';
 import Sensores from './pages/institucional/institucionalSensor';
-
+import Estacoes from './pages/institucional/institucionalEstacao';
 
 
 function App() {
@@ -66,7 +66,8 @@ function App() {
 
             {/* rotas institucional */}
             <Route path="/institucional/parametros" element={<Parametros />} />   
-            <Route path="/institucional/sensores" element={<Sensores />} />   
+            <Route path="/institucional/sensores" element={<Sensores />} />
+            <Route path="/institucional/estacoes" element={<Estacoes />} />   
 
 
             {/* rotas relatorios */} 
