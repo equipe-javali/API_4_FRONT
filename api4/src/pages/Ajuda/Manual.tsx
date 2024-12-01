@@ -5,12 +5,18 @@ const ManualUsuario: React.FC = () => {
   const [showParametros, setShowParametros] = useState(false);
   const [showSensores, setShowSensores] = useState(false);
   const [showAlertas, setShowAlertas] = useState(false);
+  const [showInstitucional, setShowInstitucional] = useState(false);
+  const [showRelatorios, setShowRelatorios] = useState(false);
+  const [showUsuario, setShowUsuario] = useState(false);
 
   const toggleSection = (section: string) => {
     if (section === "estacoes") setShowEstacoes(!showEstacoes);
     if (section === "parametros") setShowParametros(!showParametros);
     if (section === "sensores") setShowSensores(!showSensores);
     if (section === "alertas") setShowAlertas(!showAlertas);
+    if (section === "institucional") setShowInstitucional(!showInstitucional);
+    if (section === "relatorios") setShowRelatorios(!showRelatorios);
+    if (section === "usuario") setShowUsuario(!showUsuario);
   };
 
   return (
@@ -254,6 +260,111 @@ const ManualUsuario: React.FC = () => {
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
                     Acesse o menu &quot;Alertas&quot; e configure os parâmetros desejados para os alertas.
+                  </p>
+                </article>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Seção Institucional */}
+        <section style={{ marginBottom: "30px" }}>
+          <h2
+            style={{
+              color: "#364d6f",
+              borderBottom: "2px solid #364d6f",
+              cursor: "pointer",
+            }}
+            onClick={() => toggleSection("institucional")}
+          >
+            Institucional
+          </h2>
+          <div
+            style={{
+              maxHeight: showInstitucional ? "500px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.5s ease-in-out",
+              marginTop: "15px",
+            }}
+          >
+            {showInstitucional && (
+              <div>
+                <article style={{ marginBottom: "15px" }}>
+                  <h3 style={{ color: "#364d6f", fontSize: "1.2em" }}>
+                    Como acessar o conteúdo institucional?
+                  </h3>
+                  <p style={{ lineHeight: "1.6", color: "#555" }}>
+                    No menu lateral, selecione entre os conteúdos institucionais das estações, parâmetros e sensores.
+                  </p>
+                </article>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Seção Relatórios */}
+        <section style={{ marginBottom: "30px" }}>
+          <h2
+            style={{
+              color: "#364d6f",
+              borderBottom: "2px solid #364d6f",
+              cursor: "pointer",
+            }}
+            onClick={() => toggleSection("relatorios")}
+          >
+            Relatórios
+          </h2>
+          <div
+            style={{
+              maxHeight: showRelatorios ? "500px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.5s ease-in-out",
+              marginTop: "15px",
+            }}
+          >
+            {showRelatorios && (
+              <div>
+                <article style={{ marginBottom: "15px" }}>
+                  <h3 style={{ color: "#364d6f", fontSize: "1.2em" }}>
+                    Como visualizar relatórios?
+                  </h3>
+                  <p style={{ lineHeight: "1.6", color: "#555" }}>
+                    No menu lateral, clique em &quot;Visualizar Relatório&quot; para acessar os relatórios.
+                  </p>
+                </article>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Seção Usuário */}
+        <section style={{ marginBottom: "30px" }}>
+          <h2
+            style={{
+              color: "#364d6f",
+              borderBottom: "2px solid #364d6f",
+              cursor: "pointer",
+            }}
+            onClick={() => toggleSection("usuario")}
+          >
+            Usuário
+          </h2>
+          <div
+            style={{
+              maxHeight: showUsuario ? "500px" : "0",
+              overflow: "hidden",
+              transition: "max-height 0.5s ease-in-out",
+              marginTop: "15px",
+            }}
+          >
+            {showUsuario && (
+              <div>
+                <article style={{ marginBottom: "15px" }}>
+                  <h3 style={{ color: "#364d6f", fontSize: "1.2em" }}>
+                    Como acessar e editar meu perfil?
+                  </h3>
+                  <p style={{ lineHeight: "1.6", color: "#555" }}>
+                    Na parte inferior do menu lateral, clique nos três pontinhos verticais e selecione &quot;Meu Perfil&quot; para acessar e editar suas informações, excluir sua conta ou deslogar.
                   </p>
                 </article>
               </div>
