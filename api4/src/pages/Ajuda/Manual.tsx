@@ -82,7 +82,7 @@ const ManualUsuario: React.FC = () => {
                     Como cadastrar uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Acesse o menu &quot;Estação&quot; e clique em &quot;Adicionar&quot;. Preencha os campos obrigatórios e clique em &quot;Salvar&quot;.
+                    Acesse o menu lateral, clique em &quot;Estação&quot; depois em &quot;Cadastrar&quot;. Preencha os campos obrigatórios e clique em &quot;Salvar&quot;.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -90,7 +90,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar as estações cadastradas?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Estação&quot; e veja a lista completa das estações cadastradas.
+                    No menu lateral, clique em &quot;Estação&quot;, depois em &quote;Listar&quo; e veja a lista completa das estações cadastradas.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -98,7 +98,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Clique no ícone de edição ao lado da estação desejada, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Estação. Clique no ícone de edição ao lado da estação desejada, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -106,7 +106,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Selecione a estação, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Estação. Selecione a estação, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -141,7 +141,7 @@ const ManualUsuario: React.FC = () => {
                     Como cadastrar um parâmetro?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Acesse o menu &quot;Parâmetros&quot; e clique em &quot;Adicionar&quot;. Preencha os campos necessários e clique em &quot;Salvar&quot;.
+                    Acesse o menu &quot;Parâmetros&quot; e clique em &quot;Cadastrar&quot;. Preencha os campos necessários e clique em &quot;Salvar&quot;.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -149,7 +149,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar os parâmetros cadastrados?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Parâmetros&quot; e veja a lista completa dos parâmetros cadastrados.
+                    No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quo; e veja a lista completa dos parâmetros cadastrados.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -157,7 +157,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar um parâmetro?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Clique no ícone de edição ao lado do parâmetro desejado, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quo; e clique no ícone de edição ao lado do parâmetro desejado, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -165,7 +165,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir um parâmetro?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Selecione o parâmetro, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quo;, selecione o parâmetro, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -200,7 +200,7 @@ const ManualUsuario: React.FC = () => {
                     Como cadastrar um sensor?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Acesse o menu &quot;Sensores&quot; e clique em &quot;Adicionar&quot;. Preencha os campos necessários e clique em &quot;Salvar&quot;.
+                    Acesse o menu &quot;Sensores&quot; e clique em &quot;Cadastrar&quot;. Preencha os campos necessários e clique em &quot;Salvar&quot;.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -208,7 +208,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar os sensores cadastrados?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Sensores&quot; e veja a lista completa dos sensores cadastrados.
+                    No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo; e veja a lista completa dos sensores cadastrados.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -216,7 +216,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar um sensor?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Clique no ícone de edição ao lado do sensor desejado, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo; e clique no ícone de edição ao lado do sensor desejado, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -224,7 +224,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir um sensor?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Selecione o sensor, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo;, selecione o sensor, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -259,7 +259,31 @@ const ManualUsuario: React.FC = () => {
                     Como configurar alertas?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Acesse o menu &quot;Alertas&quot; e configure os parâmetros desejados para os alertas.
+                    Acesse o menu &quot;Alertas&quot;, clique em &quot;Sensores&quot;. Preencha os campos necessários e clique em &quot;Salvar&quot;.
+                  </p>
+                </article>
+                <article style={{ marginBottom: "15px" }}>
+                  <h3 style={{ color: "#364d6f", fontSize: "1.2em" }}>
+                    Como visualizar os sensores cadastrados?
+                  </h3>
+                  <p style={{ lineHeight: "1.6", color: "#555" }}>
+                    No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo; e veja a lista completa dos sensores cadastrados.
+                  </p>
+                </article>
+                <article style={{ marginBottom: "15px" }}>
+                  <h3 style={{ color: "#364d6f", fontSize: "1.2em" }}>
+                    Como editar um alerta?
+                  </h3>
+                  <p style={{ lineHeight: "1.6", color: "#555" }}>
+                  No menu lateral, clique em &quot;Alertas&quot;, depois em &quote;Listar&quo; e clique no ícone de edição ao lado do alerta desejado, faça as alterações e salve.
+                  </p>
+                </article>
+                <article style={{ marginBottom: "15px" }}>
+                  <h3 style={{ color: "#364d6f", fontSize: "1.2em" }}>
+                    Como excluir um alerta?
+                  </h3>
+                  <p style={{ lineHeight: "1.6", color: "#555" }}>
+                  No menu lateral, clique em &quot;Alertas&quot;, depois em &quote;Listar&quo;, selecione o alerta, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -294,7 +318,7 @@ const ManualUsuario: React.FC = () => {
                     Como acessar o conteúdo institucional?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, selecione entre os conteúdos institucionais das estações, parâmetros e sensores.
+                    No menu lateral, em &quot;Institucional&quot;selecione entre os conteúdos institucionais das estações, parâmetros e sensores para saber mais sobre o funcionamento de cada um destes assuntos.
                   </p>
                 </article>
               </div>
@@ -329,7 +353,8 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar relatórios?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Visualizar Relatório&quot; para acessar os relatórios.
+                    No menu lateral, clique em &quot;Relatório&quot; e depois em &quot;Visualizar Relatórios&quot; para acessar os relatórios. Nesta página você pode selecionar através dos filtro de data o período desejado para gerar o relatório correspondente ao período desejado. <br></br>
+                    Também é possível selecionar quais estações você deseja incluir no relatório para obter informações específicas sobre elas. Além disso, é possível selecionar o tipo de relatório que deseja gerar entre as opções: &quot;Geral&quot;, &quot;Quantidade Média de Alertas por estação&quot;, &quot;Média de Medição por Sensor&quot; e &quot;Quantidade de Ocorrências por Alerta&quot;.
                   </p>
                 </article>
               </div>
@@ -364,7 +389,7 @@ const ManualUsuario: React.FC = () => {
                     Como acessar e editar meu perfil?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    Na parte inferior do menu lateral, clique nos três pontinhos verticais e selecione &quot;Meu Perfil&quot; para acessar e editar suas informações, excluir sua conta ou deslogar.
+                    Na parte inferior do menu lateral, clique nos três pontinhos verticais e selecione &quot;Meu Perfil&quot; para acessar e &quot;Editar&quot; editar suas informações, ou &quot;Excluir&quot; para excluir sua conta. Caso deseje sair do sistema, clique em &quot;Sair&quot; para fazer o logout.
                   </p>
                 </article>
               </div>
