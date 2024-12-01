@@ -23,6 +23,7 @@ import { Relatorios } from './pages/relatorios/relatorios';
 import Parametros from './pages/institucional/institucionalParametro';
 import Sensores from './pages/institucional/institucionalSensor';
 import Estacoes from './pages/institucional/institucionalEstacao';
+import Ajuda from './pages/Ajuda/Manual'
 
 
 function App() {
@@ -72,6 +73,9 @@ function App() {
 
             {/* rotas relatorios */} 
             <Route path="/relatorios" element={<Relatorios />} /> 
+
+            {/* rotas Manual */} 
+            <Route path="/ajuda/manual" element={<Ajuda />} /> 
             
           </Route>
 
