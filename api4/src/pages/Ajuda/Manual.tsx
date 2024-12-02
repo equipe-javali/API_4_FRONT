@@ -98,7 +98,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Estação&quot. Clique no ícone de edição ao lado da estação desejada, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Estação&quot;. Clique no ícone de edição ao lado da estação desejada, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -106,7 +106,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Estação&quot. Selecione a estação, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Estação&quot;. Selecione a estação, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -149,7 +149,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar os parâmetros cadastrados?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quot; e veja a lista completa dos parâmetros cadastrados.
+                    No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quot;Listar&quot; e veja a lista completa dos parâmetros cadastrados.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
