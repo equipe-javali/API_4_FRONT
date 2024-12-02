@@ -90,7 +90,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar as estações cadastradas?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Estação&quot;, depois em &quote;Listar&quo; e veja a lista completa das estações cadastradas.
+                    No menu lateral, clique em &quot;Estação&quot;, depois em &quot;Listar&quot; e veja a lista completa das estações cadastradas.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -98,7 +98,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Estação. Clique no ícone de edição ao lado da estação desejada, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Estação&quot. Clique no ícone de edição ao lado da estação desejada, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -106,7 +106,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir uma estação?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Estação. Selecione a estação, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Estação&quot. Selecione a estação, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -149,7 +149,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar os parâmetros cadastrados?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quo; e veja a lista completa dos parâmetros cadastrados.
+                    No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quot; e veja a lista completa dos parâmetros cadastrados.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -157,7 +157,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar um parâmetro?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quo; e clique no ícone de edição ao lado do parâmetro desejado, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quot;Listar&quot; e clique no ícone de edição ao lado do parâmetro desejado, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -165,7 +165,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir um parâmetro?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quote;Listar&quo;, selecione o parâmetro, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Parâmetros&quot;, depois em &quot;Listar&quot;, selecione o parâmetro, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -208,7 +208,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar os sensores cadastrados?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo; e veja a lista completa dos sensores cadastrados.
+                    No menu lateral, clique em &quot;Sensores&quot;, depois em &quot;Listar&quot; e veja a lista completa dos sensores cadastrados.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -216,7 +216,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar um sensor?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo; e clique no ícone de edição ao lado do sensor desejado, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Sensores&quot;, depois em &quot;Listar&quot; e clique no ícone de edição ao lado do sensor desejado, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -224,7 +224,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir um sensor?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo;, selecione o sensor, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Sensores&quot;, depois em &quot;Listar&quot;, selecione o sensor, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -267,7 +267,7 @@ const ManualUsuario: React.FC = () => {
                     Como visualizar os sensores cadastrados?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, clique em &quot;Sensores&quot;, depois em &quote;Listar&quo; e veja a lista completa dos sensores cadastrados.
+                    No menu lateral, clique em &quot;Sensores&quot;, depois em &quot;Listar&quot; e veja a lista completa dos sensores cadastrados.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -275,7 +275,7 @@ const ManualUsuario: React.FC = () => {
                     Como editar um alerta?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Alertas&quot;, depois em &quote;Listar&quo; e clique no ícone de edição ao lado do alerta desejado, faça as alterações e salve.
+                  No menu lateral, clique em &quot;Alertas&quot;, depois em &quot;Listar&quot; e clique no ícone de edição ao lado do alerta desejado, faça as alterações e salve.
                   </p>
                 </article>
                 <article style={{ marginBottom: "15px" }}>
@@ -283,7 +283,7 @@ const ManualUsuario: React.FC = () => {
                     Como excluir um alerta?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                  No menu lateral, clique em &quot;Alertas&quot;, depois em &quote;Listar&quo;, selecione o alerta, clique no ícone de exclusão e confirme a operação.
+                  No menu lateral, clique em &quot;Alertas&quot;, depois em &quot;Listar&quot;, selecione o alerta, clique no ícone de exclusão e confirme a operação.
                   </p>
                 </article>
               </div>
@@ -318,7 +318,7 @@ const ManualUsuario: React.FC = () => {
                     Como acessar o conteúdo institucional?
                   </h3>
                   <p style={{ lineHeight: "1.6", color: "#555" }}>
-                    No menu lateral, em &quot;Institucional&quot;selecione entre os conteúdos institucionais das estações, parâmetros e sensores para saber mais sobre o funcionamento de cada um destes assuntos.
+                    No menu lateral, em &quot;Institucional&quot; selecione entre os conteúdos institucionais das estações, parâmetros e sensores para saber mais sobre o funcionamento de cada um destes assuntos.
                   </p>
                 </article>
               </div>
