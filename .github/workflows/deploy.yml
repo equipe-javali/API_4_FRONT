@@ -14,22 +14,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy to Vercel
-        run: vercel --prod
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-      - name: Verify Deployment
+      - name: SSH Setup
         run: |
-          curl -f https://frontend.yourdomain.com || exit 1
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AWS_SSH_PUB_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "Host *" >> ~/.ssh/config
+          echo "    ServerAliveInterval 20" >> ~/.ssh/config
+          echo "    TCPKeepAlive no" >> ~/.ssh/config
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+
+      - name: Deploy
+        run: |
+          echo "Iniciando o processo de deploy..."
+          ssh -i ~/.ssh/id_rsa -o "StrictHostKeyChecking=no" ubuntu@"${{ secrets.AWS_HOST }}" << 'EOF'
+            echo "Finalizando processos Node.js existentes..."
+            pkill -f "serve -s build -l 3000" || echo "Processo Node.js não está rodando."
+            echo "Atualizando o repositório..."
+            cd API_4_FRONT/api4
+            git pull origin main
+            echo "Instalando dependências..."
+            npm install
+            echo "Compilando o código TypeScript..."
+            npm run build
+            echo "Iniciando a aplicação..."
+            nohup serve -s build -l 3000 > output.log 2>&1 &
+            echo "Deploy concluído com sucesso."
+          EOF
+
